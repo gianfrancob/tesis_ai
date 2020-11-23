@@ -16,23 +16,23 @@ flags.DEFINE_string('weights', './checkpoints/yolov3.tf',
                     'path to weights file')
 flags.DEFINE_boolean('tiny', False, 'yolov3 or yolov3-tiny')
 flags.DEFINE_integer('size', 416, 'resize images to')
-flags.DEFINE_string('image', './data/girl.png', 'path to input image')
-flags.DEFINE_string('tfrecord', './data/test/train.tfrecord', 'tfrecord instead of image')
-flags.DEFINE_string('shuffle', False, 'tfrecord shuffle')
+flags.DEFINE_string('image', "None", 'path to input image')
+flags.DEFINE_string('tfrecord', './data/test/val2.tfrecord', 'tfrecord instead of image')
+flags.DEFINE_boolean('shuffle', False, 'tfrecord shuffle')
 flags.DEFINE_string('output', './output', 'path to output image')
 flags.DEFINE_integer('num_classes', 2, 'number of classes in the model')
 
 
 def main(_argv):
     logs = {
-        'classes': flags.classes,
-        'weights': flags.weights,
-        'tiny': flags.tiny,
-        'img_resize': flags.size,
-        'image': flags.image,
-        'tfrecord': flags.tfrecord,
-        'shuffle': flags.shuffle,
-        'num_classes': flags.num_classes,
+        'classes': FLAGS.classes,
+        'weights': FLAGS.weights,
+        'tiny': FLAGS.tiny,
+        'img_resize': FLAGS.size,
+        'image': FLAGS.image,
+        'tfrecord': FLAGS.tfrecord,
+        'shuffle': FLAGS.shuffle,
+        'num_classes': FLAGS.num_classes,
         'output': []
     }
 
@@ -55,11 +55,12 @@ def main(_argv):
     if FLAGS.tfrecord:
         dataset = load_tfrecord_dataset(
             FLAGS.tfrecord, FLAGS.classes, FLAGS.size)
+        logging.info("Dataset loaded!")
         if FLAGS.shuffle:
             dataset = dataset.shuffle(512)
-        for i in dataset:
-            image_raw, _label = next(iter(dataset.take(1)))
-            images_raw += (image_raw, _label)
+        for item in dataset:
+            image_raw, _label = item
+            images_raw += [image_raw]
     else:
         images_raw = [tf.image.decode_image(
             open(FLAGS.image, 'rb').read(), channels=3)]
@@ -82,23 +83,23 @@ def main(_argv):
         output_name = f'{FLAGS.output}/detected_img_{img_idx}.jpg'
 
         logging.info('detections:')
-        logs["output"] += {
+        logs["output"] += [{
             "idx": img_idx,
             "path": output_name,
             "time": elapsed_time,
             "detections": []
-        }
+        }]
 
         for i in range(nums[0]):
-            class_name = class_names[int(classes[0][i])]
-            score = np.array(scores[0][i])
-            boxes = np.array(boxes[0][i]))
-            logging.info('\t{}, {}, {}'.format(class_name, score, boxes)
-            logs["output"][img_idx]["detections"] += {
-                "class_name": class_name,
-                "score": score,
-                "boxes": boxes
-            }
+            _class_name = class_names[int(classes[0][i])]
+            _score = np.array(scores[0][i])
+            _boxes = np.array(boxes[0][i])
+            logging.info('\t{}, {}, {}'.format(_class_name, _score, _boxes))
+            logs["output"][img_idx]["detections"] += [{
+                "class_name": _class_name,
+                "score": _score,
+                "boxes": _boxes
+            }]
         
         
         cv2.imwrite(output_name, img)
@@ -109,7 +110,7 @@ def main(_argv):
     logs["total_time"] = total_time
     logs["avg_time"] = total_time / img_idx
 
-    print(json.dump(logs))
+    logging.info(json.dump(logs, indent=2))
 
 
 if __name__ == '__main__':

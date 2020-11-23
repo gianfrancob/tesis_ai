@@ -22,13 +22,14 @@ from tensorflow.keras.losses import (
 )
 from .utils import broadcast_iou
 
-flags.DEFINE_integer('yolo_max_boxes', 100,
+flags.DEFINE_integer('yolo_max_boxes', 220,
                      'maximum number of boxes per image')
 flags.DEFINE_float('yolo_iou_threshold', 0.5, 'iou threshold')
 flags.DEFINE_float('yolo_score_threshold', 0.5, 'score threshold')
 
 
-/*
+
+"""
 Choice of anchor boxes:
 YOLO v3, in total uses 9 anchor boxes. Three for each scale. 
 If you’re training YOLO on your own dataset, you should go about 
@@ -37,7 +38,7 @@ using K-Means clustering to generate 9 anchors.
 Then, arrange the anchors is descending order of a dimension. 
 Assign the three biggest anchors for the first scale , the next 
 three for the second scale, and the last three for the third.
-*/
+"""
 yolo_anchors = np.array([(10, 13), (16, 30), (33, 23), (30, 61), (62, 45),
                          (59, 119), (116, 90), (156, 198), (373, 326)],
                         np.float32) / 416
