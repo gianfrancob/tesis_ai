@@ -298,13 +298,20 @@ def YoloLoss(anchors, classes=80, ignore_thresh=0.5):
                            tf.zeros_like(true_wh), true_wh)
 
         # 4. calculate all masks
-        obj_mask = tf.squeeze(true_obj, -1)
-        # ignore false positive when iou is over threshold
+        obj_mask = tf.squeeze(true_obj, -1) 
+        # filtrar true_box & true_obj (si no hay objeto, hace un and logico con lo que sea haya true_box y lo descarta)
         best_iou = tf.map_fn(
-            lambda x: tf.reduce_max(broadcast_iou(x[0], tf.boolean_mask(
-                x[1], tf.cast(x[2], tf.bool))), axis=-1),
+            lambda x: tf.reduce_max(
+                broadcast_iou(
+                    x[0],
+                    tf.boolean_mask(x[1], tf.cast(x[2], tf.bool))
+                ),
+                axis=-1
+            ),
             (pred_box, true_box, obj_mask),
-            tf.float32)
+            tf.float32
+        )
+        # ignore false positive when iou is over threshold
         ignore_mask = tf.cast(best_iou < ignore_thresh, tf.float32)
 
         # 5. calculate all losses
@@ -315,7 +322,6 @@ def YoloLoss(anchors, classes=80, ignore_thresh=0.5):
         obj_loss = binary_crossentropy(true_obj, pred_obj)
         obj_loss = obj_mask * obj_loss + \
             (1 - obj_mask) * ignore_mask * obj_loss
-        # TODO: use binary_crossentropy instead
         class_loss = obj_mask * sparse_categorical_crossentropy(
             true_class_idx, pred_class)
 

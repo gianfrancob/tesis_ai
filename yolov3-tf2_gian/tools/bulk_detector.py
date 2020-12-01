@@ -27,7 +27,7 @@ flags.DEFINE_integer('num_classes', 2, 'number of classes in the model')
 """
 To run this:
 
-/workspace/shared_volume/tesis_ai/yolov3-tf2_gian# python ./tools/map_visualizer.py --weights ./checkpoints/saved_weights/yolov3_train_12.tf
+/workspace/shared_volume/tesis_ai/yolov3-tf2_gian# python ./tools/bulk_detector.py --weights ./checkpoints/saved_weights/yolov3_train_12.tf
 """
 
 def main(_argv):
