@@ -3,23 +3,13 @@ import json
 from datetime import datetime
 from absl import app, flags, logging
 from absl.flags import FLAGS
-import cv2
 import numpy as np
-import tensorflow as tf
-from yolov3_tf2.models import (
-    YoloV3, YoloV3Tiny
-)
-from yolov3_tf2.dataset import transform_images, load_tfrecord_dataset
-from yolov3_tf2.utils import draw_outputs
+from mean_average_precision import MeanAveragePrecision
 
-flags.DEFINE_string('classes', './data/test/test.names', 'path to classes file')
-flags.DEFINE_string('weights', './checkpoints/yolov3.tf',
-                    'path to weights file')
-flags.DEFINE_boolean('tiny', False, 'yolov3 or yolov3-tiny')
-flags.DEFINE_integer('size', 416, 'resize images to')
-flags.DEFINE_string('image', "None", 'path to input image')
-flags.DEFINE_string('tfrecord', './data/test/val2.tfrecord', 'tfrecord instead of image')
-flags.DEFINE_boolean('shuffle', False, 'tfrecord shuffle')
+flags.DEFINE_string('classes', './data/test/ps.names', 'path to classes file')
+flags.DEFINE_string('path', None,
+                    'path to json file with ground truth and detections')
+flags.DEFINE_integer('size', 416, 'images size')
 flags.DEFINE_string('output', './output', 'path to output image')
 flags.DEFINE_integer('num_classes', 2, 'number of classes in the model')
 
@@ -27,105 +17,56 @@ flags.DEFINE_integer('num_classes', 2, 'number of classes in the model')
 """
 To run this:
 
-/workspace/shared_volume/tesis_ai/yolov3-tf2_gian# python ./tools/map_visualizer.py --weights ./checkpoints/saved_weights/yolov3_train_12.tf
+/workspace/shared_volume/tesis_ai/yolov3-tf2_gian# python ./tools/map_visualizer.py --path ./logs...json
 """
 
 def main(_argv):
     logs = {
         'classes': FLAGS.classes,
-        'weights': FLAGS.weights,
-        'tiny': FLAGS.tiny,
-        'img_resize': FLAGS.size,
-        'image': FLAGS.image,
-        'tfrecord': FLAGS.tfrecord,
-        'shuffle': FLAGS.shuffle,
+        'path': FLAGS.path,
+        'img_size': FLAGS.size,
         'num_classes': FLAGS.num_classes,
         'output': []
     }
 
-    physical_devices = tf.config.experimental.list_physical_devices('GPU')
-    for physical_device in physical_devices:
-        tf.config.experimental.set_memory_growth(physical_device, True)
+    with open(FLAGS.path, "r") as logFile:
+        # [xmin, ymin, xmax, ymax, class_id, difficult, crowd]
+        gt = np.array([
+            [439, 157, 556, 241, 0, 0, 0],
+            [437, 246, 518, 351, 0, 0, 0],
+            [515, 306, 595, 375, 0, 0, 0],
+            [407, 386, 531, 476, 0, 0, 0],
+            [544, 419, 621, 476, 0, 0, 0],
+            [609, 297, 636, 392, 0, 0, 0]
+        ])
 
-    if FLAGS.tiny:
-        yolo = YoloV3Tiny(classes=FLAGS.num_classes)
-    else:
-        yolo = YoloV3(classes=FLAGS.num_classes)
+        # [xmin, ymin, xmax, ymax, class_id, confidence]
+        preds = np.array([
+            [429, 219, 528, 247, 0, 0.460851],
+            [433, 260, 506, 336, 0, 0.269833],
+            [518, 314, 603, 369, 0, 0.462608],
+            [592, 310, 634, 388, 0, 0.298196],
+            [403, 384, 517, 461, 0, 0.382881],
+            [405, 429, 519, 470, 0, 0.369369],
+            [433, 272, 499, 341, 0, 0.272826],
+            [413, 390, 515, 459, 0, 0.619459]
+        ])
 
-    yolo.load_weights(FLAGS.weights).expect_partial()
-    logging.info('weights loaded')
+        # create metric_fn
+        metric_fn = MeanAveragePrecision(num_classes=1)
 
-    class_names = [c.strip() for c in open(FLAGS.classes).readlines()]
-    logging.info('classes loaded')
+        # add some samples to evaluation
+        for i in range(10):
+            metric_fn.add(preds, gt)
 
-    images_raw = []
-    labels = []
-    if FLAGS.tfrecord:
-        dataset = load_tfrecord_dataset(
-            FLAGS.tfrecord, FLAGS.classes, FLAGS.size)
-        logging.info("Dataset loaded!")
-        if FLAGS.shuffle:
-            dataset = dataset.shuffle(512)
-        for item in dataset:
-            image_raw, label = item
-            images_raw += [image_raw]
-            labels += [label]
-        
-        for i in range(len(labels)):
-            logging.info(f"LABEL[{i}]: \n {labels[i]} \n")
-    else:
-        images_raw = [tf.image.decode_image(
-            open(FLAGS.image, 'rb').read(), channels=3)]
+        # compute PASCAL VOC metric
+        print(f"VOC PASCAL mAP: {metric_fn.value(iou_thresholds=0.5, recall_thresholds=np.arange(0., 1.1, 0.1))['mAP']}")
 
-    img_idx = 0
-    total_time = 0
-    for img_raw in images_raw:
-        img = tf.expand_dims(img_raw, 0)
-        img = transform_images(img, FLAGS.size)
+        # compute PASCAL VOC metric at the all points
+        print(f"VOC PASCAL mAP in all points: {metric_fn.value(iou_thresholds=0.5)['mAP']}")
 
-        t1 = time.time()
-        boxes, scores, classes, nums = yolo(img)
-        t2 = time.time()
-        elapsed_time = t2 - t1
-        logging.info('time: {}'.format(elapsed_time))
-        total_time += elapsed_time
-
-        img = cv2.cvtColor(img_raw.numpy(), cv2.COLOR_RGB2BGR)
-        img = draw_outputs(img, (boxes, scores, classes, nums), class_names)
-        output_name = f'{FLAGS.output}/detected_img_{img_idx}.jpg'
-
-        logging.info('detections:')
-        logs["output"] += [{
-            "idx": img_idx,
-            "path": output_name,
-            "time": elapsed_time,
-            "detections": []
-        }]
-
-        for i in range(nums[0]):
-            _class_name = class_names[int(classes[0][i])]
-            _score = np.array(scores[0][i]).tolist()
-            _boxes = np.array(boxes[0][i]).tolist()
-            logging.info('\t{}, {}, {}'.format(_class_name, _score, _boxes))
-            logs["output"][img_idx]["detections"] += [{
-                "class_name": _class_name,
-                "score": _score,
-                "boxes": _boxes
-            }]
-        
-        
-        cv2.imwrite(output_name, img)
-        logging.info('output saved to: {}'.format(output_name))
-
-        img_idx += 1
-    
-    logs["total_time"] = total_time
-    logs["avg_time"] = total_time / img_idx
-
-    
-    logging.info(json.dumps(logs, indent=2))
-    with open(f'logs_{datetime.now()}.json', 'w') as json_file:
-        json.dump(logs, json_file)
+        # compute metric COCO metric
+        print(f"COCO mAP: {metric_fn.value(iou_thresholds=np.arange(0.5, 1.0, 0.05), recall_thresholds=np.arange(0., 1.01, 0.01), mpolicy='soft')['mAP']}")
 
 
 if __name__ == '__main__':
