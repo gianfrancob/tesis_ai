@@ -27,7 +27,8 @@ flags.DEFINE_integer('num_classes', 2, 'number of classes in the model')
 """
 To run this:
 
-/workspace/shared_volume/tesis_ai/yolov3-tf2_gian# python ./tools/bulk_detector.py --weights ./checkpoints/saved_weights/yolov3_train_12.tf
+cd /workspace/shared_volume/tesis_ai/yolov3-tf2_gian
+python ./tools/bulk_detector.py --weights ./checkpoints/saved_weights/yolov3_train_12.tf
 """
 
 def main(_argv):
@@ -69,10 +70,10 @@ def main(_argv):
         for item in dataset:
             image_raw, label = item
             images_raw += [image_raw]
-            labels += [label]
+            labels += [np.array(label).tolist()]
         
-        for i in range(len(labels)):
-            logging.info(f"LABEL[{i}]: \n {labels[i]} \n")
+        # for i in range(len(labels)):
+        #     logging.info(f"LABEL[{i}]: \n {labels[i]} \n")
     else:
         images_raw = [tf.image.decode_image(
             open(FLAGS.image, 'rb').read(), channels=3)]
@@ -99,7 +100,8 @@ def main(_argv):
             "idx": img_idx,
             "path": output_name,
             "time": elapsed_time,
-            "detections": []
+            "detections": [],
+            "true_detections": labels[img_idx]
         }]
 
         for i in range(nums[0]):
