@@ -48,32 +48,27 @@ def main(_argv):
                             predClass = i
                             break
                     if (predClass != None):
-                        preds += [p["boxes"] + [predClass]]
+                        preds += [p["boxes"] + [predClass, p["score"]]]
 
-            idxs = []
             ctr = 0
             for i in range(len(groundTruth)):
                 idx = i - ctr
                 label = groundTruth[idx]
                 for j in range(len(label[:-1])):
                     groundTruth[idx][j] = label[j] * data["img_resize"]
+                groundTruth[idx] += [0, 0]
+                
                 if (functools.reduce(lambda a,b : a+b, label[:-1]) == 0):
                     del groundTruth[idx]
                     ctr += 1
-                    
-
-            #         idxs += [i]
-            # ctr = 0
-            # for i in idxs:
-            #     del groundTruth[i-ctr]
-            #     ctr += 1
 
 
             for i in range(len(preds)):
                 label = preds[i]
-                for j in range(len(label[:-1])):
+                for j in range(len(label[:-2])):
                     preds[i][j] = label[j] * data["img_resize"]
 
+            logs["output"] += "\n" + str("groundTruth: " + str(groundTruth))
             logs["output"] += "\n" + str("GT: " + str(gt))
             gt += groundTruth
 
@@ -119,6 +114,7 @@ if __name__ == '__main__':
         app.run(main)
     except SystemExit:
         pass
+
 
 
 
