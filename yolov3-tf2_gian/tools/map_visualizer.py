@@ -33,49 +33,61 @@ def main(_argv):
         classes = classesFile.readlines()
         classesFile.close()
 
-
+    preds = []
+    gt = []
     with open(FLAGS.path, "r") as logFile:
         data = json.load(logFile)
         for out in data["output"]:
             groundTruth = out["true_detections"]
             rawPreds = out["detections"]
-            preds = []
             for p in rawPreds:
                 if (type(p) == type({})):
                     predClass = None
                     for i in range(len(classes)):
-                        logs["output"] += str(p["class_name"])
-                        logs["output"] += str(classes[i])
-                        if (id(p["class_name"]) is id(classes[i])):
-                            logs["output"] += str("IGUALES!!!!!!!!!!!!!!!")
+                        if (str(p["class_name"]).strip() == str(classes[i]).strip()):
                             predClass = i
                             break
                     if (predClass != None):
-                        logs["output"] += "\n" + str("RAW PRED BOXES: " + json.dumps(p["boxes"]))
-                        logs["output"] += "\n" + str("RAW PRED predClass: " + predClass)
-                        preds += p["boxes"].append(predClass)
+                        preds += [p["boxes"] + [predClass]]
+
+            idxs = []
+            ctr = 0
+            for i in range(len(groundTruth)):
+                idx = i - ctr
+                label = groundTruth[idx]
+                for j in range(len(label[:-1])):
+                    groundTruth[idx][j] = label[j] * data["img_resize"]
+                if (functools.reduce(lambda a,b : a+b, label[:-1]) == 0):
+                    del groundTruth[idx]
+                    ctr += 1
                     
 
-            for label in groundTruth + preds:
-                # logs["output"] += "\n" + str("GROUD TRUTH BOXES: " + json.dumps(label))
-                if (functools.reduce(lambda a,b : a+b, label[:-1]) == 0):
-                    # logs["output"] += "\n" + str("deleting...")
-                    del label
-                else:
-                    for i in range(len(label[:-1])):
-                        label[i] = label[i] * data["img_resize"]
-                    logs["output"] += "\n" + str("GROUD TRUTH BOXES AFTER: " + json.dumps(label))
+            #         idxs += [i]
+            # ctr = 0
+            # for i in idxs:
+            #     del groundTruth[i-ctr]
+            #     ctr += 1
+
+
+            for i in range(len(preds)):
+                label = preds[i]
+                for j in range(len(label[:-1])):
+                    preds[i][j] = label[j] * data["img_resize"]
+
+            logs["output"] += "\n" + str("GT: " + str(gt))
+            gt += groundTruth
+
                     
         logFile.close()
             
 
         # [xmin, ymin, xmax, ymax, class_id, difficult, crowd]
-        gt = np.array(groundTruth)
+        gt = np.array(gt)
 
         # [xmin, ymin, xmax, ymax, class_id, confidence]
         preds = np.array(preds)
 
-        logs["output"] += "\n" + str("GROUD TRUTH: " + np.array_str(gt))
+        logs["output"] += "\n" + str("GROUND TRUTH: " + np.array_str(gt))
         logs["output"] += "\n" + str("PREDS: " + np.array_str(preds))
 
         np.savetxt('./tools/mapLogs_gt.csv', gt, delimiter=',')
@@ -107,5 +119,7 @@ if __name__ == '__main__':
         app.run(main)
     except SystemExit:
         pass
+
+
 
 
