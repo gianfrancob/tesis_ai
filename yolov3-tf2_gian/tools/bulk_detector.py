@@ -26,7 +26,7 @@ flags.DEFINE_integer('num_classes', 2, 'number of classes in the model')
 
 """
 To run this:
-
+Ex:
 cd /workspace/shared_volume/tesis_ai/yolov3-tf2_gian
 python ./tools/bulk_detector.py --weights ./checkpoints/saved_weights/yolov3_train_12.tf
 """
@@ -126,7 +126,7 @@ def main(_argv):
 
     
     logging.info(json.dumps(logs, indent=2))
-    with open(f'logs_{datetime.now()}.json', 'w') as json_file:
+    with open(f'{FLAGS.output}/logs_{datetime.now()}.json', 'w') as json_file:
         json.dump(logs, json_file)
 
 
