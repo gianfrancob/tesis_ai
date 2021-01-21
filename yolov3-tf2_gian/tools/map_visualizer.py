@@ -114,6 +114,26 @@ def main(_argv):
         # [xmin, ymin, xmax, ymax, class_id, confidence]
         preds = np.array(preds)
 
+        # TODO: chequear gt y preds a ver xq son de dimension 0 para los logs de stock weights
+        '''
+        (yolov3-tf2-gpu) root@727c9f86d38e:/workspace/shared_volume/tesis_ai/yolov3-tf2_gian# python tools/map_visualizer.py  --classes ./data/test/ps.names --path ./output/pivot_silobolsa/stock_weights/logs_2021-01-07\ 23\:52\:34.849503.json --outputLogPath ./output/pivot_silobolsa/stock_weights/
+Traceback (most recent call last):
+  File "tools/map_visualizer.py", line 151, in <module>
+    app.run(main)
+  File "/root/anaconda3/envs/yolov3-tf2-gpu/lib/python3.7/site-packages/absl/app.py", line 300, in run
+    _run_main(main, args)
+  File "/root/anaconda3/envs/yolov3-tf2-gpu/lib/python3.7/site-packages/absl/app.py", line 251, in _run_main
+    sys.exit(main(argv))
+  File "tools/map_visualizer.py", line 126, in main
+    metric_fn.add(preds, gt)
+  File "/root/anaconda3/envs/yolov3-tf2-gpu/lib/python3.7/site-packages/mean_average_precision/mean_average_precision.py", line 63, in add
+    match_table = compute_match_table(preds_c, gt_c, self.imgs_counter)
+  File "/root/anaconda3/envs/yolov3-tf2-gpu/lib/python3.7/site-packages/mean_average_precision/utils.py", line 139, in compute_match_table
+    difficult = np.repeat(gt[:, 5], preds.shape[0], axis=0).reshape(preds[:, 5].shape[0], -1).tolist()
+ValueError: cannot reshape array of size 0 into shape (0,newaxis)
+
+        '''
+
         np.savetxt('./tools/mapLogs_gt.csv', gt, delimiter=',')
         np.savetxt('./tools/mapLogs_preds.csv', preds, delimiter=',')
 
