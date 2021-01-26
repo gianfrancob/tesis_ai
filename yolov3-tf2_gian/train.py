@@ -38,7 +38,8 @@ flags.DEFINE_enum('transfer', 'none',
 flags.DEFINE_integer('size', 416, 'image size')
 flags.DEFINE_integer('epochs', 2, 'number of epochs')
 flags.DEFINE_integer('batch_size', 8, 'batch size')
-flags.DEFINE_float('learning_rate', 1e-3, 'learning rate')
+flags.DEFINE_float('learning_rate', 1e-3, 'optimizer: learning rate')
+flags.DEFINE_float('beta_1', 0.9, 'optimizer: beta_1. Bigger means more momentum')
 flags.DEFINE_integer('num_classes', 80, 'number of classes in the model')
 flags.DEFINE_integer('weights_num_classes', None, 'specify num class for `weights` file if different, '
                      'useful in transfer learning with different number of classes')
@@ -101,7 +102,7 @@ def main(_argv):
         if FLAGS.transfer == 'darknet':
             model.get_layer('yolo_darknet').set_weights(
                 model_pretrained.get_layer('yolo_darknet').get_weights())
-            freeze_all(model.get_layer('yolo_darknet'))
+            freeze_all(model.get_layer('yolo_darknet')) # TODO: No freezar Darknet
 
         elif FLAGS.transfer == 'no_output':
             for l in model.layers:
@@ -116,12 +117,13 @@ def main(_argv):
         if FLAGS.transfer == 'fine_tune':
             # freeze darknet and fine tune other layers
             darknet = model.get_layer('yolo_darknet')
-            freeze_all(darknet)
+            freeze_all(darknet)  # TODO: No freezar Darknet
+
         elif FLAGS.transfer == 'frozen':
             # freeze everything
             freeze_all(model)
 
-    optimizer = tf.keras.optimizers.Adam(lr=FLAGS.learning_rate)
+    optimizer = tf.keras.optimizers.Adam(lr=FLAGS.learning_rate, beta_1=FLAGS.beta_1)
     loss = [YoloLoss(anchors[mask], classes=FLAGS.num_classes)
             for mask in anchor_masks]
 
