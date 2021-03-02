@@ -1,0 +1,106 @@
+\BOOKMARK [0][-]{chapter*.2}{Resumen}{}% 1
+\BOOKMARK [0][-]{chapter*.2}{Lista de figuras}{}% 2
+\BOOKMARK [0][-]{chapter*.3}{Lista de tablas}{}% 3
+\BOOKMARK [0][-]{chapter*.5}{Glosario}{}% 4
+\BOOKMARK [0][-]{chapter.1}{Introducci\363n}{}% 5
+\BOOKMARK [1][-]{section.1.1}{Marco de investigaci\363n}{chapter.1}% 6
+\BOOKMARK [2][-]{subsection.1.1.1}{Objetivo Principal}{section.1.1}% 7
+\BOOKMARK [2][-]{subsection.1.1.2}{Objetivos Secundarios}{section.1.1}% 8
+\BOOKMARK [2][-]{subsection.1.1.3}{Motivaci\363n}{section.1.1}% 9
+\BOOKMARK [1][-]{section.1.2}{Metodolog\355a de investigaci\363n }{chapter.1}% 10
+\BOOKMARK [1][-]{section.1.3}{Requerimientos}{chapter.1}% 11
+\BOOKMARK [2][-]{subsection.1.3.1}{ Requerimientos Funcionales}{section.1.3}% 12
+\BOOKMARK [2][-]{subsection.1.3.2}{ Requerimientos No Funcionales}{section.1.3}% 13
+\BOOKMARK [1][-]{section.1.4}{Gesti\363n de Riesgos}{chapter.1}% 14
+\BOOKMARK [2][-]{subsection.1.4.1}{Niveles de riesgo}{section.1.4}% 15
+\BOOKMARK [2][-]{subsection.1.4.2}{Planificaci\363n de Riesgos}{section.1.4}% 16
+\BOOKMARK [1][-]{section.1.5}{ Resumen }{chapter.1}% 17
+\BOOKMARK [0][-]{chapter.2}{Ambiente Radiactivo}{}% 18
+\BOOKMARK [1][-]{section.2.1}{Ambiente radiactivo}{chapter.2}% 19
+\BOOKMARK [2][-]{subsection.2.1.1}{Ambiente radiactivo espacial}{section.2.1}% 20
+\BOOKMARK [2][-]{subsection.2.1.2}{La radiaci\363n c\363smica}{section.2.1}% 21
+\BOOKMARK [2][-]{subsection.2.1.3}{Cintur\363n de radiaci\363n }{section.2.1}% 22
+\BOOKMARK [2][-]{subsection.2.1.4}{Ambiente radiactivo atmosf\351rico}{section.2.1}% 23
+\BOOKMARK [2][-]{subsection.2.1.5}{Efecto de la radiaci\363n sobre los circuitos integrados }{section.2.1}% 24
+\BOOKMARK [3][-]{subsubsection.2.1.5.1}{Mecanismo de interacci\363n }{subsection.2.1.5}% 25
+\BOOKMARK [3][-]{subsubsection.2.1.5.2}{Efecto de dosis total}{subsection.2.1.5}% 26
+\BOOKMARK [4][-]{paragraph.2.1.5.2.1}{Dosis ionizante}{subsubsection.2.1.5.2}% 27
+\BOOKMARK [4][-]{paragraph.2.1.5.2.2}{Dosis no ionizante }{subsubsection.2.1.5.2}% 28
+\BOOKMARK [2][-]{subsection.2.1.6}{Efectos singulares}{section.2.1}% 29
+\BOOKMARK [3][-]{subsubsection.2.1.6.1}{Generaci\363n de cargas}{subsection.2.1.6}% 30
+\BOOKMARK [3][-]{subsubsection.2.1.6.2}{Colecci\363n de cargas}{subsection.2.1.6}% 31
+\BOOKMARK [4][-]{paragraph.2.1.6.2.1}{Single Event Transient \(SET\) }{subsubsection.2.1.6.2}% 32
+\BOOKMARK [4][-]{paragraph.2.1.6.2.2}{Single Event Upset \(SEU\) }{subsubsection.2.1.6.2}% 33
+\BOOKMARK [4][-]{paragraph.2.1.6.2.3}{Single Event Latchup \(SEL\) }{subsubsection.2.1.6.2}% 34
+\BOOKMARK [4][-]{paragraph.2.1.6.2.4}{Single Event Funtional Interrupt \(SEFI\) }{subsubsection.2.1.6.2}% 35
+\BOOKMARK [4][-]{paragraph.2.1.6.2.5}{Single Event Gate Rupture \(SEGR\) }{subsubsection.2.1.6.2}% 36
+\BOOKMARK [4][-]{paragraph.2.1.6.2.6}{Multiple-Cell Upset \(MCU\) and Multiple Bit Upset \(MBU\)}{subsubsection.2.1.6.2}% 37
+\BOOKMARK [4][-]{paragraph.2.1.6.2.7}{Single Event Burnout \(SEB\) }{subsubsection.2.1.6.2}% 38
+\BOOKMARK [2][-]{subsection.2.1.7}{Resumen}{section.2.1}% 39
+\BOOKMARK [0][-]{chapter.3}{Estado del Arte}{}% 40
+\BOOKMARK [1][-]{section.3.1}{Clasificaci\363n de m\351todos de inyecci\363n de fallas}{chapter.3}% 41
+\BOOKMARK [2][-]{subsection.3.1.1}{M\351todos actuales para Inyecci\363n de Fallas}{section.3.1}% 42
+\BOOKMARK [1][-]{section.3.2}{M\351todos y herramientas de inyecci\363n de fallas \(simulaci\363n, emulaci\363n e h\355bridos\) }{chapter.3}% 43
+\BOOKMARK [2][-]{subsection.3.2.1}{FITO}{section.3.2}% 44
+\BOOKMARK [2][-]{subsection.3.2.2}{FIDYCO}{section.3.2}% 45
+\BOOKMARK [2][-]{subsection.3.2.3}{FLIPPER}{section.3.2}% 46
+\BOOKMARK [2][-]{subsection.3.2.4}{SCFIT}{section.3.2}% 47
+\BOOKMARK [2][-]{subsection.3.2.5}{FUSE}{section.3.2}% 48
+\BOOKMARK [2][-]{subsection.3.2.6}{FT-UNSHADES}{section.3.2}% 49
+\BOOKMARK [2][-]{subsection.3.2.7}{FIFA}{section.3.2}% 50
+\BOOKMARK [2][-]{subsection.3.2.8}{DFI}{section.3.2}% 51
+\BOOKMARK [1][-]{section.3.3}{Plataforma de test ASTERICS}{chapter.3}% 52
+\BOOKMARK [1][-]{section.3.4}{ Resumen}{chapter.3}% 53
+\BOOKMARK [0][-]{chapter.4}{Descripci\363n de NetFi2}{}% 54
+\BOOKMARK [1][-]{section.4.1}{Primitivas Xilinx}{chapter.4}% 55
+\BOOKMARK [1][-]{section.4.2}{MODNET}{chapter.4}% 56
+\BOOKMARK [2][-]{subsection.4.2.1}{Emulaci\363n de SEU: Flip-Flops}{section.4.2}% 57
+\BOOKMARK [2][-]{subsection.4.2.2}{Emulaci\363n de SET: Look-Up Table }{section.4.2}% 58
+\BOOKMARK [2][-]{subsection.4.2.3}{ Implementaci\363n de MODNET}{section.4.2}% 59
+\BOOKMARK [1][-]{section.4.3}{MicroBlaze}{chapter.4}% 60
+\BOOKMARK [2][-]{subsection.4.3.1}{UART}{section.4.3}% 61
+\BOOKMARK [2][-]{subsection.4.3.2}{TIMER}{section.4.3}% 62
+\BOOKMARK [2][-]{subsection.4.3.3}{Instanciaci\363n del MicroBlaze}{section.4.3}% 63
+\BOOKMARK [2][-]{subsection.4.3.4}{ AXI4}{section.4.3}% 64
+\BOOKMARK [3][-]{subsubsection.4.3.4.1}{ Se\361ales de la interface AXI4-Lite}{subsection.4.3.4}% 65
+\BOOKMARK [3][-]{subsubsection.4.3.4.2}{Direccionamiento}{subsection.4.3.4}% 66
+\BOOKMARK [3][-]{subsubsection.4.3.4.3}{Interconexi\363n con el usuario}{subsection.4.3.4}% 67
+\BOOKMARK [3][-]{subsubsection.4.3.4.4}{ Lectura y Escritura de las se\361ales del circuito bajo prueba}{subsection.4.3.4}% 68
+\BOOKMARK [2][-]{subsection.4.3.5}{Integraci\363n de componentes}{section.4.3}% 69
+\BOOKMARK [1][-]{section.4.4}{Resumen}{chapter.4}% 70
+\BOOKMARK [0][-]{chapter.5}{Recapitulaci\363n y utilizaci\363n de NETFI2}{}% 71
+\BOOKMARK [1][-]{section.5.1}{NETFI}{chapter.5}% 72
+\BOOKMARK [1][-]{section.5.2}{ NETFI-2}{chapter.5}% 73
+\BOOKMARK [2][-]{subsection.5.2.1}{Arquitectura}{section.5.2}% 74
+\BOOKMARK [2][-]{subsection.5.2.2}{Experimento}{section.5.2}% 75
+\BOOKMARK [2][-]{subsection.5.2.3}{Programaci\363n}{section.5.2}% 76
+\BOOKMARK [1][-]{section.5.3}{Evaluaci\363n y Validaci\363n}{chapter.5}% 77
+\BOOKMARK [2][-]{subsection.5.3.1}{Dispositivo Bajo Prueba}{section.5.3}% 78
+\BOOKMARK [2][-]{subsection.5.3.2}{Inyecci\363n de Fallos}{section.5.3}% 79
+\BOOKMARK [2][-]{subsection.5.3.3}{Resultados}{section.5.3}% 80
+\BOOKMARK [1][-]{section.5.4}{Resumen}{chapter.5}% 81
+\BOOKMARK [0][-]{chapter.0.6}{Conclusi\363n y trabajos futuros}{}% 82
+\BOOKMARK [1][-]{section.0.6.1}{Conclusi\363n }{chapter.0.6}% 83
+\BOOKMARK [1][-]{section.0.6.2}{Debilidades }{chapter.0.6}% 84
+\BOOKMARK [1][-]{section.0.6.3}{Mejoras y Trabajos futuros }{chapter.0.6}% 85
+\BOOKMARK [0][-]{appendix.Alph1}{Bibliotecas originales y modificadas }{}% 86
+\BOOKMARK [1][-]{section.Alph1.1}{FDC}{appendix.Alph1}% 87
+\BOOKMARK [1][-]{section.Alph1.2}{FDC\137MOD}{appendix.Alph1}% 88
+\BOOKMARK [1][-]{section.Alph1.3}{LUT4}{appendix.Alph1}% 89
+\BOOKMARK [1][-]{section.Alph1.4}{LUT4\137MOD}{appendix.Alph1}% 90
+\BOOKMARK [1][-]{section.Alph1.5}{LUT4\137L}{appendix.Alph1}% 91
+\BOOKMARK [1][-]{section.Alph1.6}{LUT4\137L\137mod}{appendix.Alph1}% 92
+\BOOKMARK [1][-]{section.Alph1.7}{LUT5}{appendix.Alph1}% 93
+\BOOKMARK [1][-]{section.Alph1.8}{LUT5\137MOD}{appendix.Alph1}% 94
+\BOOKMARK [1][-]{section.Alph1.9}{LUT5\137L}{appendix.Alph1}% 95
+\BOOKMARK [1][-]{section.Alph1.10}{LUT5\137L\137MOD}{appendix.Alph1}% 96
+\BOOKMARK [1][-]{section.Alph1.11}{LUT6}{appendix.Alph1}% 97
+\BOOKMARK [1][-]{section.Alph1.12}{LUT6\137MOD}{appendix.Alph1}% 98
+\BOOKMARK [1][-]{section.Alph1.13}{LUT6\137L}{appendix.Alph1}% 99
+\BOOKMARK [1][-]{section.Alph1.14}{LUT6\137L\137MOD}{appendix.Alph1}% 100
+\BOOKMARK [0][-]{appendix.Alph2}{Codigo tima\137top}{}% 101
+\BOOKMARK [1][-]{section.Alph2.1}{tima\137top.vhdl}{appendix.Alph2}% 102
+\BOOKMARK [1][-]{section.Alph2.2}{ Netlist tima\137top.vm}{appendix.Alph2}% 103
+\BOOKMARK [1][-]{section.Alph2.3}{Inyecciones en tima\137top.vm}{appendix.Alph2}% 104
+\BOOKMARK [0][-]{appendix.Alph3}{ AXI4}{}% 105
+\BOOKMARK [1][-]{section.Alph3.1}{AXI4}{appendix.Alph3}% 106
