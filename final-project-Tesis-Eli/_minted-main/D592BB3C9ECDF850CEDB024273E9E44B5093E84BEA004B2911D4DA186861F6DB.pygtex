@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{} peer chaincode query \PYGZhy{}C pichannel \PYGZhy{}n picc \PYGZhy{}c \PYG{l+s+s1}{\PYGZsq{}\PYGZob{}\PYGZdq{}Args\PYGZdq{}:[\PYGZdq{}queryRegister\PYGZdq{},\PYGZdq{}UNC111\PYGZdq{}]\PYGZcb{}\PYGZsq{}}
+\end{Verbatim}

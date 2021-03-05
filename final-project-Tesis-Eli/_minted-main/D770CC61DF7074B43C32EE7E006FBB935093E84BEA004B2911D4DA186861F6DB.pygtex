@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{} peer chaincode install \PYGZhy{}n picc \PYGZhy{}v \PYG{l+m}{1}.0 \PYGZhy{}p github.com/chaincode/
+\end{Verbatim}

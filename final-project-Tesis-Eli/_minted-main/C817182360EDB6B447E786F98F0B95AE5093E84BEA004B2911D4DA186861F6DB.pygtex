@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYGZdl{}./configtxgen \PYGZhy{}profile OrgsOrdererGenesis \PYGZhy{}channelID sys\PYGZhy{}channel \PYGZhy{}outputBlock ./channel\PYGZhy{}artifacts/genesis.block
+\end{Verbatim}

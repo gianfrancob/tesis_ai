@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYGZdl{}./configtxgen \PYGZhy{}profile OrgsChannel \PYGZhy{}outputAnchorPeersUpdate ./channel\PYGZhy{}artifacts/famafMSPanchors.tx \PYGZhy{}channelID pichannel \PYGZhy{}asOrg famafMSP
+    \PYGZdl{}./configtxgen \PYGZhy{}profile OrgsChannel \PYGZhy{}outputAnchorPeersUpdate ./channel\PYGZhy{}artifacts/fcefynMSPanchors.tx \PYGZhy{}channelID pichannel \PYGZhy{}asOrg fcefynMSP
+    \PYGZdl{}./configtxgen \PYGZhy{}profile OrgsChannel \PYGZhy{}outputAnchorPeersUpdate ./channel\PYGZhy{}artifacts/fcqMSPanchors.tx \PYGZhy{}channelID pichannel \PYGZhy{}asOrg fcqMSP
+\end{Verbatim}

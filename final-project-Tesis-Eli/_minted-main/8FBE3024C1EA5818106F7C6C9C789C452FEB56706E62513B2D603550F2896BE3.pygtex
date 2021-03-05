@@ -1,0 +1,107 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{p}{\PYGZob{}}
+    \PYG{n+nt}{\PYGZdq{}name\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}pi\PYGZus{}connection\PYGZus{}profile\PYGZdq{}}\PYG{p}{,}
+    \PYG{n+nt}{\PYGZdq{}version\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}1.0.0\PYGZdq{}}\PYG{p}{,}
+    \PYG{n+nt}{\PYGZdq{}client\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+        \PYG{n+nt}{\PYGZdq{}organization\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}famaf\PYGZdq{}}\PYG{p}{,}
+        \PYG{n+nt}{\PYGZdq{}connection\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+            \PYG{n+nt}{\PYGZdq{}timeout\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+                \PYG{n+nt}{\PYGZdq{}peer\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+                    \PYG{n+nt}{\PYGZdq{}endorser\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}300\PYGZdq{}}
+                \PYG{p}{\PYGZcb{},}
+                \PYG{n+nt}{\PYGZdq{}orderer\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}300\PYGZdq{}}
+            \PYG{p}{\PYGZcb{}}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{},}  
+    
+    \PYG{n+nt}{\PYGZdq{}channels\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+        \PYG{n+nt}{\PYGZdq{}pichannel\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+            \PYG{n+nt}{\PYGZdq{}orderers\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}
+                \PYG{l+s+s2}{\PYGZdq{}orderer.pi.elisabeth.com\PYGZdq{}}
+            \PYG{p}{],}
+            \PYG{n+nt}{\PYGZdq{}peers\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+                \PYG{n+nt}{\PYGZdq{}peer0.famaf.pi.elisabeth.com\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}\PYGZcb{},}
+                \PYG{n+nt}{\PYGZdq{}peer1.famaf.pi.elisabeth.com\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}\PYGZcb{},}
+                \PYG{n+nt}{\PYGZdq{}peer0.fcefyn.pi.elisabeth.com\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}\PYGZcb{},}
+                \PYG{n+nt}{\PYGZdq{}peer1.fcefyn.pi.elisabeth.com\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}\PYGZcb{},}
+                \PYG{n+nt}{\PYGZdq{}peer0.fcq.pi.elisabeth.com\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}\PYGZcb{},}
+                \PYG{n+nt}{\PYGZdq{}peer1.fcq.pi.elisabeth.com\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}\PYGZcb{}}
+            \PYG{p}{\PYGZcb{}}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{},}
+    \PYG{n+nt}{\PYGZdq{}organizations\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+        \PYG{n+nt}{\PYGZdq{}fcefyn\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+            \PYG{n+nt}{\PYGZdq{}mspid\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}fcefynMSP\PYGZdq{}}\PYG{p}{,}
+            \PYG{n+nt}{\PYGZdq{}peers\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}
+                \PYG{l+s+s2}{\PYGZdq{}peer0.fcefyn.pi.elisabeth.com\PYGZdq{}}\PYG{p}{,}
+                \PYG{l+s+s2}{\PYGZdq{}peer1.fcefyn.pi.elisabeth.com\PYGZdq{}}
+            \PYG{p}{],}
+            \PYG{n+nt}{\PYGZdq{}certificateAuthorities\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}
+                \PYG{l+s+s2}{\PYGZdq{}ca\PYGZhy{}fcefyn\PYGZdq{}}
+            \PYG{p}{]}
+        \PYG{p}{\PYGZcb{},}
+
+        \PYG{n+nt}{\PYGZdq{}famaf\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+            \PYG{n+nt}{\PYGZdq{}mspid\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}famafMSP\PYGZdq{}}\PYG{p}{,}
+            \PYG{n+nt}{\PYGZdq{}peers\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}
+                \PYG{l+s+s2}{\PYGZdq{}peer0.famaf.pi.elisabeth.com\PYGZdq{}}\PYG{p}{,}
+                \PYG{l+s+s2}{\PYGZdq{}peer0.famaf.pi.elisabeth.com\PYGZdq{}}
+            \PYG{p}{],}
+            \PYG{n+nt}{\PYGZdq{}certificateAuthorities\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}
+                \PYG{l+s+s2}{\PYGZdq{}ca\PYGZhy{}famaf\PYGZdq{}}
+            \PYG{p}{]}
+        \PYG{p}{\PYGZcb{},}
+
+        \PYG{n+nt}{\PYGZdq{}fcq\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+            \PYG{n+nt}{\PYGZdq{}mspid\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}fcqfMSP\PYGZdq{}}\PYG{p}{,}
+            \PYG{n+nt}{\PYGZdq{}peers\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}
+                \PYG{l+s+s2}{\PYGZdq{}peer0.fcq.pi.elisabeth.com\PYGZdq{}}\PYG{p}{,}
+                \PYG{l+s+s2}{\PYGZdq{}peer0.fcq.pi.elisabeth.com\PYGZdq{}}
+            \PYG{p}{],}
+            \PYG{n+nt}{\PYGZdq{}certificateAuthorities\PYGZdq{}}\PYG{p}{:} \PYG{p}{[}
+                \PYG{l+s+s2}{\PYGZdq{}ca\PYGZhy{}fcq\PYGZdq{}}
+            \PYG{p}{]}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{},}
+
+    \PYG{n+nt}{\PYGZdq{}orderers\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+        \PYG{n+nt}{\PYGZdq{}orderer.pi.elisabeth.com\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+            \PYG{n+nt}{\PYGZdq{}url\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}grpc://localhost:7050\PYGZdq{}}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{},}
+    \PYG{n+nt}{\PYGZdq{}peers\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+        \PYG{n+nt}{\PYGZdq{}peer0.famaf.pi.elisabeth.com\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+            \PYG{n+nt}{\PYGZdq{}url\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}grpc://localhost:7051\PYGZdq{}} \PYG{err}{//reemplazar} \PYG{err}{por} \PYG{err}{dns} \PYG{err}{del} \PYG{err}{servicio}
+        \PYG{p}{\PYGZcb{},}
+        \PYG{n+nt}{\PYGZdq{}peer1.famaf.pi.elisabeth.com\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+            \PYG{n+nt}{\PYGZdq{}url\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}grpc://localhost:8051\PYGZdq{}}
+        \PYG{p}{\PYGZcb{},}
+        \PYG{n+nt}{\PYGZdq{}peer0.fcefyn.pi.elisabeth.com\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+            \PYG{n+nt}{\PYGZdq{}url\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}grpc://localhost:9051\PYGZdq{}}
+        \PYG{p}{\PYGZcb{},}
+        \PYG{n+nt}{\PYGZdq{}peer1.fcefyn.pi.elisabeth.com\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+            \PYG{n+nt}{\PYGZdq{}url\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}grpc://localhost:10051\PYGZdq{}}
+        \PYG{p}{\PYGZcb{},}
+        \PYG{n+nt}{\PYGZdq{}peer0.fcq.pi.elisabeth.com\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+            \PYG{n+nt}{\PYGZdq{}url\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}grpc://localhost:11051\PYGZdq{}}
+        \PYG{p}{\PYGZcb{},}
+        \PYG{n+nt}{\PYGZdq{}peer1.fcq.pi.elisabeth.com\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+            \PYG{n+nt}{\PYGZdq{}url\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}grpc://localhost:12051\PYGZdq{}}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{},}
+    \PYG{n+nt}{\PYGZdq{}certificateAuthorities\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+        \PYG{n+nt}{\PYGZdq{}ca\PYGZhy{}famaf\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+            \PYG{n+nt}{\PYGZdq{}url\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}http://localhost:7054\PYGZdq{}}\PYG{p}{,}
+            \PYG{n+nt}{\PYGZdq{}caName\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}ca\PYGZhy{}famaf\PYGZdq{}}
+        \PYG{p}{\PYGZcb{},}
+        \PYG{n+nt}{\PYGZdq{}ca\PYGZhy{}fcefyn\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+            \PYG{n+nt}{\PYGZdq{}url\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}http://localhost:8054\PYGZdq{}}\PYG{p}{,}
+            \PYG{n+nt}{\PYGZdq{}caName\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}ca\PYGZhy{}fcefyn\PYGZdq{}}
+        \PYG{p}{\PYGZcb{},}
+        \PYG{n+nt}{\PYGZdq{}ca\PYGZhy{}fcq\PYGZdq{}}\PYG{p}{:} \PYG{p}{\PYGZob{}}
+            \PYG{n+nt}{\PYGZdq{}url\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}http://localhost:9054\PYGZdq{}}\PYG{p}{,}
+            \PYG{n+nt}{\PYGZdq{}caName\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}ca\PYGZhy{}fcq\PYGZdq{}}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

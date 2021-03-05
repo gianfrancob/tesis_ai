@@ -1,0 +1,165 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nt}{Organizations}\PYG{p}{:}
+    \PYG{p+pIndicator}{\PYGZhy{}} \PYG{n+nl}{\PYGZam{}OrdererOrg}
+        \PYG{n+nt}{Name}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{OrdererOrg}
+        \PYG{n+nt}{ID}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{OrdererMSP}
+        \PYG{n+nt}{MSPDir}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{crypto\PYGZhy{}config/ordererOrganizations/pi.elisabeth.com/msp}
+        \PYG{n+nt}{Policies}\PYG{p}{:}
+            \PYG{n+nt}{Readers}\PYG{p}{:}
+                \PYG{n+nt}{Type}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{Signature}
+                \PYG{n+nt}{Rule}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}OR(\PYGZsq{}OrdererMSP.member\PYGZsq{})\PYGZdq{}}
+            \PYG{n+nt}{Writers}\PYG{p}{:}
+                \PYG{n+nt}{Type}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{Signature}
+                \PYG{n+nt}{Rule}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}OR(\PYGZsq{}OrdererMSP.member\PYGZsq{})\PYGZdq{}}
+            \PYG{n+nt}{Admins}\PYG{p}{:}
+                \PYG{n+nt}{Type}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{Signature}
+                \PYG{n+nt}{Rule}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}OR(\PYGZsq{}OrdererMSP.admin\PYGZsq{})\PYGZdq{}}
+
+    \PYG{p+pIndicator}{\PYGZhy{}} \PYG{n+nl}{\PYGZam{}fcefyn}
+        \PYG{n+nt}{Name}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{fcefynMSP}
+        \PYG{n+nt}{ID}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{fcefynMSP}
+        \PYG{n+nt}{MSPDir}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{crypto\PYGZhy{}config/peerOrganizations/fcefyn.pi.elisabeth.com/msp}
+        \PYG{n+nt}{Policies}\PYG{p}{:}
+            \PYG{n+nt}{Readers}\PYG{p}{:}
+                \PYG{n+nt}{Type}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{Signature}
+                \PYG{n+nt}{Rule}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}OR(\PYGZsq{}fcefynMSP.admin\PYGZsq{},}\PYG{n+nv}{ }\PYG{l+s}{\PYGZsq{}fcefynMSP.member\PYGZsq{},}\PYG{n+nv}{ }\PYG{l+s}{\PYGZsq{}fcefynMSP.peer\PYGZsq{},}\PYG{n+nv}{ }\PYG{l+s}{\PYGZsq{}fcefynMSP.client\PYGZsq{})\PYGZdq{}}
+            \PYG{n+nt}{Writers}\PYG{p}{:}
+                \PYG{n+nt}{Type}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{Signature}
+                \PYG{n+nt}{Rule}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}OR(\PYGZsq{}fcefynMSP.admin\PYGZsq{},}\PYG{n+nv}{ }\PYG{l+s}{\PYGZsq{}fcefynMSP.member\PYGZsq{},}\PYG{n+nv}{ }\PYG{l+s}{\PYGZsq{}fcefynMSP.peer\PYGZsq{},}\PYG{n+nv}{ }\PYG{l+s}{\PYGZsq{}fcefynMSP.client\PYGZsq{})\PYGZdq{}}
+            \PYG{n+nt}{Admins}\PYG{p}{:}
+                \PYG{n+nt}{Type}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{Signature}
+                \PYG{n+nt}{Rule}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}OR(\PYGZsq{}fcefynMSP.admin\PYGZsq{})\PYGZdq{}}
+        \PYG{n+nt}{AnchorPeers}\PYG{p}{:}
+            \PYG{p+pIndicator}{\PYGZhy{}} \PYG{n+nt}{Host}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{peer0.fcefyn.pi.elisabeth.com}
+              \PYG{n+nt}{Port}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{7051}
+
+    \PYG{p+pIndicator}{\PYGZhy{}} \PYG{n+nl}{\PYGZam{}famaf}
+        \PYG{n+nt}{Name}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{famafMSP}
+        \PYG{n+nt}{ID}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{famafMSP}
+        \PYG{n+nt}{MSPDir}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{crypto\PYGZhy{}config/peerOrganizations/famaf.pi.elisabeth.com/msp}
+        \PYG{n+nt}{Policies}\PYG{p}{:}
+            \PYG{n+nt}{Readers}\PYG{p}{:}
+                \PYG{n+nt}{Type}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{Signature}
+                \PYG{n+nt}{Rule}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}OR(\PYGZsq{}famafMSP.admin\PYGZsq{},}\PYG{n+nv}{ }\PYG{l+s}{\PYGZsq{}famafMSP.member\PYGZsq{},}\PYG{n+nv}{ }\PYG{l+s}{\PYGZsq{}famafMSP.peer\PYGZsq{},}\PYG{n+nv}{ }\PYG{l+s}{\PYGZsq{}famafMSP.client\PYGZsq{})\PYGZdq{}}
+            \PYG{n+nt}{Writers}\PYG{p}{:}
+                \PYG{n+nt}{Type}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{Signature}
+                \PYG{n+nt}{Rule}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}OR(\PYGZsq{}famafMSP.admin\PYGZsq{},}\PYG{n+nv}{ }\PYG{l+s}{\PYGZsq{}famafMSP.member\PYGZsq{},}\PYG{n+nv}{ }\PYG{l+s}{\PYGZsq{}famafMSP.peer\PYGZsq{},}\PYG{n+nv}{ }\PYG{l+s}{\PYGZsq{}famafMSP.client\PYGZsq{})\PYGZdq{}}
+            \PYG{n+nt}{Admins}\PYG{p}{:}
+                \PYG{n+nt}{Type}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{Signature}
+                \PYG{n+nt}{Rule}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}OR(\PYGZsq{}famafMSP.admin\PYGZsq{})\PYGZdq{}}
+        \PYG{n+nt}{AnchorPeers}\PYG{p}{:}
+            \PYG{p+pIndicator}{\PYGZhy{}} \PYG{n+nt}{Host}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{peer0.famaf.pi.elisabeth.com}
+              \PYG{n+nt}{Port}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{7051}
+
+    \PYG{p+pIndicator}{\PYGZhy{}} \PYG{n+nl}{\PYGZam{}fcq}
+        \PYG{n+nt}{Name}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{fcqMSP}
+        \PYG{n+nt}{ID}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{fcqMSP}
+        \PYG{n+nt}{MSPDir}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{crypto\PYGZhy{}config/peerOrganizations/fcq.pi.elisabeth.com/msp}
+        \PYG{n+nt}{Policies}\PYG{p}{:}
+            \PYG{n+nt}{Readers}\PYG{p}{:}
+                \PYG{n+nt}{Type}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{Signature}
+                \PYG{n+nt}{Rule}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}OR(\PYGZsq{}fcqMSP.admin\PYGZsq{},}\PYG{n+nv}{ }\PYG{l+s}{\PYGZsq{}fcqMSP.member\PYGZsq{},}\PYG{n+nv}{ }\PYG{l+s}{\PYGZsq{}fcqMSP.peer\PYGZsq{},}\PYG{n+nv}{ }\PYG{l+s}{\PYGZsq{}fcqMSP.client\PYGZsq{})\PYGZdq{}}
+            \PYG{n+nt}{Writers}\PYG{p}{:}
+                \PYG{n+nt}{Type}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{Signature}
+                \PYG{n+nt}{Rule}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}OR(\PYGZsq{}fcqMSP.admin\PYGZsq{},}\PYG{n+nv}{ }\PYG{l+s}{\PYGZsq{}fcqMSP.member\PYGZsq{},}\PYG{n+nv}{ }\PYG{l+s}{\PYGZsq{}fcqMSP.peer\PYGZsq{},}\PYG{n+nv}{ }\PYG{l+s}{\PYGZsq{}fcqMSP.client\PYGZsq{})\PYGZdq{}}
+            \PYG{n+nt}{Admins}\PYG{p}{:}
+                \PYG{n+nt}{Type}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{Signature}
+                \PYG{n+nt}{Rule}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}OR(\PYGZsq{}fcqMSP.admin\PYGZsq{})\PYGZdq{}}
+        \PYG{n+nt}{AnchorPeers}\PYG{p}{:}
+            \PYG{p+pIndicator}{\PYGZhy{}} \PYG{n+nt}{Host}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{peer0.fcq.pi.elisabeth.com}
+              \PYG{n+nt}{Port}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{7051}
+
+\PYG{n+nt}{Capabilities}\PYG{p}{:}
+    \PYG{n+nt}{Channel}\PYG{p}{:} \PYG{n+nl}{\PYGZam{}ChannelCapabilities}
+        \PYG{n+nt}{V1\PYGZus{}3}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{true}
+    \PYG{n+nt}{Orderer}\PYG{p}{:} \PYG{n+nl}{\PYGZam{}OrdererCapabilities}
+        \PYG{n+nt}{V1\PYGZus{}1}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{true}
+    \PYG{n+nt}{Application}\PYG{p}{:} \PYG{n+nl}{\PYGZam{}ApplicationCapabilities}
+        \PYG{n+nt}{V1\PYGZus{}3}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{true}
+        \PYG{n+nt}{V1\PYGZus{}2}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{false}
+        \PYG{n+nt}{V1\PYGZus{}1}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{false}
+
+\PYG{n+nt}{Application}\PYG{p}{:} \PYG{n+nl}{\PYGZam{}ApplicationDefaults}
+    \PYG{n+nt}{Organizations}\PYG{p}{:}
+    \PYG{n+nt}{Policies}\PYG{p}{:}
+        \PYG{n+nt}{Readers}\PYG{p}{:}
+            \PYG{n+nt}{Type}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{ImplicitMeta}
+            \PYG{n+nt}{Rule}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}ANY}\PYG{n+nv}{ }\PYG{l+s}{Readers\PYGZdq{}}
+        \PYG{n+nt}{Writers}\PYG{p}{:}
+            \PYG{n+nt}{Type}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{ImplicitMeta}
+            \PYG{n+nt}{Rule}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}ANY}\PYG{n+nv}{ }\PYG{l+s}{Writers\PYGZdq{}}
+        \PYG{n+nt}{Admins}\PYG{p}{:}
+            \PYG{n+nt}{Type}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{ImplicitMeta}
+            \PYG{n+nt}{Rule}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}MAJORITY}\PYG{n+nv}{ }\PYG{l+s}{Admins\PYGZdq{}}
+
+    \PYG{n+nt}{Capabilities}\PYG{p}{:}
+        \PYG{n+nt}{\PYGZlt{}\PYGZlt{}}\PYG{p}{:} \PYG{n+nv}{*ApplicationCapabilities}
+
+\PYG{n+nt}{Orderer}\PYG{p}{:} \PYG{n+nl}{\PYGZam{}OrdererDefaults}
+    \PYG{n+nt}{OrdererType}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{solo}
+    \PYG{n+nt}{Addresses}\PYG{p}{:}
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{orderer.pi.elisabeth.com:7050}
+    \PYG{n+nt}{BatchTimeout}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{2s}
+    \PYG{n+nt}{BatchSize}\PYG{p}{:}
+        \PYG{n+nt}{MaxMessageCount}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{10}
+        \PYG{n+nt}{AbsoluteMaxBytes}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{99 MB}
+        \PYG{n+nt}{PreferredMaxBytes}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{512 KB}
+    \PYG{n+nt}{Kafka}\PYG{p}{:}
+        \PYG{n+nt}{Brokers}\PYG{p}{:}
+            \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{127.0.0.1:9092}
+    \PYG{n+nt}{Organizations}\PYG{p}{:}
+    \PYG{n+nt}{Policies}\PYG{p}{:}
+        \PYG{n+nt}{Readers}\PYG{p}{:}
+            \PYG{n+nt}{Type}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{ImplicitMeta}
+            \PYG{n+nt}{Rule}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}ANY}\PYG{n+nv}{ }\PYG{l+s}{Readers\PYGZdq{}}
+        \PYG{n+nt}{Writers}\PYG{p}{:}
+            \PYG{n+nt}{Type}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{ImplicitMeta}
+            \PYG{n+nt}{Rule}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}ANY}\PYG{n+nv}{ }\PYG{l+s}{Writers\PYGZdq{}}
+        \PYG{n+nt}{Admins}\PYG{p}{:}
+            \PYG{n+nt}{Type}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{ImplicitMeta}
+            \PYG{n+nt}{Rule}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}MAJORITY}\PYG{n+nv}{ }\PYG{l+s}{Admins\PYGZdq{}}
+        \PYG{n+nt}{BlockValidation}\PYG{p}{:}
+            \PYG{n+nt}{Type}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{ImplicitMeta}
+            \PYG{n+nt}{Rule}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}ANY}\PYG{n+nv}{ }\PYG{l+s}{Writers\PYGZdq{}}
+
+\PYG{n+nt}{Channel}\PYG{p}{:} \PYG{n+nl}{\PYGZam{}ChannelDefaults}
+    \PYG{n+nt}{Policies}\PYG{p}{:}
+        \PYG{n+nt}{Readers}\PYG{p}{:}
+            \PYG{n+nt}{Type}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{ImplicitMeta}
+            \PYG{n+nt}{Rule}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}ANY}\PYG{n+nv}{ }\PYG{l+s}{Readers\PYGZdq{}}
+        \PYG{n+nt}{Writers}\PYG{p}{:}
+            \PYG{n+nt}{Type}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{ImplicitMeta}
+            \PYG{n+nt}{Rule}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}ANY}\PYG{n+nv}{ }\PYG{l+s}{Writers\PYGZdq{}}
+        \PYG{n+nt}{Admins}\PYG{p}{:}
+            \PYG{n+nt}{Type}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{ImplicitMeta}
+            \PYG{n+nt}{Rule}\PYG{p}{:} \PYG{l+s}{\PYGZdq{}MAJORITY}\PYG{n+nv}{ }\PYG{l+s}{Admins\PYGZdq{}}
+
+    \PYG{n+nt}{Capabilities}\PYG{p}{:}
+        \PYG{n+nt}{\PYGZlt{}\PYGZlt{}}\PYG{p}{:} \PYG{n+nv}{*ChannelCapabilities}
+
+\PYG{n+nt}{Profiles}\PYG{p}{:}
+    \PYG{n+nt}{OrgsOrdererGenesis}\PYG{p}{:}
+        \PYG{n+nt}{\PYGZlt{}\PYGZlt{}}\PYG{p}{:} \PYG{n+nv}{*ChannelDefaults}
+        \PYG{n+nt}{Orderer}\PYG{p}{:}
+            \PYG{n+nt}{\PYGZlt{}\PYGZlt{}}\PYG{p}{:} \PYG{n+nv}{*OrdererDefaults}
+            \PYG{n+nt}{Organizations}\PYG{p}{:}
+                \PYG{p+pIndicator}{\PYGZhy{}} \PYG{n+nv}{*OrdererOrg}
+            \PYG{n+nt}{Capabilities}\PYG{p}{:}
+                \PYG{n+nt}{\PYGZlt{}\PYGZlt{}}\PYG{p}{:} \PYG{n+nv}{*OrdererCapabilities}
+        \PYG{n+nt}{Consortiums}\PYG{p}{:}
+            \PYG{n+nt}{PiConsortium}\PYG{p}{:}
+                \PYG{n+nt}{Organizations}\PYG{p}{:}
+                    \PYG{p+pIndicator}{\PYGZhy{}} \PYG{n+nv}{*fcefyn}
+                    \PYG{p+pIndicator}{\PYGZhy{}} \PYG{n+nv}{*famaf}
+                    \PYG{p+pIndicator}{\PYGZhy{}} \PYG{n+nv}{*fcq}
+    \PYG{n+nt}{OrgsChannel}\PYG{p}{:}
+        \PYG{n+nt}{Consortium}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{PiConsortium}
+        \PYG{n+nt}{Application}\PYG{p}{:}
+            \PYG{n+nt}{\PYGZlt{}\PYGZlt{}}\PYG{p}{:} \PYG{n+nv}{*ApplicationDefaults}
+            \PYG{n+nt}{Organizations}\PYG{p}{:}
+                \PYG{p+pIndicator}{\PYGZhy{}} \PYG{n+nv}{*fcefyn}
+                \PYG{p+pIndicator}{\PYGZhy{}} \PYG{n+nv}{*famaf}
+                \PYG{p+pIndicator}{\PYGZhy{}} \PYG{n+nv}{*fcq}
+            \PYG{n+nt}{Capabilities}\PYG{p}{:}
+                \PYG{n+nt}{\PYGZlt{}\PYGZlt{}}\PYG{p}{:} \PYG{n+nv}{*ApplicationCapabilities}
+\end{Verbatim}

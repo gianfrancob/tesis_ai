@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{} npm install \PYGZhy{}g @angular/cli
+\PYGZdl{} npm install \PYGZhy{}g ionic
+\end{Verbatim}

@@ -1,0 +1,26 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{p}{\PYGZob{}}    \PYG{n+nt}{\PYGZdq{}Acta Nr\PYGZdq{}}\PYG{p}{:}\PYG{l+s+s2}{\PYGZdq{}201200017\PYGZdq{}}\PYG{p}{,}
+
+    \PYG{n+nt}{\PYGZdq{}revocar\PYGZdq{}}\PYG{p}{:\PYGZob{}}
+
+        \PYG{n+nt}{\PYGZdq{}1\PYGZdq{}}\PYG{p}{:\PYGZob{}}
+        \PYG{n+nt}{\PYGZdq{}Appellido y Nombre\PYGZdq{}}\PYG{p}{:}\PYG{l+s+s2}{\PYGZdq{}Acevedo Mauricio German\PYGZdq{}}\PYG{p}{,}
+        \PYG{n+nt}{\PYGZdq{}Identificacón:\PYGZdq{}}\PYG{p}{:}\PYG{l+s+s2}{\PYGZdq{}DNI 4260181\PYGZdq{}}\PYG{p}{,}
+        \PYG{n+nt}{\PYGZdq{}Instancia\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}Regular\PYGZdq{}}\PYG{p}{,}
+        \PYG{n+nt}{\PYGZdq{}Fecha\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}05/10/2017\PYGZdq{}}\PYG{p}{,}
+        \PYG{n+nt}{\PYGZdq{}Nota\PYGZdq{}}\PYG{p}{:} \PYG{l+m+mi}{2}\PYG{p}{,}
+        \PYG{n+nt}{\PYGZdq{}Letras\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}dos\PYGZdq{}}\PYG{p}{,}
+        \PYG{n+nt}{\PYGZdq{}Resultado\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}reprobado\PYGZdq{}}\PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{},}
+    \PYG{n+nt}{\PYGZdq{}corregido\PYGZdq{}}\PYG{p}{:\PYGZob{}}
+         \PYG{n+nt}{\PYGZdq{}1\PYGZdq{}}\PYG{p}{:\PYGZob{}}
+        \PYG{n+nt}{\PYGZdq{}Appellido y Nombre\PYGZdq{}}\PYG{p}{:}\PYG{l+s+s2}{\PYGZdq{}Acevedo Mauricio German\PYGZdq{}}\PYG{p}{,}
+        \PYG{n+nt}{\PYGZdq{}Identificacón:\PYGZdq{}}\PYG{p}{:}\PYG{l+s+s2}{\PYGZdq{}DNI 4260181\PYGZdq{}}\PYG{p}{,}
+        \PYG{n+nt}{\PYGZdq{}Instancia\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}Regular\PYGZdq{}}\PYG{p}{,}
+        \PYG{n+nt}{\PYGZdq{}Fecha\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}05/10/2017\PYGZdq{}}\PYG{p}{,}
+        \PYG{n+nt}{\PYGZdq{}Nota\PYGZdq{}}\PYG{p}{:} \PYG{l+m+mi}{4}\PYG{p}{,}
+        \PYG{n+nt}{\PYGZdq{}Letras\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}cuatro\PYGZdq{}}\PYG{p}{,}
+        \PYG{n+nt}{\PYGZdq{}Resultado\PYGZdq{}}\PYG{p}{:} \PYG{l+s+s2}{\PYGZdq{}aprobado\PYGZdq{}}\PYG{p}{\PYGZcb{}}
+	\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

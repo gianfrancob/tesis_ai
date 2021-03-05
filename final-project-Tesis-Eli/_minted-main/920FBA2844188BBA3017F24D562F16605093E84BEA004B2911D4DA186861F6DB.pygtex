@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{} peer channel update \PYGZhy{}o orderer.pi.elisabeth.com:7050 \PYGZhy{}c pichannel \PYGZhy{}f ./channel\PYGZhy{}artifacts/fcqMSPanchors.tx
+\end{Verbatim}

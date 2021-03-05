@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo apt\PYGZhy{}get update
+\PYGZdl{} sudo apt\PYGZhy{}get install apt\PYGZhy{}transport\PYGZhy{}https ca\PYGZhy{}certificates
+	gnupg\PYGZhy{}agent software\PYGZhy{}properties\PYGZhy{}common
+\PYGZdl{} curl \PYGZhy{}fsSL https://download.docker.com/linux/ubuntu/gpg \PYG{p}{|} sudo apt\PYGZhy{}key add \PYGZhy{}
+\PYGZdl{} sudo add\PYGZhy{}apt\PYGZhy{}repository \PYG{l+s+s2}{\PYGZdq{}deb [arch=amd64] https://download.docker.com/linux/ubuntu }\PYG{k}{\PYGZdl{}(}lsb\PYGZus{}release \PYGZhy{}cs\PYG{k}{)}\PYG{l+s+s2}{	stable\PYGZdq{}}
+\end{Verbatim}

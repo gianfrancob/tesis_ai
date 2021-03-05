@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{k+kd}{func} \PYG{p}{(}\PYG{n+nx}{s} \PYG{o}{*}\PYG{n+nx}{SmartContract}\PYG{p}{)} \PYG{n+nx}{addRegister}\PYG{p}{(}\PYG{n+nx}{APIstub} \PYG{n+nx}{shim}\PYG{p}{.}\PYG{n+nx}{ChaincodeStubInterface}\PYG{p}{,} \PYG{n+nx}{args} \PYG{p}{[]}\PYG{k+kt}{string}\PYG{p}{)} \PYG{n+nx}{sc}\PYG{p}{.}\PYG{n+nx}{Response} \PYG{p}{\PYGZob{}}
+
+	\PYG{k+kd}{var} \PYG{n+nx}{buffer} \PYG{n+nx}{bytes}\PYG{p}{.}\PYG{n+nx}{Buffer}
+	\PYG{n+nx}{APIstub}\PYG{p}{.}\PYG{n+nx}{PutState}\PYG{p}{(}\PYG{n+nx}{args}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{],} \PYG{p}{[]}\PYG{n+nb}{byte}\PYG{p}{(}\PYG{n+nx}{args}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]))}
+	\PYG{k}{return} \PYG{n+nx}{shim}\PYG{p}{.}\PYG{n+nx}{Success}\PYG{p}{(}\PYG{n+nx}{buffer}\PYG{p}{.}\PYG{n+nx}{Bytes}\PYG{p}{())}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

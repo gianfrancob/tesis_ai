@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYGZdl{} ./cryptogen generate \PYGZhy{}\PYGZhy{}config\PYG{o}{=}./crypto\PYGZhy{}config.yaml
+\end{Verbatim}

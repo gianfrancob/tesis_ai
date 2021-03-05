@@ -1,0 +1,16 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{var} \PYG{n+nx}{express} \PYG{o}{=} \PYG{n+nx}{require}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}express\PYGZdq{}}\PYG{p}{);}
+\PYG{k+kd}{var} \PYG{n+nx}{bodyParser} \PYG{o}{=} \PYG{n+nx}{require}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}body\PYGZhy{}parser\PYGZdq{}}\PYG{p}{);}
+\PYG{k+kd}{var} \PYG{n+nx}{app} \PYG{o}{=} \PYG{n+nx}{express}\PYG{p}{();}
+
+\PYG{n+nx}{app}\PYG{p}{.}\PYG{n+nx}{use}\PYG{p}{(}\PYG{n+nx}{bodyParser}\PYG{p}{.}\PYG{n+nx}{json}\PYG{p}{());}
+\PYG{n+nx}{app}\PYG{p}{.}\PYG{n+nx}{use}\PYG{p}{(}\PYG{n+nx}{bodyParser}\PYG{p}{.}\PYG{n+nx}{urlencoded}\PYG{p}{(\PYGZob{}} \PYG{n+nx}{extended}\PYG{o}{:} \PYG{k+kc}{true} \PYG{p}{\PYGZcb{}));}
+
+\PYG{n+nx}{app}\PYG{p}{.}\PYG{n+nx}{get}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}/\PYGZdq{}}\PYG{p}{,} \PYG{k+kd}{function} \PYG{p}{(}\PYG{n+nx}{req}\PYG{p}{,} \PYG{n+nx}{res}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{n+nx}{res}\PYG{p}{.}\PYG{n+nx}{status}\PYG{p}{(}\PYG{l+m+mi}{200}\PYG{p}{).}\PYG{n+nx}{send}\PYG{p}{(\PYGZob{}} \PYG{n+nx}{message}\PYG{o}{:} \PYG{l+s+s1}{\PYGZsq{}Welcome to the Blockchain restful API\PYGZsq{}} \PYG{p}{\PYGZcb{});}
+  \PYG{p}{\PYGZcb{});}
+
+\PYG{k+kd}{var} \PYG{n+nx}{server} \PYG{o}{=} \PYG{n+nx}{app}\PYG{p}{.}\PYG{n+nx}{listen}\PYG{p}{(}\PYG{l+m+mi}{8000}\PYG{p}{,} \PYG{k+kd}{function} \PYG{p}{()} \PYG{p}{\PYGZob{}}
+    \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}app running on port.\PYGZdq{}}\PYG{p}{,} \PYG{n+nx}{server}\PYG{p}{.}\PYG{n+nx}{address}\PYG{p}{().}\PYG{n+nx}{port}\PYG{p}{);}
+\PYG{p}{\PYGZcb{});}
+\end{Verbatim}

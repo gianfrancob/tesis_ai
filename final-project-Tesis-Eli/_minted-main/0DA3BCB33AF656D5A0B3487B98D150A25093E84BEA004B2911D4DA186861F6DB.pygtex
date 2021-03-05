@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo apt\PYGZhy{}get update
+\PYGZdl{} sudo apt\PYGZhy{}get install curl
+\end{Verbatim}

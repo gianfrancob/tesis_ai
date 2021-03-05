@@ -1,0 +1,170 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nt}{version}\PYG{p}{:} \PYG{l+s}{\PYGZsq{}2\PYGZsq{}}
+
+\PYG{n+nt}{services}\PYG{p}{:}
+
+  \PYG{n+nt}{orderer.pi.elisabeth.com}\PYG{p}{:}
+    \PYG{n+nt}{container\PYGZus{}name}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{orderer.pi.elisabeth.com}
+    \PYG{n+nt}{image}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{hyperledger/fabric\PYGZhy{}orderer:1.4}
+    \PYG{n+nt}{environment}\PYG{p}{:}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{FABRIC\PYGZus{}LOGGING\PYGZus{}SPEC=INFO}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{ORDERER\PYGZus{}GENERAL\PYGZus{}LISTENADDRESS=0.0.0.0}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{ORDERER\PYGZus{}GENERAL\PYGZus{}GENESISMETHOD=file}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{ORDERER\PYGZus{}GENERAL\PYGZus{}GENESISFILE=/var/hyperledger/orderer/orderer.genesis.block}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{ORDERER\PYGZus{}GENERAL\PYGZus{}LOCALMSPID=OrdererMSP}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{ORDERER\PYGZus{}GENERAL\PYGZus{}LOCALMSPDIR=/var/hyperledger/orderer/msp}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{ORDERER\PYGZus{}GENERAL\PYGZus{}TLS\PYGZus{}ENABLED=false}
+    \PYG{n+nt}{working\PYGZus{}dir}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{/opt/gopath/src/github.com/hyperledger/fabric}
+    \PYG{n+nt}{command}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{orderer}
+    \PYG{n+nt}{volumes}\PYG{p}{:}
+    \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{../channel\PYGZhy{}artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block}
+    \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{../crypto\PYGZhy{}config/ordererOrganizations/pi.elisabeth.com/orderers/orderer.pi.elisabeth.com/msp:/var/hyperledger/orderer/msp}
+    \PYG{c+c1}{\PYGZsh{}\PYGZhy{} ../crypto\PYGZhy{}config/ordererOrganizations/pi.elisabeth.com/orderers/orderer.pi.elisabeth.com/tls/:/var/hyperledger/orderer/tls}
+    \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{orderer.pi.elisabeth.com:/var/hyperledger/production/orderer}
+    \PYG{n+nt}{ports}\PYG{p}{:}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{7050:7050}
+
+  \PYG{n+nt}{peer0.famaf.pi.elisabeth.com}\PYG{p}{:}
+    \PYG{n+nt}{container\PYGZus{}name}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{peer0.famaf.pi.elisabeth.com}
+    \PYG{n+nt}{extends}\PYG{p}{:}
+      \PYG{n+nt}{file}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{peer\PYGZhy{}base.yaml}
+      \PYG{n+nt}{service}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{peer\PYGZhy{}base}
+    \PYG{n+nt}{environment}\PYG{p}{:}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}ID=peer0.famaf.pi.elisabeth.com}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}ADDRESS=peer0.famaf.pi.elisabeth.com:7051}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}GOSSIP\PYGZus{}BOOTSTRAP=peer1.famaf.pi.elisabeth.com:7051}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}GOSSIP\PYGZus{}EXTERNALENDPOINT=peer0.famaf.pi.elisabeth.com:7051}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}LOCALMSPID=famafMSP}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}MSPCONFIGPATH =/etc/hyperledger/fabric/msp}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}CHAINCODE\PYGZus{}DEPLOYTIMEOUT=300s}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}CHAINCODE\PYGZus{}STARTUPTIMEOUT=300s}
+    \PYG{n+nt}{volumes}\PYG{p}{:}
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{/var/run/:/host/var/run/}
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{../channel\PYGZhy{}artifacts:/etc/hyperledger/configtx}
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{../crypto\PYGZhy{}config/peerOrganizations/famaf.pi.elisabeth.com/peers/peer0.famaf.pi.elisabeth.com/msp:/etc/hyperledger/fabric/msp}
+        \PYG{c+c1}{\PYGZsh{}\PYGZhy{} ../crypto\PYGZhy{}config/peerOrganizations/famaf.pi.elisabeth.com/peers/peer0.famaf.pi.elisabeth.com/tls:/etc/hyperledger/fabric/tls}
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{peer0.famaf.pi.elisabeth.com:/var/hyperledger/production}
+    \PYG{n+nt}{ports}\PYG{p}{:}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{7051:7051}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{7053:7053}
+
+  \PYG{n+nt}{peer1.famaf.pi.elisabeth.com}\PYG{p}{:}
+    \PYG{n+nt}{container\PYGZus{}name}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{peer1.famaf.pi.elisabeth.com}
+    \PYG{n+nt}{extends}\PYG{p}{:}
+      \PYG{n+nt}{file}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{peer\PYGZhy{}base.yaml}
+      \PYG{n+nt}{service}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{peer\PYGZhy{}base}
+    \PYG{n+nt}{environment}\PYG{p}{:}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}ID=peer1.famaf.pi.elisabeth.com}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}ADDRESS=peer1.famaf.pi.elisabeth.com:7051}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}GOSSIP\PYGZus{}EXTERNALENDPOINT=peer1.famaf.pi.elisabeth.com:7051}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}GOSSIP\PYGZus{}BOOTSTRAP=peer0.famaf.pi.elisabeth.com:7051}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}LOCALMSPID=famafMSP}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}MSPCONFIGPATH =/etc/hyperledger/fabric/msp}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}CHAINCODE\PYGZus{}DEPLOYTIMEOUT=300s}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}CHAINCODE\PYGZus{}STARTUPTIMEOUT=300s}
+    \PYG{n+nt}{volumes}\PYG{p}{:}
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{/var/run/:/host/var/run/}
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{../channel\PYGZhy{}artifacts:/etc/hyperledger/configtx}
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{../crypto\PYGZhy{}config/peerOrganizations/famaf.pi.elisabeth.com/peers/peer1.famaf.pi.elisabeth.com/msp:/etc/hyperledger/fabric/msp}
+        \PYG{c+c1}{\PYGZsh{}\PYGZhy{} ../crypto\PYGZhy{}config/peerOrganizations/famaf.pi.elisabeth.com/peers/peer1.famaf.pi.elisabeth.com/tls:/etc/hyperledger/fabric/tls}
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{peer1.famaf.pi.elisabeth.com:/var/hyperledger/production}
+
+    \PYG{n+nt}{ports}\PYG{p}{:}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{8051:7051}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{8053:7053}
+
+  \PYG{n+nt}{peer0.fcefyn.pi.elisabeth.com}\PYG{p}{:}
+    \PYG{n+nt}{container\PYGZus{}name}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{peer0.fcefyn.pi.elisabeth.com}
+    \PYG{n+nt}{extends}\PYG{p}{:}
+      \PYG{n+nt}{file}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{peer\PYGZhy{}base.yaml}
+      \PYG{n+nt}{service}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{peer\PYGZhy{}base}
+    \PYG{n+nt}{environment}\PYG{p}{:}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}ID=peer0.fcefyn.pi.elisabeth.com}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}ADDRESS=peer0.fcefyn.pi.elisabeth.com:7051}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}GOSSIP\PYGZus{}EXTERNALENDPOINT=peer0.fcefyn.pi.elisabeth.com:7051}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}GOSSIP\PYGZus{}BOOTSTRAP=peer1.fcefyn.pi.elisabeth.com:7051}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}LOCALMSPID=fcefynMSP}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}MSPCONFIGPATH =/etc/hyperledger/fabric/msp}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}CHAINCODE\PYGZus{}DEPLOYTIMEOUT=300s}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}CHAINCODE\PYGZus{}STARTUPTIMEOUT=300s}
+    \PYG{n+nt}{volumes}\PYG{p}{:}
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{/var/run/:/host/var/run/}
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{../channel\PYGZhy{}artifacts:/etc/hyperledger/configtx}
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{../crypto\PYGZhy{}config/peerOrganizations/fcefyn.pi.elisabeth.com/peers/peer0.fcefyn.pi.elisabeth.com/msp:/etc/hyperledger/fabric/msp}
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{peer0.fcefyn.pi.elisabeth.com:/var/hyperledger/production}
+    \PYG{n+nt}{ports}\PYG{p}{:}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{9051:7051}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{9053:7053}
+
+  \PYG{n+nt}{peer1.fcefyn.pi.elisabeth.com}\PYG{p}{:}
+    \PYG{n+nt}{container\PYGZus{}name}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{peer1.fcefyn.pi.elisabeth.com}
+    \PYG{n+nt}{extends}\PYG{p}{:}
+      \PYG{n+nt}{file}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{peer\PYGZhy{}base.yaml}
+      \PYG{n+nt}{service}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{peer\PYGZhy{}base}
+    \PYG{n+nt}{environment}\PYG{p}{:}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}ID=peer1.fcefyn.pi.elisabeth.com}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}ADDRESS=peer1.fcefyn.pi.elisabeth.com:7051}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}GOSSIP\PYGZus{}EXTERNALENDPOINT=peer1.fcefyn.pi.elisabeth.com:7051}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}GOSSIP\PYGZus{}BOOTSTRAP=peer0.fcefyn.pi.elisabeth.com:7051}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}LOCALMSPID=fcefynMSP}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}MSPCONFIGPATH =/etc/hyperledger/fabric/msp}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}CHAINCODE\PYGZus{}DEPLOYTIMEOUT=300s}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}CHAINCODE\PYGZus{}STARTUPTIMEOUT=300s}
+    \PYG{n+nt}{volumes}\PYG{p}{:}
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{/var/run/:/host/var/run/}
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{../channel\PYGZhy{}artifacts:/etc/hyperledger/configtx}
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{../crypto\PYGZhy{}config/peerOrganizations/fcefyn.pi.elisabeth.com/peers/peer1.fcefyn.pi.elisabeth.com/msp:/etc/hyperledger/fabric/msp}
+        \PYG{c+c1}{\PYGZsh{}\PYGZhy{} ../crypto\PYGZhy{}config/peerOrganizations/fcefyn.pi.elisabeth.com/peers/peer1.fcefyn.pi.elisabeth.com/tls:/etc/hyperledger/fabric/tls}
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{peer1.fcefyn.pi.elisabeth.com:/var/hyperledger/production}
+    \PYG{n+nt}{ports}\PYG{p}{:}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{10051:7051}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{10053:7053}
+
+  \PYG{n+nt}{peer0.fcq.pi.elisabeth.com}\PYG{p}{:}
+    \PYG{n+nt}{container\PYGZus{}name}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{peer0.fcq.pi.elisabeth.com}
+    \PYG{n+nt}{extends}\PYG{p}{:}
+      \PYG{n+nt}{file}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{peer\PYGZhy{}base.yaml}
+      \PYG{n+nt}{service}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{peer\PYGZhy{}base}
+    \PYG{n+nt}{environment}\PYG{p}{:}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}ID=peer0.fcq.pi.elisabeth.com}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}ADDRESS=peer0.fcq.pi.elisabeth.com:7051}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}GOSSIP\PYGZus{}EXTERNALENDPOINT=peer0.fcq.pi.elisabeth.com:7051}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}GOSSIP\PYGZus{}BOOTSTRAP=peer1.fcq.pi.elisabeth.com:7051}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}LOCALMSPID=fcqMSP}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}MSPCONFIGPATH =/etc/hyperledger/fabric/msp}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}CHAINCODE\PYGZus{}DEPLOYTIMEOUT=300s}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}CHAINCODE\PYGZus{}STARTUPTIMEOUT=300s}
+    \PYG{n+nt}{volumes}\PYG{p}{:}
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{/var/run/:/host/var/run/}
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{../channel\PYGZhy{}artifacts:/etc/hyperledger/configtx}
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{../crypto\PYGZhy{}config/peerOrganizations/fcq.pi.elisabeth.com/peers/peer0.fcq.pi.elisabeth.com/msp:/etc/hyperledger/fabric/msp}
+        \PYG{c+c1}{\PYGZsh{}\PYGZhy{} ../crypto\PYGZhy{}config/peerOrganizations/fcq.pi.elisabeth.com/peers/peer0.fcq.pi.elisabeth.com/tls:/etc/hyperledger/fabric/tls}
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{peer0.fcq.pi.elisabeth.com:/var/hyperledger/production}
+    \PYG{n+nt}{ports}\PYG{p}{:}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{11051:7051}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{11053:7053}
+
+  \PYG{n+nt}{peer1.fcq.pi.elisabeth.com}\PYG{p}{:}
+    \PYG{n+nt}{container\PYGZus{}name}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{peer1.fcq.pi.elisabeth.com}
+    \PYG{n+nt}{extends}\PYG{p}{:}
+      \PYG{n+nt}{file}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{peer\PYGZhy{}base.yaml}
+      \PYG{n+nt}{service}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{peer\PYGZhy{}base}
+    \PYG{n+nt}{environment}\PYG{p}{:}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}ID=peer1.fcq.pi.elisabeth.com}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}ADDRESS=peer1.fcq.pi.elisabeth.com:7051}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}GOSSIP\PYGZus{}EXTERNALENDPOINT=peer1.fcq.pi.elisabeth.com:7051}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}GOSSIP\PYGZus{}BOOTSTRAP=peer0.fcq.pi.elisabeth.com:7051}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}LOCALMSPID=fcqMSP}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}PEER\PYGZus{}MSPCONFIGPATH =/etc/hyperledger/fabric/msp}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}CHAINCODE\PYGZus{}DEPLOYTIMEOUT=300s}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{CORE\PYGZus{}CHAINCODE\PYGZus{}STARTUPTIMEOUT=300s}
+    \PYG{n+nt}{volumes}\PYG{p}{:}
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{/var/run/:/host/var/run/}
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{../channel\PYGZhy{}artifacts:/etc/hyperledger/configtx}
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{../crypto\PYGZhy{}config/peerOrganizations/fcq.pi.elisabeth.com/peers/peer1.fcq.pi.elisabeth.com/msp:/etc/hyperledger/fabric/msp}
+        \PYG{c+c1}{\PYGZsh{}\PYGZhy{} ../crypto\PYGZhy{}config/peerOrganizations/fcq.pi.elisabeth.com/peers/peer1.fcq.pi.elisabeth.com/tls:/etc/hyperledger/fabric/tls}
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{peer1.fcq.pi.elisabeth.com:/var/hyperledger/production}
+    \PYG{n+nt}{ports}\PYG{p}{:}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{12051:7051}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{12053:7053}
+\end{Verbatim}

@@ -1,0 +1,105 @@
+{
+    "name": "pi_connection_profile",
+    "version": "1.0.0",
+    "client": {
+        "organization": "famaf",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300"
+                },
+                "orderer": "300"
+            }
+        }
+    },  
+    
+    "channels": {
+        "pichannel": {
+            "orderers": [
+                "orderer.pi.elisabeth.com"
+            ],
+            "peers": {
+                "peer0.famaf.pi.elisabeth.com": {},
+                "peer1.famaf.pi.elisabeth.com": {},
+                "peer0.fcefyn.pi.elisabeth.com": {},
+                "peer1.fcefyn.pi.elisabeth.com": {},
+                "peer0.fcq.pi.elisabeth.com": {},
+                "peer1.fcq.pi.elisabeth.com": {}
+            }
+        }
+    },
+    "organizations": {
+        "fcefyn": {
+            "mspid": "fcefynMSP",
+            "peers": [
+                "peer0.fcefyn.pi.elisabeth.com",
+                "peer1.fcefyn.pi.elisabeth.com"
+            ],
+            "certificateAuthorities": [
+                "ca-fcefyn"
+            ]
+        },
+
+        "famaf": {
+            "mspid": "famafMSP",
+            "peers": [
+                "peer0.famaf.pi.elisabeth.com",
+                "peer0.famaf.pi.elisabeth.com"
+            ],
+            "certificateAuthorities": [
+                "ca-famaf"
+            ]
+        },
+
+        "fcq": {
+            "mspid": "fcqfMSP",
+            "peers": [
+                "peer0.fcq.pi.elisabeth.com",
+                "peer0.fcq.pi.elisabeth.com"
+            ],
+            "certificateAuthorities": [
+                "ca-fcq"
+            ]
+        }
+    },
+
+    "orderers": {
+        "orderer.pi.elisabeth.com": {
+            "url": "grpc://localhost:7050"
+        }
+    },
+    "peers": {
+        "peer0.famaf.pi.elisabeth.com": {
+            "url": "grpc://localhost:7051" //reemplazar por dns del servicio
+        },
+        "peer1.famaf.pi.elisabeth.com": {
+            "url": "grpc://localhost:8051"
+        },
+        "peer0.fcefyn.pi.elisabeth.com": {
+            "url": "grpc://localhost:9051"
+        },
+        "peer1.fcefyn.pi.elisabeth.com": {
+            "url": "grpc://localhost:10051"
+        },
+        "peer0.fcq.pi.elisabeth.com": {
+            "url": "grpc://localhost:11051"
+        },
+        "peer1.fcq.pi.elisabeth.com": {
+            "url": "grpc://localhost:12051"
+        }
+    },
+    "certificateAuthorities": {
+        "ca-famaf": {
+            "url": "http://localhost:7054",
+            "caName": "ca-famaf"
+        },
+        "ca-fcefyn": {
+            "url": "http://localhost:8054",
+            "caName": "ca-fcefyn"
+        },
+        "ca-fcq": {
+            "url": "http://localhost:9054",
+            "caName": "ca-fcq"
+        }
+    }
+}

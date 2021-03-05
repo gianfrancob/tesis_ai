@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{} peer chaincode invoke \PYGZhy{}o orderer.pi.elisabeth.com:7050 \PYGZhy{}C pichannel \PYGZhy{}n picc \PYGZhy{}\PYGZhy{}peerAddresses peer0.famaf.pi.elisabeth.com:7051 \PYGZhy{}\PYGZhy{}peerAddresses peer0.fcefyn.pi.elisabeth.com:7051 \PYGZhy{}c \PYG{l+s+s1}{\PYGZsq{}\PYGZob{}\PYGZdq{}Args\PYGZdq{}:[\PYGZdq{}addRegister\PYGZdq{}, \PYGZdq{}UNC111\PYGZdq{}, \PYGZdq{}\PYGZob{}\PYGZsq{}}UNC111\PYG{l+s+s1}{\PYGZsq{}:\PYGZsq{}}testregister\PYG{l+s+s1}{\PYGZsq{}\PYGZcb{}\PYGZdq{}]\PYGZcb{}\PYGZsq{}}
+\end{Verbatim}

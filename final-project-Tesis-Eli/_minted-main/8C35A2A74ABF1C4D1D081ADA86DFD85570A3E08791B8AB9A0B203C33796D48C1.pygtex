@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+    \PYG{n+nx}{app}\PYG{p}{.}\PYG{n+nx}{listen}\PYG{p}{(}\PYG{l+m+mi}{3000}\PYG{p}{,} \PYG{p}{()} \PYG{p}{=\PYGZgt{}} \PYG{p}{\PYGZob{}}
+        \PYG{n+nx}{console}\PYG{p}{.}\PYG{n+nx}{log}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}Server running on port 3000\PYGZdq{}}\PYG{p}{);}
+        \PYG{n+nx}{enroll\PYGZus{}admin}\PYG{p}{.}\PYG{n+nx}{enrollAdmin}\PYG{p}{().}\PYG{n+nx}{then}\PYG{p}{(}
+            \PYG{n+nx}{success} \PYG{p}{=\PYGZgt{}} \PYG{p}{\PYGZob{}}
+                \PYG{n+nx}{setTimeout}\PYG{p}{(()} \PYG{p}{=\PYGZgt{}} \PYG{n+nx}{register\PYGZus{}user}\PYG{p}{.}\PYG{n+nx}{registerUser}\PYG{p}{(),} \PYG{l+m+mi}{1000}\PYG{p}{)}
+            \PYG{p}{\PYGZcb{})}
+        \PYG{p}{\PYGZcb{});}
+\end{Verbatim}

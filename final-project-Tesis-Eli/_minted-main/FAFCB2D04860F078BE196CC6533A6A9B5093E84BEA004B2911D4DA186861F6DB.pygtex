@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{} docker \PYG{n+nb}{exec} cli peer chaincode instantiate \PYGZhy{}o orderer.pi.elisabeth.com:7050 \PYGZhy{}C pichannel \PYGZhy{}n picc \PYGZhy{}v \PYG{l+m}{1}.0 \PYGZhy{}c \PYG{l+s+s1}{\PYGZsq{}\PYGZob{}\PYGZdq{}Args\PYGZdq{}:[]\PYGZcb{}\PYGZsq{}} \PYGZhy{}P \PYG{l+s+s2}{\PYGZdq{}OutOf (2, \PYGZsq{}famafMSP.peer\PYGZsq{}, \PYGZsq{}fcefynMSP.peer\PYGZsq{}, \PYGZsq{}fcqMSP.peer\PYGZsq{})\PYGZdq{}}
+\end{Verbatim}
