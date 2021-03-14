@@ -1,0 +1,56 @@
+\chapter{Conclusión} % Main chapter title
+\label{Chapter7}
+\lhead{Capítulo 7. \emph{Conclusión}}
+\setstretch{1.1} % Line spacing of 1.1
+
+En el presente proyecto, se realizó un estudio profundo de la tecnología Blockchain, sus características más importantes como también sus aplicaciones y casos de uso. Se comparó una multitud de plataformas Blockchain diferentes. Luego, se eligió una plataforma de las analizadas para probar su funcionamiento en un caso práctico que no involucrara la necesidad de una criptomoneda. Se investigó la utilidad de un sistema de validación de actas académicas y se llegó a la conclusión que un sistema con arquitectura Blockchain puede superar en utilidad a un sistema de base de datos tradicional.
+
+Después de la etapa de investigación se procedió a desarrollar un prototipo con el fin de evaluar la implementabilidad y utilidad de la propuesta. Para eso, el proyecto se dividió en tres partes: 
+
+\begin{enumerate}
+    \item La primera parte consiste en la configuración de la red Blockchain con el framework elegido. Se configuraron 3 organizaciones diferentes con 2 nodos cada una, que comparten el mismo canal y usan el mecanismo de aprobación de transacciones \textit{solo}. Ambos nodos por cada organización funcionan como nodos de aprobación de transacciones y un nodo por cada organización se configuró adicionalmente como \textit{anchor node} para posibilitar el descubrimiento de nodos de otras organizaciones. El desarrollo del \textit{chaincode} permite agregar y modificar información al Blockchain, una vez que toda la red fue iniciada.
+    \item La segunda parte consiste en la programación de la API con la ayuda del SDK previsto por Hyperledger Fabric. Se implementaron los diferentes \textit{endpoints} que invocan al \textit{chaincode} correspondiente, el cual consulta por información existente o agrega información nueva. Se implementaron las siguientes funcionalidades:
+    \begin{enumerate}
+        \item Subir un acta nueva.
+        \item Consultar por un acta subida.
+        \item Validar una nota.
+        \item Validar una historia académica.
+        \item Rectificar un acta.
+        \item Consultar por todas las actas rectificadas.
+    \end{enumerate}
+    \item En la última parte, se desarrolló una aplicación web para que el usuario pueda interactuar con el sistema a través de una interfaz gráfica. Con Angular, se crearon diferentes páginas que interactúan con la API y dan una retroalimentación visual al usuario para indicar si su operación fue exitosa o fracasó.
+\end{enumerate}
+
+\section{Problemas y Limitaciones}
+A continuación, se elaboran algunos problemas y limitaciones que se presentaron durante el desarrollo del proyecto.
+
+\begin{itemize}
+    \item 
+    En el momento de la investigación, resultó difícil encontrar bibliografía. Dado que la primera implementación de una arquitectura Blockchain data en el 2009, es un tema reciente, y no existen libros que discuten el tema con la profundidad requerida. Por otro lado, especialmente gracias a las criptomonedas, es un tema polémico que atrae mucha atención, y se encuentran muchas fuentes con información erronea. Por esa razón, se aplicaron criterios rigurosos para su elección: la mayoría de la información fue extraida de papers científicos, blogs de fundadores de implementaciones Blockchain y de la documentación de dichas implementaciones.
+    \item Una vez elegido el \textit{framework} Hyperledger Fabric para la implementación del trabajo, se presentarion una multitud de problemas y dudas que solo se lograron resolver en parte: Si bien se encontraron preguntas relacionadas en foros como Stackoverflow, para muchas existen pocas respuestas o ninguna. Para esos casos, fue necesario asumir o experimentar con ejemplos hasta llegar a una conclusión satisfactoria.
+    \item Todos los proyectos de Hyperledger son gestionados por la Linux Foundation y son proyectos de código libre, donde se modifican y agregan funcionalidades constantemente. \textit{Bugs} en versiones que se usaron en este proyecto se resolvieron al migrar a versiones posteriores, las cuales, sin embargo, introducían funcionalidades desconocidas que todavía no contaban con la documentación necesaria y a veces introducían otros problemas o incompatibilidades imprevistas.  
+\end{itemize}
+
+\section{Trabajos futuros}
+A continuación, figuran algunas mejoras y extensiones al presente proyecto, que no se implementaron por limitaciones de tiempo o porque su desarrollo se desviaba del objetivo inicial del proyecto integrador.
+
+Mejoras propuestas en la parte de interfaz gráfica y API:
+\begin{itemize}
+    \item Agregar autenticación de usuarios a la aplicación web, para que solamente personal autorizado pueda agregar y revocar actas.
+    \item Junto con la autenticación, implementar una limitación para que un acta solamente puede ser rectificado por el mismo usuario que lo creó originalmente.
+    \item Implementar que cada acta del sistema sea firmada digitalmente por su creador.
+    \item Desarrollar una planilla en la interfaz gráfica que permita ingresar los datos requeridos a través de un formulario en vez de usar el formato JSON. Para un usuario poco experimentado con la computación, respetar el formato JSON puede resultar engorroso.
+    \item Para una adopción más fácil de la tecnología y mitigar el riesgo de un usuario vacilante, también es posible automatizar la obtención de los datos del alumno, de tal manera que la aplicación utilice una API del sistema Guaraní para obtener la información en texto plano, en vez de requerir su ingreso manual en formato JSON. Sin embargo, es primordial tener en cuenta que el alumno antes debe autorizar dicho acceso, ya que su información no debe ser difundida sin su consentimiento.
+\end{itemize}
+
+Mejoras propuestas en la parte de la red Blockchain:
+\begin{itemize}
+    \item Desplegar la red con más que un nodo de aprobación de transacciones para lograr redundancia usando Raft o Kafka.
+    \item Desplegar una mayor cantidad de nodos por organización: Para ambientes de producción, Hyperledger Fabric recomienda un mínimo de tres nodos por organización, de los cuales dos deben estar configurados como \textit{anchor peers}.
+    \item Generar las identidades digitales a través de las CA en vez de utilizar la herramienta cryptogen, ya que ésta predefine la topología de la red y una modificación posterior resulta complicada.
+    \item Realizar un análisis de costos de un despliegue en producción.
+\end{itemize}
+
+
+\section{Aporte personal}
+El conocimiento adquirido a lo largo de la carrera, especialmente en las materias de los últimos años como Bases de Datos, Redes de Computdoras y Sistemas Operativos, formó una base de conocimiento imprescindible para el desarrollo del proyecto. Si bien los paradigmas en cuestión recién cumplen 10 años, los problemas que se plantearon pudieron ser abarcados gracias a la preparación recibida en la facultad junto con paciencia, perseverancia y curiosidad. 

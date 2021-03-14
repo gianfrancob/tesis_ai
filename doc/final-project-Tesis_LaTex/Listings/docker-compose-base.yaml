@@ -1,0 +1,168 @@
+version: '2'
+
+services:
+
+  orderer.pi.elisabeth.com:
+    container_name: orderer.pi.elisabeth.com
+    image: hyperledger/fabric-orderer:1.4
+    environment:
+      - FABRIC_LOGGING_SPEC=INFO
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_GENESISMETHOD=file
+      - ORDERER_GENERAL_GENESISFILE=/var/hyperledger/orderer/orderer.genesis.block
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+      - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/orderer/msp
+      - ORDERER_GENERAL_TLS_ENABLED=false
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+    command: orderer
+    volumes:
+    - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+    - ../crypto-config/ordererOrganizations/pi.elisabeth.com/orderers/orderer.pi.elisabeth.com/msp:/var/hyperledger/orderer/msp
+    #- ../crypto-config/ordererOrganizations/pi.elisabeth.com/orderers/orderer.pi.elisabeth.com/tls/:/var/hyperledger/orderer/tls
+    - orderer.pi.elisabeth.com:/var/hyperledger/production/orderer
+    ports:
+      - 7050:7050
+
+  peer0.famaf.pi.elisabeth.com:
+    container_name: peer0.famaf.pi.elisabeth.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.famaf.pi.elisabeth.com
+      - CORE_PEER_ADDRESS=peer0.famaf.pi.elisabeth.com:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.famaf.pi.elisabeth.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.famaf.pi.elisabeth.com:7051
+      - CORE_PEER_LOCALMSPID=famafMSP
+      - CORE_PEER_MSPCONFIGPATH =/etc/hyperledger/fabric/msp
+      - CORE_CHAINCODE_DEPLOYTIMEOUT=300s
+      - CORE_CHAINCODE_STARTUPTIMEOUT=300s
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../channel-artifacts:/etc/hyperledger/configtx
+        - ../crypto-config/peerOrganizations/famaf.pi.elisabeth.com/peers/peer0.famaf.pi.elisabeth.com/msp:/etc/hyperledger/fabric/msp
+        #- ../crypto-config/peerOrganizations/famaf.pi.elisabeth.com/peers/peer0.famaf.pi.elisabeth.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.famaf.pi.elisabeth.com:/var/hyperledger/production
+    ports:
+      - 7051:7051
+      - 7053:7053
+
+  peer1.famaf.pi.elisabeth.com:
+    container_name: peer1.famaf.pi.elisabeth.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.famaf.pi.elisabeth.com
+      - CORE_PEER_ADDRESS=peer1.famaf.pi.elisabeth.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.famaf.pi.elisabeth.com:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.famaf.pi.elisabeth.com:7051
+      - CORE_PEER_LOCALMSPID=famafMSP
+      - CORE_PEER_MSPCONFIGPATH =/etc/hyperledger/fabric/msp
+      - CORE_CHAINCODE_DEPLOYTIMEOUT=300s
+      - CORE_CHAINCODE_STARTUPTIMEOUT=300s
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../channel-artifacts:/etc/hyperledger/configtx
+        - ../crypto-config/peerOrganizations/famaf.pi.elisabeth.com/peers/peer1.famaf.pi.elisabeth.com/msp:/etc/hyperledger/fabric/msp
+        #- ../crypto-config/peerOrganizations/famaf.pi.elisabeth.com/peers/peer1.famaf.pi.elisabeth.com/tls:/etc/hyperledger/fabric/tls
+        - peer1.famaf.pi.elisabeth.com:/var/hyperledger/production
+
+    ports:
+      - 8051:7051
+      - 8053:7053
+
+  peer0.fcefyn.pi.elisabeth.com:
+    container_name: peer0.fcefyn.pi.elisabeth.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.fcefyn.pi.elisabeth.com
+      - CORE_PEER_ADDRESS=peer0.fcefyn.pi.elisabeth.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.fcefyn.pi.elisabeth.com:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.fcefyn.pi.elisabeth.com:7051
+      - CORE_PEER_LOCALMSPID=fcefynMSP
+      - CORE_PEER_MSPCONFIGPATH =/etc/hyperledger/fabric/msp
+      - CORE_CHAINCODE_DEPLOYTIMEOUT=300s
+      - CORE_CHAINCODE_STARTUPTIMEOUT=300s
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../channel-artifacts:/etc/hyperledger/configtx
+        - ../crypto-config/peerOrganizations/fcefyn.pi.elisabeth.com/peers/peer0.fcefyn.pi.elisabeth.com/msp:/etc/hyperledger/fabric/msp
+        - peer0.fcefyn.pi.elisabeth.com:/var/hyperledger/production
+    ports:
+      - 9051:7051
+      - 9053:7053
+
+  peer1.fcefyn.pi.elisabeth.com:
+    container_name: peer1.fcefyn.pi.elisabeth.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.fcefyn.pi.elisabeth.com
+      - CORE_PEER_ADDRESS=peer1.fcefyn.pi.elisabeth.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.fcefyn.pi.elisabeth.com:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.fcefyn.pi.elisabeth.com:7051
+      - CORE_PEER_LOCALMSPID=fcefynMSP
+      - CORE_PEER_MSPCONFIGPATH =/etc/hyperledger/fabric/msp
+      - CORE_CHAINCODE_DEPLOYTIMEOUT=300s
+      - CORE_CHAINCODE_STARTUPTIMEOUT=300s
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../channel-artifacts:/etc/hyperledger/configtx
+        - ../crypto-config/peerOrganizations/fcefyn.pi.elisabeth.com/peers/peer1.fcefyn.pi.elisabeth.com/msp:/etc/hyperledger/fabric/msp
+        #- ../crypto-config/peerOrganizations/fcefyn.pi.elisabeth.com/peers/peer1.fcefyn.pi.elisabeth.com/tls:/etc/hyperledger/fabric/tls
+        - peer1.fcefyn.pi.elisabeth.com:/var/hyperledger/production
+    ports:
+      - 10051:7051
+      - 10053:7053
+
+  peer0.fcq.pi.elisabeth.com:
+    container_name: peer0.fcq.pi.elisabeth.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.fcq.pi.elisabeth.com
+      - CORE_PEER_ADDRESS=peer0.fcq.pi.elisabeth.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.fcq.pi.elisabeth.com:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.fcq.pi.elisabeth.com:7051
+      - CORE_PEER_LOCALMSPID=fcqMSP
+      - CORE_PEER_MSPCONFIGPATH =/etc/hyperledger/fabric/msp
+      - CORE_CHAINCODE_DEPLOYTIMEOUT=300s
+      - CORE_CHAINCODE_STARTUPTIMEOUT=300s
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../channel-artifacts:/etc/hyperledger/configtx
+        - ../crypto-config/peerOrganizations/fcq.pi.elisabeth.com/peers/peer0.fcq.pi.elisabeth.com/msp:/etc/hyperledger/fabric/msp
+        #- ../crypto-config/peerOrganizations/fcq.pi.elisabeth.com/peers/peer0.fcq.pi.elisabeth.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.fcq.pi.elisabeth.com:/var/hyperledger/production
+    ports:
+      - 11051:7051
+      - 11053:7053
+
+  peer1.fcq.pi.elisabeth.com:
+    container_name: peer1.fcq.pi.elisabeth.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.fcq.pi.elisabeth.com
+      - CORE_PEER_ADDRESS=peer1.fcq.pi.elisabeth.com:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.fcq.pi.elisabeth.com:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.fcq.pi.elisabeth.com:7051
+      - CORE_PEER_LOCALMSPID=fcqMSP
+      - CORE_PEER_MSPCONFIGPATH =/etc/hyperledger/fabric/msp
+      - CORE_CHAINCODE_DEPLOYTIMEOUT=300s
+      - CORE_CHAINCODE_STARTUPTIMEOUT=300s
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../channel-artifacts:/etc/hyperledger/configtx
+        - ../crypto-config/peerOrganizations/fcq.pi.elisabeth.com/peers/peer1.fcq.pi.elisabeth.com/msp:/etc/hyperledger/fabric/msp
+        #- ../crypto-config/peerOrganizations/fcq.pi.elisabeth.com/peers/peer1.fcq.pi.elisabeth.com/tls:/etc/hyperledger/fabric/tls
+        - peer1.fcq.pi.elisabeth.com:/var/hyperledger/production
+    ports:
+      - 12051:7051
+      - 12053:7053

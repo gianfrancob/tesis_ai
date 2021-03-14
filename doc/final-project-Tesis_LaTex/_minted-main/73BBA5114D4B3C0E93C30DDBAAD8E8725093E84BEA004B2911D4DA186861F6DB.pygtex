@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{} tar \PYGZhy{}C /usr/local \PYGZhy{}xzf go1.11.12.linux\PYGZhy{}amd64.tar.gz
+\end{Verbatim}

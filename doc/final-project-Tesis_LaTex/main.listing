@@ -1,0 +1,31 @@
+  OrdererOrgs:
+        - Name: Orderer
+            Domain: pi.elisabeth.com
+            Specs:
+            - Hostname: orderer
+
+  PeerOrgs:
+        - Name: fcefyn
+            Domain: fcefyn.pi.elisabeth.com
+            EnableNodeOUs: true
+            Template:
+                Count: 2
+            Users:
+                Count: 0
+
+        - Name: famaf
+            Domain: famaf.pi.elisabeth.com
+            EnableNodeOUs: true
+            Template:
+            Count: 2
+            Users:
+            Count: 0
+
+        - Name: fcq
+            Domain: fcq.pi.elisabeth.com
+            EnableNodeOUs: true
+            Template:
+            Count: 2
+            Users:
+            Count: 0
+	

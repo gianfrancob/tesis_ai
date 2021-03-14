@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{} git clone https://github.com/hyperledger/fabric\PYGZhy{}samples.git
+\PYGZdl{} \PYG{n+nb}{cd} fabric\PYGZhy{}samples/scripts \PYG{o}{\PYGZam{}\PYGZam{}} ./bootstrap.sh
+\end{Verbatim}

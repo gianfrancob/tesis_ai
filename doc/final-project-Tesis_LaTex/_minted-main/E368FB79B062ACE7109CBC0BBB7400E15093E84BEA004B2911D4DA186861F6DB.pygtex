@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo curl \PYGZhy{}L \PYG{l+s+s2}{\PYGZdq{}https://github.com/docker/compose/releases/download/1.18.0/docker\PYGZhy{}compose\PYGZhy{}}\PYG{k}{\PYGZdl{}(}uname \PYGZhy{}s\PYG{k}{)}\PYG{l+s+s2}{\PYGZhy{}}\PYG{k}{\PYGZdl{}(}uname \PYGZhy{}m\PYG{k}{)}\PYG{l+s+s2}{\PYGZdq{}} \PYGZhy{}o /usr/local/bin/docker\PYGZhy{}compose
+\PYGZdl{} sudo chmod +x /usr/local/bin/docker\PYGZhy{}compose
+\end{Verbatim}

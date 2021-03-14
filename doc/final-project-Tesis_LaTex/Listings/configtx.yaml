@@ -1,0 +1,163 @@
+Organizations:
+    - &OrdererOrg
+        Name: OrdererOrg
+        ID: OrdererMSP
+        MSPDir: crypto-config/ordererOrganizations/pi.elisabeth.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('OrdererMSP.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('OrdererMSP.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('OrdererMSP.admin')"
+
+    - &fcefyn
+        Name: fcefynMSP
+        ID: fcefynMSP
+        MSPDir: crypto-config/peerOrganizations/fcefyn.pi.elisabeth.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('fcefynMSP.admin', 'fcefynMSP.member', 'fcefynMSP.peer', 'fcefynMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('fcefynMSP.admin', 'fcefynMSP.member', 'fcefynMSP.peer', 'fcefynMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('fcefynMSP.admin')"
+        AnchorPeers:
+            - Host: peer0.fcefyn.pi.elisabeth.com
+              Port: 7051
+
+    - &famaf
+        Name: famafMSP
+        ID: famafMSP
+        MSPDir: crypto-config/peerOrganizations/famaf.pi.elisabeth.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('famafMSP.admin', 'famafMSP.member', 'famafMSP.peer', 'famafMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('famafMSP.admin', 'famafMSP.member', 'famafMSP.peer', 'famafMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('famafMSP.admin')"
+        AnchorPeers:
+            - Host: peer0.famaf.pi.elisabeth.com
+              Port: 7051
+
+    - &fcq
+        Name: fcqMSP
+        ID: fcqMSP
+        MSPDir: crypto-config/peerOrganizations/fcq.pi.elisabeth.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('fcqMSP.admin', 'fcqMSP.member', 'fcqMSP.peer', 'fcqMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('fcqMSP.admin', 'fcqMSP.member', 'fcqMSP.peer', 'fcqMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('fcqMSP.admin')"
+        AnchorPeers:
+            - Host: peer0.fcq.pi.elisabeth.com
+              Port: 7051
+
+Capabilities:
+    Channel: &ChannelCapabilities
+        V1_3: true
+    Orderer: &OrdererCapabilities
+        V1_1: true
+    Application: &ApplicationCapabilities
+        V1_3: true
+        V1_2: false
+        V1_1: false
+
+Application: &ApplicationDefaults
+    Organizations:
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+
+    Capabilities:
+        <<: *ApplicationCapabilities
+
+Orderer: &OrdererDefaults
+    OrdererType: solo
+    Addresses:
+        - orderer.pi.elisabeth.com:7050
+    BatchTimeout: 2s
+    BatchSize:
+        MaxMessageCount: 10
+        AbsoluteMaxBytes: 99 MB
+        PreferredMaxBytes: 512 KB
+    Kafka:
+        Brokers:
+            - 127.0.0.1:9092
+    Organizations:
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+        BlockValidation:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+
+Channel: &ChannelDefaults
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+
+    Capabilities:
+        <<: *ChannelCapabilities
+
+Profiles:
+    OrgsOrdererGenesis:
+        <<: *ChannelDefaults
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *OrdererOrg
+            Capabilities:
+                <<: *OrdererCapabilities
+        Consortiums:
+            PiConsortium:
+                Organizations:
+                    - *fcefyn
+                    - *famaf
+                    - *fcq
+    OrgsChannel:
+        Consortium: PiConsortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *fcefyn
+                - *famaf
+                - *fcq
+            Capabilities:
+                <<: *ApplicationCapabilities
