@@ -1,5 +1,6 @@
 import os
 import cv2
+import itertools
 
 def loadImages(path):
     # Load images from path
@@ -42,11 +43,19 @@ def mergeImage(front, back, pos):
     alpha_front = front_cropped[:,:,3:4] / 255
     alpha_back = back_cropped[:,:,3:4] / 255
     
+    print("front_cropped Y: ", front_cropped.shape[0])
+    print("front_cropped X: ", front_cropped.shape[1])
+    print("alpha_front Y: ", alpha_front.shape[0])
+    print("alpha_front X: ", alpha_front.shape[1])
     # replace an area in result with overlay
     result = back.copy()
     print(f'af: {alpha_front.shape}\nab: {alpha_back.shape}\nfront_cropped: {front_cropped.shape}\nback_cropped: {back_cropped.shape}')
     result[y1:y2, x1:x2, :3] = alpha_front * front_cropped[:,:,:3] + (1-alpha_front) * back_cropped[:,:,:3]
     result[y1:y2, x1:x2, 3:4] = (alpha_front + alpha_back) / (1 + alpha_front*alpha_back) * 255
+
+
+    cv2.imshow('image', result)
+    cv2.waitKey(0)
 
     return result
 
@@ -55,14 +64,16 @@ def mergeImages(foregrounds, backgrounds):
 
     results = []
     for front in [foregrounds[10]]:
+        v_offset = int(front.shape[0] / 2)
+        h_offset = int(front.shape[1] / 2)
         for back in [backgrounds[0]]:
-            positions = []
+            v_step = int((back.shape[0] + 2*v_offset) / 4)
+            h_step = int((back.shape[1] + 2*h_offset) / 4)
 
-            # TODO: Generate random point
-            x = int(back.shape[0] / 2)
-            y = int(back.shape[1] / 2)
+            y = range(-v_offset, back.shape[0] + v_offset, v_step)
+            x = range(-h_offset, back.shape[1] + h_offset, h_step)
 
-            positions += [(x, y)]
+            positions = list(itertools.product(x, y))
             for pos in positions:
                 results += [mergeImage(front, back, pos)]
 
@@ -80,8 +91,6 @@ def main(foregroundsPath, backgroundsPath, outputPath):
     # backgrounds += generateFakeBackgrounds()
 
     mergedImages = mergeImages(foregrounds, backgrounds)
-    cv2.imshow('image', mergedImages[0])
-    cv2.waitKey(0)
 
     # saveDataset(outputPath)
 
