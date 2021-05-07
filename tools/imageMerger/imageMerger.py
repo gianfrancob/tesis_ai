@@ -74,38 +74,41 @@ def mergeImage(front, back, pos):
 
             bb = (xmin, ymin, xmax, ymax)
 
-            return (result, bb)
+            return result, bb
 
 def mergeImages(foregrounds, backgrounds):
     # Paste image over background in random place and calculate BB
-
     results = []
-    for front in foregrounds[0:4]:
+    for front in foregrounds[0:1]:
         v_offset = int(front.shape[0]) # / 2
         h_offset = int(front.shape[1]) # / 2
-        for back in backgrounds[0:2]:
+        for back in backgrounds[0:1]:
             v_step = int((back.shape[0] + 2*v_offset) / 8)
             h_step = int((back.shape[1] + 2*h_offset) / 8)
-            print("v_step: ", v_step)
-            print("h_step: ", h_step)
 
             y = range(-v_offset, back.shape[0] + v_offset, v_step)
             x = range(-h_offset, back.shape[1] + h_offset, h_step)
-            print("y range: ", *y)
-            print("x range: ", *x)
-
 
             positions = list(itertools.product(x, y))
             for pos in positions:
-                results += [mergeImage(front, back, pos)]
+                img = mergeImage(front, back, pos)
+                if type(img) != type(None):
+                    results += [img]
 
     return results
-'''
-def saveDataset(outputPath):
+
+def saveDataset(data, className, outputPath, extension="JPG"):
     # Save dataset in the give path
     # It saves all tyhe images with it's corresponding label file
-'''
-def main(foregroundsPath, backgroundsPath, outputPath):
+    for i in range(len(data)):
+        name = outputPath + f'{className}/{className}_{i}'
+        img, label = data[i]
+        with open(f'{name}.txt', 'w') as labelFile:
+            cv2.imwrite(f'{name}.{extension}', img)
+            labelFile.write(f'{className}/{className} {label[0]} {label[1]} {label[2]} {label[3]}')
+
+
+def main(foregroundsPath, backgroundsPath, className, outputPath):
     foregrounds = loadImages(foregroundsPath)
     # foregrounds = augmentData(foregrounds)
 
@@ -115,7 +118,7 @@ def main(foregroundsPath, backgroundsPath, outputPath):
 
     mergedImages = mergeImages(foregrounds, backgrounds)
 
-    # saveDataset(outputPath)
+    saveDataset(mergedImages, className, outputPath)
 
 if __name__ == "__main__":
     import argparse
@@ -125,8 +128,10 @@ if __name__ == "__main__":
                         help='the path to foregrounds')
     parser.add_argument('--backgrounds', metavar='path', required=True,
                         help='path to backgrounds')
+    parser.add_argument('--className', required=True,
+                        help='name of the class')
     parser.add_argument('--output', metavar='path', required=True,
                         help='path to output dataset')
     args = parser.parse_args()
     
-    main(args.foregrounds, args.backgrounds, args.output)
+    main(args.foregrounds, args.backgrounds, args.className, args.output)
