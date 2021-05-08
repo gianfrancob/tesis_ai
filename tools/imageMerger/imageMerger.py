@@ -1,6 +1,7 @@
 import os
 import cv2
 import itertools
+import numpy as np
 
 def loadImages(path):
     # Load images from path
@@ -10,10 +11,23 @@ def loadImages(path):
         if img is not None:
             images.append(img)
     return images
-'''
-def generateFakeBackgrounds():
-    # Generate background images from scratch
 
+def generateFakeBackgrounds(outputPath):
+    # Generate background images from scratch
+    for red in range(0, 257, 64):
+        for blue in range(0, 257, 64):
+            for green in range(0, 257, 64):
+                # Create a blank 300x300 black image
+                image = np.zeros((300, 300, 3), np.uint8)
+                # Fill image with red color(set each pixel to red)
+                red = 255 if red == 256 else red
+                green = 255 if green == 256 else green
+                blue = 255 if blue == 256 else blue
+                image[:] = (blue, green, red)
+                cv2.imwrite(f'{outputPath}/R{red}G{green}B{blue}.PNG', image)
+
+
+'''
 def augmentData(images):
     # Apply image transformations to images
     # - Rotation
@@ -114,7 +128,9 @@ def main(foregroundsPath, backgroundsPath, className, outputPath):
 
     backgrounds = loadImages(backgroundsPath)
     # backgrounds = augmentData(backgrounds)
-    # backgrounds += generateFakeBackgrounds()
+    fakeBackgroundsPath = "./fakeBackgounds"
+    # generateFakeBackgrounds(fakeBackgroundsPath)
+    backgrounds += loadImages(fakeBackgroundsPath)
 
     mergedImages = mergeImages(foregrounds, backgrounds)
 
