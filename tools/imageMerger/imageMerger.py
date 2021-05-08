@@ -60,7 +60,7 @@ def mergeImage(front, back, pos):
     x_min = xmin-x
     x_max = xmax-x
     if (y_min >= 0 and y_max >= 0 and x_min >= 0 and x_max >= 0):
-        if (y_max - y_min >= fh/4 and x_max - x_min >= fw/4 ):
+        if (y_max - y_min >= fh/3 and x_max - x_min >= fw/3 ):
             front_cropped = front[y_min:y_max, x_min:x_max]
             back_cropped = back[ymin:ymax, xmin:xmax]
 
@@ -89,32 +89,35 @@ def mergeImage(front, back, pos):
 
             return result, bb
 
-def mergeImages(foregrounds, backgrounds):
+def mergeImages(foregrounds, backgrounds, className, outputPath):
     # Paste image over background in random place and calculate BB
-    defaultBackgroundSize = 800
-    defaultForegroundScalePercentOverBrackground = defaultBackgroundSize * 1.0
-    results = []
-    for front in foregrounds:
+    defaultBackgroundSize = 416
+    defaultForegroundScalePercentOverBrackground = defaultBackgroundSize * 0.9
+    # results = []
+    imgNum = 0
+    for front in foregrounds[:30]:
         # Normalize foreground images
-        fWidth = int(front.shape[1] * defaultForegroundScalePercentOverBrackground / defaultBackgroundSize)
-        fHeight = int(front.shape[0] * defaultForegroundScalePercentOverBrackground / defaultBackgroundSize)
-        frontSize = (fWidth, fHeight)
+        frontHeight = front.shape[0]
+        frontWidth = front.shape[1]
+        fResizeWidth = int(defaultForegroundScalePercentOverBrackground)
+        fResizeHeight = int(defaultForegroundScalePercentOverBrackground * frontHeight/frontWidth)
+        frontSize = (fResizeWidth, fResizeHeight)
         front = cv2.resize(front, frontSize)
 
         # Calculate the offset of the foreground over the background
-        v_offset = int(front.shape[0]) # / 2
-        h_offset = int(front.shape[1]) # / 2
+        v_offset = int(front.shape[0] / 2)
+        h_offset = int(front.shape[1] / 2)
         
-        for back in backgrounds:
+        for back in backgrounds[:30]:
             # Normalize background images
-            bWidth = defaultBackgroundSize
-            bHeight = defaultBackgroundSize
-            backSize = (bWidth, bHeight)
+            bResizeWidth = defaultBackgroundSize
+            bResizeHeight = defaultBackgroundSize
+            backSize = (bResizeWidth, bResizeHeight)
             back = cv2.resize(back, backSize)
 
             # Calculate the shift
-            v_step = int((back.shape[0] + 2*v_offset) / 8)
-            h_step = int((back.shape[1] + 2*h_offset) / 8)
+            v_step = int((back.shape[0] + 2*v_offset) / 4) # Increase this number if you wan more granularity
+            h_step = int((back.shape[1] + 2*h_offset) / 4) # Increase this number if you wan more granularity
 
             # Calculate the positions
             y = range(-v_offset, back.shape[0] + v_offset, v_step)
@@ -124,15 +127,17 @@ def mergeImages(foregrounds, backgrounds):
             for pos in positions:
                 img = mergeImage(front, back, pos)
                 if type(img) != type(None):
-                    results += [img]
+                    # results += [img]
+                    saveDataset([img], className, outputPath, imgNum)
+                    imgNum += 1
 
-    return results
+    # return results
 
-def saveDataset(data, className, outputPath, extension="JPG"):
+def saveDataset(data, className, outputPath, imgNum, extension="JPG"):
     # Save dataset in the give path
     # It saves all tyhe images with it's corresponding label file
     for i in range(len(data)):
-        name = outputPath + f'{className}/{className}_{i}'
+        name = outputPath + f'{className}/{className}_{imgNum}'
         img, label = data[i]
         with open(f'{name}.txt', 'w') as labelFile:
             cv2.imwrite(f'{name}.{extension}', img)
@@ -157,9 +162,9 @@ def main(foregroundsPath, backgroundsPath, className, outputPath):
 
     print(f"Total foreground images: {len(foregrounds)}")
     print(f"Total backgrounds images: {len(backgrounds)}")
-    mergedImages = mergeImages(foregrounds, backgrounds)
+    mergedImages = mergeImages(foregrounds, backgrounds, className, outputPath)
 
-    saveDataset(mergedImages, className, outputPath)
+    # saveDataset(mergedImages, className, outputPath)
 
 if __name__ == "__main__":
     import argparse
