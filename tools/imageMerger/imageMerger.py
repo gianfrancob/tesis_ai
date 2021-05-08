@@ -2,6 +2,7 @@ import os
 import cv2
 import itertools
 import numpy as np
+import imageUtils
 
 def loadImages(path):
     # Load images from path
@@ -26,17 +27,15 @@ def generateFakeBackgrounds(outputPath):
                 image[:] = (blue, green, red)
                 cv2.imwrite(f'{outputPath}/R{red}G{green}B{blue}.PNG', image)
 
-
-'''
 def augmentData(images):
     # Apply image transformations to images
-    # - Rotation
-    # - Size
-    # - Crop
-    # - Colour: Saturation, brightness
-    # - Noise
-    
-'''
+    for img in images:
+        # img = imageUtils.brightness(img, 0.8, 1.2)
+        # img = imageUtils.channel_shift(img, 60)
+        img = imageUtils.horizontal_flip(img, True)
+        img = imageUtils.vertical_flip(img, True)
+        img = imageUtils.rotation(img, 30)
+    return images
 
 '''
 This function paste a foregrond image over abackground image in a given position
@@ -68,23 +67,23 @@ def mergeImage(front, back, pos):
             alpha_front = front_cropped[:,:,3:4] / 255
             alpha_back = back_cropped[:,:,3:4] / 255
             
-            print("ymin:ymax ", ymin, ":", ymax)
-            print("xmin:xmax ", xmin, ":", xmax)
-            print("ymin-y:ymax-y ", ymin-y, ":", ymax-y)
-            print("xmin-x:xmax-x ", xmin-x, ":", xmax-x)
-            print("front_cropped Y: ", front_cropped.shape[0])
-            print("front_cropped X: ", front_cropped.shape[1])
-            print("alpha_front Y: ", alpha_front.shape[0])
-            print("alpha_front X: ", alpha_front.shape[1])
+            # print("ymin:ymax ", ymin, ":", ymax)
+            # print("xmin:xmax ", xmin, ":", xmax)
+            # print("ymin-y:ymax-y ", ymin-y, ":", ymax-y)
+            # print("xmin-x:xmax-x ", xmin-x, ":", xmax-x)
+            # print("front_cropped Y: ", front_cropped.shape[0])
+            # print("front_cropped X: ", front_cropped.shape[1])
+            # print("alpha_front Y: ", alpha_front.shape[0])
+            # print("alpha_front X: ", alpha_front.shape[1])
             # replace an area in result with overlay
             result = back.copy()
-            print(f'af: {alpha_front.shape}\nab: {alpha_back.shape}\nfront_cropped: {front_cropped.shape}\nback_cropped: {back_cropped.shape}')
+            # print(f'af: {alpha_front.shape}\nab: {alpha_back.shape}\nfront_cropped: {front_cropped.shape}\nback_cropped: {back_cropped.shape}')
             result[ymin:ymax, xmin:xmax, :3] = alpha_front * front_cropped[:,:,:3] + (1-alpha_front) * back_cropped[:,:,:3]
             result[ymin:ymax, xmin:xmax, 3:4] = (alpha_front + alpha_back) / (1 + alpha_front*alpha_back) * 255
 
 
-            cv2.imshow('image', result)
-            cv2.waitKey(0)
+            # cv2.imshow('image', result)
+            # cv2.waitKey(0)
 
             bb = (xmin, ymin, xmax, ymax)
 
@@ -92,14 +91,32 @@ def mergeImage(front, back, pos):
 
 def mergeImages(foregrounds, backgrounds):
     # Paste image over background in random place and calculate BB
+    defaultBackgroundSize = 800
+    defaultForegroundScalePercentOverBrackground = defaultBackgroundSize * 1.0
     results = []
-    for front in foregrounds[0:1]:
+    for front in foregrounds:
+        # Normalize foreground images
+        fWidth = int(front.shape[1] * defaultForegroundScalePercentOverBrackground / defaultBackgroundSize)
+        fHeight = int(front.shape[0] * defaultForegroundScalePercentOverBrackground / defaultBackgroundSize)
+        frontSize = (fWidth, fHeight)
+        front = cv2.resize(front, frontSize)
+
+        # Calculate the offset of the foreground over the background
         v_offset = int(front.shape[0]) # / 2
         h_offset = int(front.shape[1]) # / 2
-        for back in backgrounds[0:1]:
+        
+        for back in backgrounds:
+            # Normalize background images
+            bWidth = defaultBackgroundSize
+            bHeight = defaultBackgroundSize
+            backSize = (bWidth, bHeight)
+            back = cv2.resize(back, backSize)
+
+            # Calculate the shift
             v_step = int((back.shape[0] + 2*v_offset) / 8)
             h_step = int((back.shape[1] + 2*h_offset) / 8)
 
+            # Calculate the positions
             y = range(-v_offset, back.shape[0] + v_offset, v_step)
             x = range(-h_offset, back.shape[1] + h_offset, h_step)
 
@@ -119,19 +136,27 @@ def saveDataset(data, className, outputPath, extension="JPG"):
         img, label = data[i]
         with open(f'{name}.txt', 'w') as labelFile:
             cv2.imwrite(f'{name}.{extension}', img)
-            labelFile.write(f'{className}/{className} {label[0]} {label[1]} {label[2]} {label[3]}')
+            labelFile.write(f'{className} {label[0]} {label[1]} {label[2]} {label[3]}')
 
 
 def main(foregroundsPath, backgroundsPath, className, outputPath):
     foregrounds = loadImages(foregroundsPath)
-    # foregrounds = augmentData(foregrounds)
+    print(f"Loaded {len(foregrounds)} {className} foreground images")
+    foregrounds += augmentData(foregrounds)
+    print(f"Augmented {className} foreground images: {len(foregrounds)}")
 
     backgrounds = loadImages(backgroundsPath)
-    # backgrounds = augmentData(backgrounds)
+    print(f"Loaded {len(backgrounds)} backgrounds images")
+    backgrounds += augmentData(backgrounds)
+    print(f"Augmented backgrounds images: {len(backgrounds)}")
     fakeBackgroundsPath = "./fakeBackgounds"
-    # generateFakeBackgrounds(fakeBackgroundsPath)
-    backgrounds += loadImages(fakeBackgroundsPath)
+    # generateFakeBackgrounds(fakeBackgroundsPath) # This should be executed once to generate fake backgrounds
+    fakeBackgrounds = loadImages(fakeBackgroundsPath)
+    print(f"Loaded {len(fakeBackgrounds)} fake backgrounds images")
+    backgrounds += fakeBackgrounds
 
+    print(f"Total foreground images: {len(foregrounds)}")
+    print(f"Total backgrounds images: {len(backgrounds)}")
     mergedImages = mergeImages(foregrounds, backgrounds)
 
     saveDataset(mergedImages, className, outputPath)
