@@ -161,7 +161,7 @@ def saveDataset(data, className, outputPath, imgNum, extension="JPG"):
 
 
 def main(foregroundsPath, backgroundsPath, className, outputPath):
-    foregrounds = loadImages(foregroundsPath)[7:8]
+    foregrounds = loadImages(foregroundsPath)
     print(f"Loaded {len(foregrounds)} {className} foreground images")
     foregrounds += augmentData(foregrounds)
     print(f"Augmented {className} foreground images: {len(foregrounds)}")
