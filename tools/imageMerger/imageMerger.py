@@ -170,13 +170,13 @@ def main(foregroundsPath, backgroundsPath, className, outputPath):
         cv2.imshow(" -------- front", front)
         cv2.waitKey(0)
 
-    backgrounds = loadImages(backgroundsPath)[0:1]
+    backgrounds = loadImages(backgroundsPath)
     print(f"Loaded {len(backgrounds)} backgrounds images")
     backgrounds += augmentData(backgrounds, rotation=False)
     print(f"Augmented backgrounds images: {len(backgrounds)}")
     fakeBackgroundsPath = "./fakeBackgounds"
     # generateFakeBackgrounds(fakeBackgroundsPath) # This should be executed once to generate fake backgrounds
-    fakeBackgrounds = loadImages(fakeBackgroundsPath)[0:1]
+    fakeBackgrounds = loadImages(fakeBackgroundsPath)
     print(f"Loaded {len(fakeBackgrounds)} fake backgrounds images")
     backgrounds += fakeBackgrounds
 
