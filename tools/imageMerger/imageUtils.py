@@ -36,14 +36,10 @@ def vertical_flip(img, flag):
         return img
 
 def rotation(img, angle):
-    cv2.imshow("before Rotation", img)
-    cv2.waitKey(0)
     angle = int(random.uniform(-angle, angle))
     h, w = img.shape[:2]
     M = cv2.getRotationMatrix2D((int(w/2), int(h/2)), angle, 1)
     img = cv2.warpAffine(img, M, (w, h), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_TRANSPARENT)
-    cv2.imshow("after Rotation", img)
-    cv2.waitKey(0)
     return img
 
 def rotation2(image, angle):

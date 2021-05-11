@@ -65,11 +65,8 @@ def mergeImage(front, back, pos):
     x_max = xmax-x
 
 
-    cv2.imshow("front", front)
-    cv2.waitKey(0)
     if (y_min >= 0 and y_max >= 0 and x_min >= 0 and x_max >= 0):
         if (y_max - y_min >= fh/3 and x_max - x_min >= fw/3 ):
-            print("HOLA")
             front_cropped = front[y_min:y_max, x_min:x_max]
             back_cropped = back[ymin:ymax, xmin:xmax]
 
@@ -118,8 +115,6 @@ def mergeImages(foregrounds, backgrounds, className, outputPath):
         frontSize = (fResizeWidth, fResizeHeight)
         front = cv2.resize(front, frontSize)
 
-        cv2.imshow("front", front)
-        cv2.waitKey(0)
         # Calculate the offset of the foreground over the background
         v_offset = int(front.shape[0] / 2)
         h_offset = int(front.shape[1] / 2)
@@ -165,10 +160,6 @@ def main(foregroundsPath, backgroundsPath, className, outputPath):
     print(f"Loaded {len(foregrounds)} {className} foreground images")
     foregrounds += augmentData(foregrounds)
     print(f"Augmented {className} foreground images: {len(foregrounds)}")
-
-    for front in foregrounds:
-        cv2.imshow(" -------- front", front)
-        cv2.waitKey(0)
 
     backgrounds = loadImages(backgroundsPath)
     print(f"Loaded {len(backgrounds)} backgrounds images")
