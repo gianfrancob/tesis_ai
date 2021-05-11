@@ -27,15 +27,19 @@ def generateFakeBackgrounds(outputPath):
                 image[:] = (blue, green, red)
                 cv2.imwrite(f'{outputPath}/R{red}G{green}B{blue}.PNG', image)
 
-def augmentData(images):
+def augmentData(images, rotation=True):
     # Apply image transformations to images
+    augImages = []
     for img in images:
         # img = imageUtils.brightness(img, 0.8, 1.2)
         # img = imageUtils.channel_shift(img, 60)
         img = imageUtils.horizontal_flip(img, True)
         img = imageUtils.vertical_flip(img, True)
-        img = imageUtils.rotation(img, 30)
-    return images
+        # img = imageUtils.rotation(img, 30)
+        if rotation:
+            img = imageUtils.rotation2(img, 90)
+        augImages += [img]
+    return augImages
 
 '''
 This function paste a foregrond image over abackground image in a given position
@@ -59,8 +63,13 @@ def mergeImage(front, back, pos):
     y_max = ymax-y
     x_min = xmin-x
     x_max = xmax-x
+
+
+    cv2.imshow("front", front)
+    cv2.waitKey(0)
     if (y_min >= 0 and y_max >= 0 and x_min >= 0 and x_max >= 0):
         if (y_max - y_min >= fh/3 and x_max - x_min >= fw/3 ):
+            print("HOLA")
             front_cropped = front[y_min:y_max, x_min:x_max]
             back_cropped = back[ymin:ymax, xmin:xmax]
 
@@ -95,20 +104,27 @@ def mergeImages(foregrounds, backgrounds, className, outputPath):
     defaultForegroundScalePercentOverBrackground = defaultBackgroundSize * 0.9
     # results = []
     imgNum = 0
-    for front in foregrounds[:30]:
+    for front in foregrounds:
         # Normalize foreground images
         frontHeight = front.shape[0]
         frontWidth = front.shape[1]
+
         fResizeWidth = int(defaultForegroundScalePercentOverBrackground)
         fResizeHeight = int(defaultForegroundScalePercentOverBrackground * frontHeight/frontWidth)
+        if (className == "Silobolsa"):
+            if (frontHeight > frontWidth): # Is vertical
+                fResizeWidth = int(defaultForegroundScalePercentOverBrackground * frontWidth/frontHeight)
+                fResizeHeight = int(defaultForegroundScalePercentOverBrackground)
         frontSize = (fResizeWidth, fResizeHeight)
         front = cv2.resize(front, frontSize)
 
+        cv2.imshow("front", front)
+        cv2.waitKey(0)
         # Calculate the offset of the foreground over the background
         v_offset = int(front.shape[0] / 2)
         h_offset = int(front.shape[1] / 2)
         
-        for back in backgrounds[:30]:
+        for back in backgrounds:
             # Normalize background images
             bResizeWidth = defaultBackgroundSize
             bResizeHeight = defaultBackgroundSize
@@ -145,18 +161,22 @@ def saveDataset(data, className, outputPath, imgNum, extension="JPG"):
 
 
 def main(foregroundsPath, backgroundsPath, className, outputPath):
-    foregrounds = loadImages(foregroundsPath)
+    foregrounds = loadImages(foregroundsPath)[7:8]
     print(f"Loaded {len(foregrounds)} {className} foreground images")
     foregrounds += augmentData(foregrounds)
     print(f"Augmented {className} foreground images: {len(foregrounds)}")
 
-    backgrounds = loadImages(backgroundsPath)
+    for front in foregrounds:
+        cv2.imshow(" -------- front", front)
+        cv2.waitKey(0)
+
+    backgrounds = loadImages(backgroundsPath)[0:1]
     print(f"Loaded {len(backgrounds)} backgrounds images")
-    backgrounds += augmentData(backgrounds)
+    backgrounds += augmentData(backgrounds, rotation=False)
     print(f"Augmented backgrounds images: {len(backgrounds)}")
     fakeBackgroundsPath = "./fakeBackgounds"
     # generateFakeBackgrounds(fakeBackgroundsPath) # This should be executed once to generate fake backgrounds
-    fakeBackgrounds = loadImages(fakeBackgroundsPath)
+    fakeBackgrounds = loadImages(fakeBackgroundsPath)[0:1]
     print(f"Loaded {len(fakeBackgrounds)} fake backgrounds images")
     backgrounds += fakeBackgrounds
 
