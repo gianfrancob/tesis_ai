@@ -25,6 +25,7 @@ flags.DEFINE_string('image', "None", 'path to input image')
 flags.DEFINE_string('tfrecord', './data/test/val2.tfrecord', 'tfrecord instead of image')
 flags.DEFINE_boolean('shuffle', False, 'tfrecord shuffle')
 flags.DEFINE_string('output', './output', 'path to output image')
+flags.DEFINE_string('outputLog', 'log.json', 'path to output logs')
 flags.DEFINE_integer('num_classes', 2, 'number of classes in the model')
 
 
@@ -130,7 +131,8 @@ def main(_argv):
 
     
     logging.info(json.dumps(logs, indent=2))
-    with open(f'{FLAGS.output}/logs_{datetime.now()}.json', 'w') as json_file:
+    log_file = f"{FLAGS.output}/{FLAGS.outputLog}" if FLAGS.outputLog.endswith(".json") else f"{FLAGS.output}/logs_{datetime.now()}.json"
+    with open(log_file, 'w') as json_file:
         json.dump(logs, json_file)
 
 

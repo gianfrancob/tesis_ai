@@ -11,7 +11,7 @@ flags.DEFINE_string('classes', './data/test/ps.names', 'path to classes file')
 flags.DEFINE_string('path', './tools/logs.json',
                     'path to json file with ground truth and detections')
 flags.DEFINE_integer('size', 416, 'images size')
-flags.DEFINE_string('outputLogPath', './tools/map.log.json', 'path to output log file')
+flags.DEFINE_string('output', './tools/map.log.json', 'path to output log file')
 flags.DEFINE_integer('num_classes', 2, 'number of classes in the model')
 
 
@@ -94,12 +94,12 @@ def main(_argv):
             for i in range(len(groundTruth)):
                 idx = i - ctr
                  # Build groun truth vector formatted in a way mAP could use it
-                label = groundTruth[idx][:4]
-                groundTruth[idx][:4] = getCoords(label, data["img_resize"], logs, "gt")
+                coords = groundTruth[idx][:4]
+                groundTruth[idx][:4] = getCoords(coords, data["img_resize"], logs, "gt")
                 groundTruth[idx] += [0, 0]
 
                 # Delete vectors full of zeros
-                if (functools.reduce(lambda a,b : a+b, label[0:3]) == 0):
+                if (functools.reduce(lambda a,b : a+b, coords[0:3]) == 0):
                     del groundTruth[idx]
                     ctr += 1
             gt += groundTruth
@@ -116,7 +116,7 @@ def main(_argv):
 
         # TODO: chequear gt y preds a ver xq son de dimension 0 para los logs de stock weights
         '''
-        (yolov3-tf2-gpu) root@727c9f86d38e:/workspace/shared_volume/tesis_ai/yolov3-tf2_gian# python tools/map_visualizer.py  --classes ./data/test/ps.names --path ./output/pivot_silobolsa/stock_weights/logs_2021-01-07\ 23\:52\:34.849503.json --outputLogPath ./output/pivot_silobolsa/stock_weights/
+        (yolov3-tf2-gpu) root@727c9f86d38e:/workspace/shared_volume/tesis_ai/yolov3-tf2_gian# python tools/map_visualizer.py  --classes ./data/test/ps.names --path ./output/pivot_silobolsa/stock_weights/logs_2021-01-07\ 23\:52\:34.849503.json --output ./output/pivot_silobolsa/stock_weights/
 Traceback (most recent call last):
   File "tools/map_visualizer.py", line 151, in <module>
     app.run(main)
@@ -160,7 +160,8 @@ ValueError: cannot reshape array of size 0 into shape (0,newaxis)
         print("COCO mAP: ", aux)
         logs["output"]["COCO mAP"] = str(aux)
 
-        with open(FLAGS.outputLogPath + "/map.log.json", "w") as f:
+        log_file = FLAGS.output if FLAGS.output.endswith(".json") else f"{FLAGS.output}/map_{datetime.now()}.log.json"
+        with open(log_file, "w") as f:
             json.dump(logs, f, indent=2)
 
         logFile.close()

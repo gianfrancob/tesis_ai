@@ -24,8 +24,8 @@ from .utils import broadcast_iou
 
 flags.DEFINE_integer('yolo_max_boxes', 220,
                      'maximum number of boxes per image')
-flags.DEFINE_float('yolo_iou_threshold', 0.5, 'iou threshold')
-flags.DEFINE_float('yolo_score_threshold', 0.5, 'score threshold')
+flags.DEFINE_float('yolo_iou_threshold', 0.5, 'iou threshold') # TODO: disminuir el valor de IoU
+flags.DEFINE_float('yolo_score_threshold', 0.5, 'score threshold') # TODO: disminuir el valor de score
 
 
 
@@ -39,9 +39,30 @@ Then, arrange the anchors is descending order of a dimension.
 Assign the three biggest anchors for the first scale , the next 
 three for the second scale, and the last three for the third.
 """
-yolo_anchors = np.array([(10, 13), (16, 30), (33, 23), (30, 61), (62, 45),
-                         (59, 119), (116, 90), (156, 198), (373, 326)],
-                        np.float32) / 416
+yolo_anchors = np.array([
+    (10, 13), (16, 30), (33, 23),
+    (30, 61), (62, 45), (59, 119),
+    (116, 90), (156, 198), (373, 326)
+], np.float32) / 416
+
+#yolo_anchors = np.array([
+#    (0.05, 0.05), (0.13, 0.13), (0.5, 0.1),
+#    (0.1, 0.5), (0.3, 0.3), (0.45, 0.45), 
+#    (0.5, 0.3), (0.3, 0.5), (0.75, 0.75)
+#    ], np.float32)
+    
+#yolo_anchors = np.array([
+#    (0.26, 0.13), (0.13, 0.26), (0.27, 0.27),
+#    (0.4, 0.2), (0.2, 0.4), (0.45, 0.45),
+#    (0.6, 0.4), (0.4, 0.6), (0.90, 0.90)
+#    ], np.float32)
+    
+#yolo_anchors = np.array([
+#    (0.02, 0.02), (0.065, 0.065), (0.15, 0.03),
+#    (0.1, 0.3), (0.2, 0.2), (0.225, 0.225),
+#    (0.3, 0.2), (0.35, 0.35), (0.425, 0.425)
+#    ], np.float32)
+
 yolo_anchor_masks = np.array([[6, 7, 8], [3, 4, 5], [0, 1, 2]])
 
 yolo_tiny_anchors = np.array([(10, 14), (23, 27), (37, 58),
