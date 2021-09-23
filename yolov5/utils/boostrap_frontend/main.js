@@ -35,12 +35,19 @@ const apiCaller = () => {
 
   $.ajax(settings).done(function (response) {
     console.log(response);
-    data["response"] = response;
+    // console.log(status);
+    const responseJson = JSON.parse(response);
+    console.log(responseJson);
+
+    // TODO: Trye to make  status code work. Add style to detected img. Show logs info
+    // if (status == 200) {
     $("#image-from-server").attr(
       "src",
-      "data:image/;base64," +
-        btoa(unescape(encodeURIComponent(data["response"])))
+      "data:image/png;base64," + responseJson.image
     );
+    $("#image-name").attr("src", responseJson.image_name);
+    $("#logs").attr("src", responseJson.logs);
+    // }
   });
 
   // $("#image-from-server").attr("src", "data:image/;base64," + data["response"]);
