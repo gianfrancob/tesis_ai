@@ -14,29 +14,37 @@ typewriter
 
 const apiCaller = () => {
   console.log("holaaaa");
-  console.log($("#formFile").val());
+  console.log("filename: ", $("#formFile").val());
 
-  //var data = {} // object to hold the user input data
-  // store user data in a data["pycatj_data"]
+  let data = {};
+  data["filename"] = $("#formFile").val();
+  data["uploadedFile"] = $("#formFile").prop("files")[0];
 
-  // data["uploadedFile"] = $('#formFile').val() // in case of JSON data - store it as an object
+  var form = new FormData();
+  form.append("image", data["uploadedFile"], data["filename"]);
 
-  //     var form = new FormData();
-  //     form.append("image", data["uploadedFile"], "riego1.png");
+  var settings = {
+    url: "http://localhost:5000/v1/img-object-detection/yolov5",
+    method: "POST",
+    timeout: 0,
+    processData: false,
+    mimeType: "multipart/form-data",
+    contentType: false,
+    data: form,
+  };
 
-  //     var settings = {
-  //       "url": "http://localhost:5000/v1/img-object-detection/yolov5",
-  //       "method": "POST",
-  //       "timeout": 0,
-  //       "processData": false,
-  //       "mimeType": "multipart/form-data",
-  //       "contentType": false,
-  //       "data": form
-  //       };
+  $.ajax(settings).done(function (response) {
+    console.log(response);
+    data["response"] = response;
+    $("#image-from-server").attr(
+      "src",
+      "data:image/;base64," +
+        btoa(unescape(encodeURIComponent(data["response"])))
+    );
+  });
 
-  // $.ajax(settings).done(function (response) {
-  //   console.log(response);
-  // });
+  // $("#image-from-server").attr("src", "data:image/;base64," + data["response"]);
+  // $("#image-from-server").attr("src", data["response"]);
 
   // todo: add root input element
   // data["root"] = "POST"
