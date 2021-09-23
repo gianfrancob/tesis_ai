@@ -5,6 +5,8 @@ import argparse
 import io
 import subprocess
 import torch
+import base64
+import json
 from PIL import Image
 from flask import Flask, request, send_file
 from flask_cors import CORS
@@ -19,28 +21,57 @@ VIDEO_DETECTION_URL = "/v1/video-object-detection/yolov5" # for webcam stream
 @app.route(IMG_DETECTION_URL, methods=["POST"])
 def predictImage():
     if not request.method == "POST":
-        return
+        return app.response_class(
+            status=400, 
+            mimetype='application/json',
+            response="Method must be POST"
+        )
 
-    if request.files.get("image"):
-        image_file = request.files["image"]
-        image_bytes = image_file.read()
-        img_name = str(image_file).split("FileStorage: '")[1].split("'")[0]
-        print("Load file: ", img_name ) # TODO: Printear info de la imagen y del modelo
-        save_path = f'./utils/flask_rest_api/postedImages/{img_name}'
-        img = Image.open(io.BytesIO(image_bytes))
-        img.save(save_path)
-        
-        logs = subprocess.run(["python3", "detect.py", "--weights", "yolov5s-best.pt", "--source", save_path, "--conf-thres", "0.65", "--augment", "--project", "runs/RESTapi", "--name", "results"])
-        
-        detected_img_path = f"./runs/RESTapi/results/{img_name}"
-        detected_img = Image.open(detected_img_path)
-        output = io.BytesIO()
-        detected_img.save(output, format='JPEG')
-        image_binary = output.getvalue()
-        
-        #subprocess.run(["rm", save_path])
-        
-        return send_file(io.BytesIO(image_binary), mimetype='image/jpeg', as_attachment=True, attachment_filename=f'detected_{img_name}')
+    try: 
+        if request.files.get("image"):
+            image_file = request.files["image"]
+            image_bytes = image_file.read()
+            img_name = str(image_file).split("FileStorage: '")[1].split("'")[0]
+            print("Load file: ", img_name ) # TODO: Printear info de la imagen y del modelo
+            save_path = f'./utils/flask_rest_api/postedImages/{img_name}'
+            img = Image.open(io.BytesIO(image_bytes))
+            img.save(save_path)
+            
+            logs = subprocess.run(["python3", "detect.py", "--weights", "yolov5s-best.pt", "--source", save_path, "--conf-thres", "0.65", "--augment", "--project", "runs/RESTapi", "--name", "results"], capture_output=True)
+            
+            detected_img_path = f"./runs/RESTapi/results/{img_name}"
+            detected_img = Image.open(detected_img_path)
+            output = io.BytesIO()
+            detected_img.save(output, format='PNG')
+            image_binary = output.getvalue()
+
+            # move to beginning of file so `send_file()` it will read from start    
+            output.seek(0)
+            
+            #subprocess.run(["rm", save_path])
+            
+        #        return send_file(io.BytesIO(image_binary), mimetype='image/jpeg', as_attachment=True, attachment_filename=f'detected_{img_name}')
+        #        return send_file(output, mimetype='image/png')
+            data = dict(
+                image_name=f'detected_{img_name}',
+                image=base64.encodebytes(image_binary).decode('ascii'),
+                logs=logs.stdout.decode('ascii')#,
+                # TODO: Separate and parse the logs: img size, nº and type of detections, time of detection, confidence threshold. Try to put CPU and GPU info
+            )
+            
+            response = app.response_class(
+                response=json.dumps(data),
+                status=200,
+                mimetype='application/json'
+            )
+            return response
+    except Exception as e:
+        print(f"Error! {e}")
+        return  app.response_class(
+            status=400, 
+            mimetype='application/json',
+            response=f"Detection failed. Error: {e}"
+        )
 
 # TODO: armar predictBulkImage
 def predictImageBulk():
