@@ -7,6 +7,7 @@ import subprocess
 import torch
 import base64
 import json
+import re
 from PIL import Image
 from flask import Flask, request, send_file
 from flask_cors import CORS
@@ -37,7 +38,7 @@ def predictImage():
             img = Image.open(io.BytesIO(image_bytes))
             img.save(save_path)
             
-            logs = subprocess.run(["python3", "detect.py", "--weights", "yolov5s-best.pt", "--source", save_path, "--conf-thres", "0.65", "--augment", "--project", "runs/RESTapi", "--name", "results"], capture_output=True)
+            raw_logs = subprocess.run(["python3", "detect.py", "--weights", "yolov5s-best.pt", "--source", save_path, "--conf-thres", "0.65", "--augment", "--project", "runs/RESTapi", "--name", "results"], stdout=subprocess.PIPE, text=True).stdout
             
             detected_img_path = f"./runs/RESTapi/results/{img_name}"
             detected_img = Image.open(detected_img_path)
@@ -52,10 +53,31 @@ def predictImage():
             
         #        return send_file(io.BytesIO(image_binary), mimetype='image/jpeg', as_attachment=True, attachment_filename=f'detected_{img_name}')
         #        return send_file(output, mimetype='image/png')
-            data = dict(
+            inference_logs = raw_logs.split(': ')[1].split(', Done')[0] # 416x640 5 pivots
+            detections = {}
+            pivots = re.findall("[0-9]+ pivot", inference_logs)
+            if len(pivots) > 0:
+                detections['pivots'] = pivots[0].split(' ')[0]
+            silobolsas = re.findall("[0-9]+ silobolsa", inference_logs)
+            if len(silobolsas) > 0:
+                detections['silobolsas'] = silobolsas[0].split(' ')[0]
+            logs = dict(
                 image_name=f'detected_{img_name}',
+                input_img_size = raw_logs.split('imgsz=')[1].split(',')[0] + "px",
+                img_size = inference_logs.split(' ')[0] + " px",
+                conf_thres = raw_logs.split('conf_thres=')[1].split(',')[0],
+                iou_thres = raw_logs.split('iou_thres=')[1].split(',')[0],
+                inference_time = raw_logs.split('Done. (')[1].split(')')[0],
+                total_time = raw_logs.split('Done. (')[2].split(')')[0],
+                detections = detections,
+                raw_logs=raw_logs
+            )
+            print(json.dumps(logs, indent=4))
+            
+            
+            data = dict(
                 image=base64.encodebytes(image_binary).decode('ascii'),
-                logs=logs.stdout.decode('ascii')#,
+                logs=logs#,
                 # TODO: Separate and parse the logs: img size, nº and type of detections, time of detection, confidence threshold. Try to put CPU and GPU info
             )
             
