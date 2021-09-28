@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="./css/main.css">
 
-    <title>ExpertD.</title>
+    <title>AI PivotSilobolsa</title>
   </head>
   <body>
   <!--========================================================== -->
@@ -220,9 +220,6 @@
       </div>
   
     <button onclick="apiCaller()" class="btn btn-primary" id="submit_btn">Submit</button>
-    <br>
-    <img id="image-from-server" />
-    <br>
     
   </div>
 </section>
@@ -233,10 +230,11 @@
 <section>
   <div class="container w-50 m-auto text-center" id="seccion-resultado">
       <h1 class="mb-5 fs-2">Resultados del Análisis</h1>
+      <!-- Poner aca info de como esta seteado el modelo-->
   </div>
 
   <div class="mt-5 text-center">
-      <img id="img-resultado" src="./img/silo152.jpg" alt="seccion-resultado">
+      <img id="image-from-server">
   </div>
 
   <div id="local" class="border-top border-2">
@@ -246,30 +244,21 @@
                 <table class="table table-dark table-hover"> 
                     <thead>
                       <tr>
-                        <th scope="col">Tiempo</th>
+                        <th scope="col">Tiempo Total</th>
+                        <th scope="col">Tiempo de Inferencia</th>
                         <th scope="col">Tamaño de la imagen</th>
-                        <th scope="col">Detecciones</th>
-                        <th scope="col">Clase</th>
+                        <th scope="col">Pivotes Detectados</th>
+                        <th scope="col">Silobolsas Detectados</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
+                        <td id="total_time" >
+                        <td id="inference_time" >
+                        <td id="img_size" >
+                        <td id="pivots" >
+                        <td id="silobolsas" >
                       </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        <td>the Bird</td>
-                        <td>@twitter</td>
                       </tr>
                     </tbody>
                 </table>
