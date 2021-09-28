@@ -41,6 +41,9 @@
               <li class="nav-item">
                 <a class="nav-link" href="#seccion-contacto">Subir imagenes</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#seccion-resultado">Resultados</a>
+              </li>
             </ul>
             
           </div>
@@ -217,18 +220,66 @@
       </div>
   
     <button onclick="apiCaller()" class="btn btn-primary" id="submit_btn">Submit</button>
-
+    <br>
     <img id="image-from-server" />
-  
+    <br>
+    
   </div>
 </section>
+<!--========================================================== -->
+                        <!-- SECCION RESULTADOS-->
+<!--========================================================== -->
+<br>
+<section>
+  <div class="container w-50 m-auto text-center" id="seccion-resultado">
+      <h1 class="mb-5 fs-2">Resultados del Análisis</h1>
+  </div>
 
+  <div class="mt-5 text-center">
+      <img id="img-resultado" src="./img/silo152.jpg" alt="seccion-resultado">
+  </div>
+
+  <div id="local" class="border-top border-2">
+      <div class="resultado"> </div>
+      <div>
+          <h2>Información del Análisis</h2>
+                <table class="table table-dark table-hover"> 
+                    <thead>
+                      <tr>
+                        <th scope="col">Tiempo</th>
+                        <th scope="col">Tamaño de la imagen</th>
+                        <th scope="col">Detecciones</th>
+                        <th scope="col">Clase</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>Thornton</td>
+                        <td>@fat</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>the Bird</td>
+                        <td>@twitter</td>
+                      </tr>
+                    </tbody>
+                </table>
+      </div>
+  </div>
+</section>
 
 <!--========================================================== -->
                         <!--FOOTER-->
 <!--========================================================== -->
-
-
 <footer class="w-100  d-flex  align-items-center justify-content-center flex-wrap">
   <p class="fs-5 px-3  pt-3">PI &copy; Diciembre 2021</p>
   <div id="iconos" >
