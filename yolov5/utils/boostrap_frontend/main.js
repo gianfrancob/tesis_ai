@@ -45,8 +45,17 @@ const apiCaller = () => {
       "src",
       "data:image/png;base64," + responseJson.image
     );
-    $("#image-name").attr("src", responseJson.image_name);
-    $("#logs").attr("src", responseJson.logs);
+    $("#image_name").attr("src", responseJson.logs.image_name);
+    $("#pivots").attr("src", responseJson.logs.detections.pivots);
+    $("#silobolsas").attr("src", responseJson.logs.detections.silobolsas);
+    $("#input_img_size").attr("src", responseJson.logs.input_img_size);
+    $("#img_size").attr("src", responseJson.logs.img_size);
+    $("#conf_thres").attr("src", responseJson.logs.conf_thres);
+    $("#iou_thres").attr("src", responseJson.logs.iou_thres);
+    $("#inference_time").attr("src", responseJson.logs.inference_time);
+    $("#total_time").attr("src", responseJson.logs.total_time);
+    $("#raw_logs").attr("src", responseJson.logs.raw_logs);
+
     // }
   });
 
