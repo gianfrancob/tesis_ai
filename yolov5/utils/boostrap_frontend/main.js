@@ -27,8 +27,8 @@ $(`#results_table_tr_${idx}`).append(`<td style="text-align:center"></td>`);
 
 const apiCaller = () => {
   let data = {};
-  data["filename"] = $("#formFile").val();
-  data["uploadedFile"] = $("#formFile").prop("files")[0];
+  data.filename = $("#formFile").val();
+  data.uploadedFile = $("#formFile").prop("files")[0];
 
   var form = new FormData();
   form.append("image", data["uploadedFile"], data["filename"]);
@@ -43,7 +43,21 @@ const apiCaller = () => {
     data: form,
   };
 
+  const submit_btn = document.getElementById("submit_btn");
+  if (data.filename) {
+    submit_btn.disabled = true;
+    $("#submit_btn").empty();
+    $("#submit_btn").wrapInner(
+      '<span id="loading_spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>\nLoading...'
+    );
+  }
+
   $.ajax(settings).done(function (response) {
+    submit_btn.disabled = false;
+    // document.getElementById("loading_spinner").remove();
+    $("#submit_btn").empty();
+    $("#submit_btn").wrapInner("Submit");
+
     console.log(response);
     // console.log(status);
     const responseJson = JSON.parse(response);
