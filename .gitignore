@@ -2,6 +2,8 @@
 *.weights
 *.tar
 *.tfrecord
+*.record
+yolov3-tf2_gian/output/*.jpg
 yolov3-tf2_gian/checkpoints*
 yolov3-tf2_gian/serving/*
 yolov3-tf2_gian/logs/
