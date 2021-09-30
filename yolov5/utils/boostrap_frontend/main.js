@@ -12,10 +12,20 @@ typewriter
   .deleteChars(10)
   .start();
 
-const apiCaller = () => {
-  console.log("holaaaa");
-  console.log("filename: ", $("#formFile").val());
+$("#model_table_tr").append(`<td style="text-align:center">YOLOv5 Small</td>`);
+$("#model_table_tr").append(`<td style="text-align:center">640x640 px</td>`);
+$("#model_table_tr").append(`<td style="text-align:center">0.65</td>`);
+$("#model_table_tr").append(`<td style="text-align:center">0.45</td>`);
 
+let idx = 0;
+$(`#results_table_tr_${idx}`).append(`<td style="text-align:center"></td>`);
+$(`#results_table_tr_${idx}`).append(`<td style="text-align:center"></td>`);
+$(`#results_table_tr_${idx}`).append(`<td style="text-align:center"></td>`);
+$(`#results_table_tr_${idx}`).append(`<td style="text-align:center"></td>`);
+$(`#results_table_tr_${idx}`).append(`<td style="text-align:center"></td>`);
+$(`#results_table_tr_${idx}`).append(`<td style="text-align:center"></td>`);
+
+const apiCaller = () => {
   let data = {};
   data["filename"] = $("#formFile").val();
   data["uploadedFile"] = $("#formFile").prop("files")[0];
@@ -39,41 +49,71 @@ const apiCaller = () => {
     const responseJson = JSON.parse(response);
     console.log(responseJson);
 
+    idx = idx + 1;
+
     // TODO: Trye to make  status code work. Add style to detected img. Show logs info
     // if (status == 200) {
     $("#image-from-server").attr(
       "src",
       "data:image/png;base64," + responseJson.image
     );
-    $("#image_name").attr("src", responseJson.logs.image_name);
-    $("#pivots").attr("src", responseJson.logs.detections.pivots);
-    $("#silobolsas").attr("src", responseJson.logs.detections.silobolsas);
-    $("#input_img_size").attr("src", responseJson.logs.input_img_size);
-    $("#img_size").attr("src", responseJson.logs.img_size);
-    $("#conf_thres").attr("src", responseJson.logs.conf_thres);
-    $("#iou_thres").attr("src", responseJson.logs.iou_thres);
-    $("#inference_time").attr("src", responseJson.logs.inference_time);
-    $("#total_time").attr("src", responseJson.logs.total_time);
-    $("#raw_logs").attr("src", responseJson.logs.raw_logs);
+
+    const pivots = responseJson.logs.detections.pivots
+      ? responseJson.logs.detections.pivots
+      : 0;
+    const silobolsas = responseJson.logs.detections.silobolsas
+      ? responseJson.logs.detections.silobolsas
+      : 0;
+    const img_size = responseJson.logs.img_size;
+    const inference_time = responseJson.logs.inference_time;
+    const total_time = responseJson.logs.total_time;
+    const input_img_size = responseJson.logs.input_img_size;
+    const conf_thres = responseJson.logs.conf_thres;
+    const iou_thres = responseJson.logs.iou_thres;
+    const image_name = responseJson.logs.image_name;
+    const raw_logs = responseJson.logs.raw_logs;
+
+    // const results_table = document.getElementById("results_table");
+    // results_table.deleteRow(1);
+
+    const model_table = document.getElementById("model_table");
+    model_table.deleteRow(1);
+
+    $("#results_table").append(`<tr id="results_table_tr_${idx}"></tr>`);
+
+    $(`#results_table_tr_${idx}`).append(
+      `<td style="text-align:center">${image_name}</td>`
+    );
+    $(`#results_table_tr_${idx}`).append(
+      `<td style="text-align:center">${total_time}</td>`
+    );
+    $(`#results_table_tr_${idx}`).append(
+      `<td style="text-align:center">${inference_time}</td>`
+    );
+    $(`#results_table_tr_${idx}`).append(
+      `<td style="text-align:center">${img_size}</td>`
+    );
+    $(`#results_table_tr_${idx}`).append(
+      `<td style="text-align:center">${pivots}</td>`
+    );
+    $(`#results_table_tr_${idx}`).append(
+      `<td style="text-align:center">${silobolsas}</td>`
+    );
+
+    $("#model_table").append(`<tr id="model_table_tr"></tr>`);
+    $("#model_table_tr").append(
+      `<td style="text-align:center">YOLOv5 Small</td>`
+    );
+    $("#model_table_tr").append(
+      `<td style="text-align:center">${input_img_size}</td>`
+    );
+    $("#model_table_tr").append(
+      `<td style="text-align:center">${conf_thres}</td>`
+    );
+    $("#model_table_tr").append(
+      `<td style="text-align:center">${iou_thres}</td>`
+    );
 
     // }
   });
-
-  // $("#image-from-server").attr("src", "data:image/;base64," + data["response"]);
-  // $("#image-from-server").attr("src", data["response"]);
-
-  // todo: add root input element
-  // data["root"] = "POST"
-  //console.log(data)
-  //var body = JSON.stringify(data)
-  //$.ajax({
-  //url: "https://us-central1-pycatj.cloudfunctions.net/pycatjify",
-  // contentType: "application/json",
-  // data: body,
-  // dataType: "json",
-  // type: 'POST',
-  // success: function (response) {
-  // $('#out_form').val(response.data)
-  // }
-  // });
 };
