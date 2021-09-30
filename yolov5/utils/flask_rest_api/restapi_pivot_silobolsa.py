@@ -32,7 +32,7 @@ def predictImage():
         if request.files.get("image"):
             image_file = request.files["image"]
             image_bytes = image_file.read()
-            img_name = str(image_file).split("FileStorage: '")[1].split("'")[0]
+            img_name = str(image_file).split("FileStorage: '")[1].split("'")[0].split("\\")[-1]
             print("Load file: ", img_name ) # TODO: Printear info de la imagen y del modelo
             save_path = f'./utils/flask_rest_api/postedImages/{img_name}'
             img = Image.open(io.BytesIO(image_bytes))
@@ -61,9 +61,13 @@ def predictImage():
             silobolsas = re.findall("[0-9]+ silobolsa", inference_logs)
             if len(silobolsas) > 0:
                 detections['silobolsas'] = silobolsas[0].split(' ')[0]
+
+            input_img_size = raw_logs.split('imgsz=')[1].split(',')[0]
+            input_img_size += "x" + input_img_size + " px"
+
             logs = dict(
-                image_name=f'detected_{img_name}',
-                input_img_size = raw_logs.split('imgsz=')[1].split(',')[0] + "px",
+                image_name=img_name,
+                input_img_size=input_img_size,
                 img_size = inference_logs.split(' ')[0] + " px",
                 conf_thres = raw_logs.split('conf_thres=')[1].split(',')[0],
                 iou_thres = raw_logs.split('iou_thres=')[1].split(',')[0],
