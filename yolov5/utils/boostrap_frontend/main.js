@@ -31,7 +31,7 @@ const apiCaller = () => {
   data.uploadedFile = $("#formFile").prop("files")[0];
 
   var form = new FormData();
-  form.append("image", data["uploadedFile"], data["filename"]);
+  form.append("attachment", data["uploadedFile"], data["filename"]);
 
   var settings = {
     url: "http://localhost:5000/v1/img-object-detection/yolov5",
@@ -54,7 +54,6 @@ const apiCaller = () => {
 
   $.ajax(settings).done(function (response) {
     submit_btn.disabled = false;
-    // document.getElementById("loading_spinner").remove();
     $("#submit_btn").empty();
     $("#submit_btn").wrapInner("Submit");
 
@@ -67,9 +66,11 @@ const apiCaller = () => {
 
     // TODO: Trye to make  status code work. Add style to detected img. Show logs info
     // if (status == 200) {
+
+    // TODO: agregar logica para descomprimir el attachment recibido con las deteccion y armar carrusel
     $("#image-from-server").attr(
       "src",
-      "data:image/png;base64," + responseJson.image
+      "data:image/png;base64," + responseJson.inference
     );
 
     const pivots = responseJson.logs.detections.pivots

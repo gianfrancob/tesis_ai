@@ -8,6 +8,8 @@ import torch
 import base64
 import json
 import re
+import os
+import pyunpack
 from PIL import Image
 from flask import Flask, request, send_file
 from flask_cors import CORS
@@ -20,7 +22,7 @@ BULK_IMG_DETECTION_URL = "/v1/bulk-img-object-detection/yolov5"
 VIDEO_DETECTION_URL = "/v1/video-object-detection/yolov5" # for webcam stream
 
 @app.route(IMG_DETECTION_URL, methods=["POST"])
-def predictImage():
+def predict():
     if not request.method == "POST":
         return app.response_class(
             status=400, 
@@ -29,31 +31,63 @@ def predictImage():
         )
 
     try: 
-        if request.files.get("image"):
-            image_file = request.files["image"]
-            image_bytes = image_file.read()
-            img_name = str(image_file).split("FileStorage: '")[1].split("'")[0].split("\\")[-1]
-            print("Load file: ", img_name ) # TODO: Printear info de la imagen y del modelo
-            save_path = f'./utils/flask_rest_api/postedImages/{img_name}'
-            img = Image.open(io.BytesIO(image_bytes))
-            img.save(save_path)
+        if request.files.get("attachment"):
+            attached_file = request.files["attachment"]
+            attached_file_str = str(attached_file)
+            print("attached_file ", attached_file_str)
+
+            extension = ""
+            if len(re.findall("application/", attached_file_str)) > 0:
+                extension = "compressed"
+            elif len(re.findall("image/", attached_file_str)) > 0:
+                extension = "image"
+
+            print("attached_file extension ", extension)
+
+            if extension == "":
+                return app.response_class(
+                    status=400, 
+                    mimetype='application/json',
+                    response="Bad attachment extension. Supported types: Check https://github.com/ponty/pyunpack/tree/0.2.2"
+                )
+            else:
+                attachment_name = attached_file.filename.split("\\")[-1]
+                # attachment_bytes = attached_file.read()
+                print("Load file: ", attachment_name )
+                save_path = f'./utils/flask_rest_api/postedImages/{attachment_name}'
+                attached_file.save(save_path)
+                detected_img_path = f"./runs/RESTapi/results/{attachment_name}"
+                sub_results_folder = ""
+                if extension == "compressed":
+                    print("HOLA")
+                    save_dir = "." + save_path.split(".")[1]
+                    mkdir_logs = subprocess.run(["mkdir", save_dir], stdout=subprocess.PIPE, text=True).stdout        
+                    pyunpack.Archive(save_path).extractall(save_dir)
+                    save_path = save_dir
+                    sub_results_folder = attachment_name
+                    detected_img_path = f"./runs/RESTapi/results/{sub_results_folder}"
+                    # TODO: chequear xq no esta corriendo yolo. Ver los paths!
             
-            raw_logs = subprocess.run(["python3", "detect.py", "--weights", "yolov5s-best.pt", "--source", save_path, "--conf-thres", "0.65", "--augment", "--project", "runs/RESTapi", "--name", "results"], stdout=subprocess.PIPE, text=True).stdout
+            print("save_path ", save_path)
+            detect_logs = subprocess.run(["python3", "detect.py", "--weights", "yolov5s-best.pt", "--source", save_path, "--conf-thres", "0.65", "--augment", "--project", "runs/RESTapi", "--name", f"results{sub_results_folder}"], stdout=subprocess.PIPE, text=True).stdout
             
-            detected_img_path = f"./runs/RESTapi/results/{img_name}"
-            detected_img = Image.open(detected_img_path)
             output = io.BytesIO()
-            detected_img.save(output, format='PNG')
-            image_binary = output.getvalue()
+            if extension == "image":
+                detected_img = Image.open(detected_img_path)
+                detected_img.save(output, format='PNG')
+            else:
+                output_compressed_file = "output.tar.gz"
+                tar_logs = subprocess.run(["tar", "-czvf", output_compressed_file, f"{detected_img_path}/*"], stdout=subprocess.PIPE, text=True).stdout
+                with open(os.path.join(detected_img_path, output_compressed_file), 'rb') as file_data:
+                    output = file_data.read()
+            inference_binary = output.getvalue()
 
             # move to beginning of file so `send_file()` it will read from start    
             output.seek(0)
             
             #subprocess.run(["rm", save_path])
             
-        #        return send_file(io.BytesIO(image_binary), mimetype='image/jpeg', as_attachment=True, attachment_filename=f'detected_{img_name}')
-        #        return send_file(output, mimetype='image/png')
-            inference_logs = raw_logs.split(': ')[1].split(', Done')[0] # 416x640 5 pivots
+            inference_logs = detect_logs.split(': ')[1].split(', Done')[0] # 416x640 5 pivots
             detections = {}
             pivots = re.findall("[0-9]+ pivot", inference_logs)
             if len(pivots) > 0:
@@ -62,27 +96,26 @@ def predictImage():
             if len(silobolsas) > 0:
                 detections['silobolsas'] = silobolsas[0].split(' ')[0]
 
-            input_img_size = raw_logs.split('imgsz=')[1].split(',')[0]
+            input_img_size = detect_logs.split('imgsz=')[1].split(',')[0]
             input_img_size += "x" + input_img_size + " px"
 
             logs = dict(
-                image_name=img_name,
+                image_name=attachment_name,
                 input_img_size=input_img_size,
                 img_size = inference_logs.split(' ')[0] + " px",
-                conf_thres = raw_logs.split('conf_thres=')[1].split(',')[0],
-                iou_thres = raw_logs.split('iou_thres=')[1].split(',')[0],
-                inference_time = raw_logs.split('Done. (')[1].split(')')[0],
-                total_time = raw_logs.split('Done. (')[2].split(')')[0],
+                conf_thres = detect_logs.split('conf_thres=')[1].split(',')[0],
+                iou_thres = detect_logs.split('iou_thres=')[1].split(',')[0],
+                inference_time = detect_logs.split('Done. (')[1].split(')')[0],
+                total_time = detect_logs.split('Done. (')[2].split(')')[0],
                 detections = detections,
-                raw_logs=raw_logs
+                raw_logs=detect_logs
             )
             print(json.dumps(logs, indent=4))
             
             
             data = dict(
-                image=base64.encodebytes(image_binary).decode('ascii'),
-                logs=logs#,
-                # TODO: Separate and parse the logs: img size, nº and type of detections, time of detection, confidence threshold. Try to put CPU and GPU info
+                inference=base64.encodebytes(inference_binary).decode('ascii'),
+                logs=logs
             )
             
             response = app.response_class(
@@ -99,33 +132,6 @@ def predictImage():
             response=f"Detection failed. Error: {e}"
         )
 
-# TODO: armar predictBulkImage
-def predictImageBulk():
-    if not request.method == "POST":
-        return
-
-    if request.files.get("file"):
-        image_file = request.files["file"]
-        # TODO: Descomprimir archivo adjuntado
-        image_bytes = image_file.read()
-        path = str(image_file).split("FileStorage: '")[1].split("'")[0]
-        print("Load files: ", path.count() ) # TODO: Printear info de la imagen y del modelo
-        save_path = f'./utils/flask_rest_api/postedImages/{img_name}'
-        img = Image.open(io.BytesIO(image_bytes))
-        img.save(save_path)
-        
-        logs = subprocess.run(["python3", "detect.py", "--weights", "yolov5s-best.pt", "--source", save_path, "--conf-thres", "0.65", "--augment", "--project", "runs/RESTapi", "--name", "results"])
-        
-        detected_img_path = f"./runs/RESTapi/results/{img_name}"
-        detected_img = Image.open(detected_img_path)
-        output = io.BytesIO()
-        detected_img.save(output, format='JPEG')
-        image_binary = output.getvalue()
-        
-        #subprocess.run(["rm", save_path])
-        
-        return send_file(io.BytesIO(image_binary), mimetype='image/jpeg', as_attachment=True, attachment_filename=f'detected_{img_name}') # TODO: ver de eliminar el mimetype
-# TODO: armar predictVideo
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Flask API exposing YOLOv5 model")
