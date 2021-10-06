@@ -64,29 +64,38 @@ def predict():
                     mkdir_logs = subprocess.run(["mkdir", save_dir], stdout=subprocess.PIPE, text=True).stdout        
                     pyunpack.Archive(save_path).extractall(save_dir)
                     save_path = save_dir
-                    sub_results_folder = attachment_name
-                    detected_img_path = f"./runs/RESTapi/results/{sub_results_folder}"
-                    # TODO: chequear xq no esta corriendo yolo. Ver los paths!
+                    sub_results_folder = "/" + attachment_name
+                    detected_img_path = f"./runs/RESTapi/results{sub_results_folder}"
+                    print("detected_img_path: ", detected_img_path)
             
             print("save_path ", save_path)
             detect_logs = subprocess.run(["python3", "detect.py", "--weights", "yolov5s-best.pt", "--source", save_path, "--conf-thres", "0.65", "--augment", "--project", "runs/RESTapi", "--name", f"results{sub_results_folder}"], stdout=subprocess.PIPE, text=True).stdout
-            
+            print(detect_logs)
+
             output = io.BytesIO()
+            inference_binary = None
             if extension == "image":
                 detected_img = Image.open(detected_img_path)
                 detected_img.save(output, format='PNG')
+                inference_binary = output.getvalue()
+                output.seek(0)
             else:
-                output_compressed_file = "output.tar.gz"
-                tar_logs = subprocess.run(["tar", "-czvf", output_compressed_file, f"{detected_img_path}/*"], stdout=subprocess.PIPE, text=True).stdout
-                with open(os.path.join(detected_img_path, output_compressed_file), 'rb') as file_data:
-                    output = file_data.read()
-            inference_binary = output.getvalue()
+                output_compressed_file = detected_img_path + "/output.tar.gz"
+                wd = os.getcwd()
+                os.chdir(detected_img_path)
+                os.system("ls -l")
+                os.system("tar vczf output.tar.gz *")
+                os.system("ls -l")
+                os.chdir(wd)
 
-            # move to beginning of file so `send_file()` it will read from start    
-            output.seek(0)
+                with open(output_compressed_file, 'rb') as file_data:
+                    output = file_data.read()
+                    inference_binary = output # TODO: chequear en FE si sirve lo que le llega
+
             
-            #subprocess.run(["rm", save_path])
+            #subprocess.run(["rm", save_path]) TODO:: no colgar con esto, para no llenar la matrix de basoooooooura
             
+            # TODO: Rearmar logs cuadno extension != image
             inference_logs = detect_logs.split(': ')[1].split(', Done')[0] # 416x640 5 pivots
             detections = {}
             pivots = re.findall("[0-9]+ pivot", inference_logs)
