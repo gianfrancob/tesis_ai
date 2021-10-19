@@ -59,7 +59,6 @@ def predict():
                 detected_img_path = f"./runs/RESTapi/results/{attachment_name}"
                 sub_results_folder = ""
                 if extension == "compressed":
-                    print("HOLA")
                     save_dir = "." + save_path.split(".")[1]
                     mkdir_logs = subprocess.run(["mkdir", save_dir], stdout=subprocess.PIPE, text=True).stdout        
                     pyunpack.Archive(save_path).extractall(save_dir)
@@ -94,7 +93,16 @@ def predict():
 
             
             #subprocess.run(["rm", save_path]) TODO:: no colgar con esto, para no llenar la matrix de basoooooooura
+            '''
+            Namespace(weights=['yolov5s-best.pt'], source='./utils/flask_rest_api/postedImages/bulkImages', imgsz=640, conf_thres=0.65, iou_thres=0.45, max_det=1000, device='', view_img=False, save_txt=False, save_conf=False, save_crop=False, nosave=False, classes=None, agnostic_nms=False, augment=True, update=False, project='runs/RESTapi', name='results/bulkImages.zip', exist_ok=False, line_thickness=3, hide_labels=False, hide_conf=False, half=False)
+            image 1/6 /workspace/shared_volume/yolov5/utils/flask_rest_api/postedImages/bulkImages/bolsa1.png: 320x640 1 silobolsa, Done. (0.050s)
+            image 2/6 /workspace/shared_volume/yolov5/utils/flask_rest_api/postedImages/bulkImages/pivot_silo1.png: 352x640 1 pivot, 2 silobolsas, Done. (0.049s)
+            image 3/6 /workspace/shared_volume/yolov5/utils/flask_rest_api/postedImages/bulkImages/pivot_silo2.png: 384x640 1 silobolsa, Done. (0.050s)
+            image 4/6 /workspace/shared_volume/yolov5/utils/flask_rest_api/postedImages/bulkImages/pivot_silo3.png: 352x640 1 silobolsa, Done. (0.049s)
+            image 5/6 /workspace/shared_volume/yolov5/utils/flask_rest_api/postedImages/bulkImages/riego1.png: 416x640 5 pivots, Done. (0.051s)
+            image 6/6 /workspace/shared_volume/yolov5/utils/flask_rest_api/postedImages/bulkImages/riego2.png: 512x640 24 pivots, Done. (0.053s)
 
+            '''
             input_img_size = detect_logs.split('imgsz=')[1].split(',')[0]
             input_img_size += "x" + input_img_size + " px"
 
@@ -102,7 +110,8 @@ def predict():
             inference_logs = ''.join(detect_logs.split(")")[1:]).split("image ")[1:]
             for inference in inference_logs:
                 name = inference.split(': ')[0].split('/')[-1]
-                inference_row = inference.split(': ')[1].split(', Done')[0] # 416x640 5 pivots
+                inference_row = inference.split(': ')[1]#.split(', Done')[0] # 416x640 5 pivots
+                inference_time = inference_row.split('Done. (')[1].split('s')[0] + 's'
                 detections = {}
                 pivots = re.findall("[0-9]+ pivot", inference_row)
                 if len(pivots) > 0:
@@ -116,7 +125,8 @@ def predict():
                 parsed_inference_logs += [dict(
                     image_name=name,
                     img_size = img_size,
-                    detections = detections
+                    detections = detections,
+                    inference_time = inference_time
                 )]
 
             logs = dict(
@@ -125,11 +135,10 @@ def predict():
                 input_img_size=input_img_size,
                 conf_thres = detect_logs.split('conf_thres=')[1].split(',')[0],
                 iou_thres = detect_logs.split('iou_thres=')[1].split(',')[0],
-                inference_time = detect_logs.split('Done. (')[1].split(')')[0],
-                total_time = detect_logs.split('Done. (')[2].split(')')[0],
+                total_time = detect_logs.split('Done. (')[-1].split(')')[0],
                 raw_logs=detect_logs
             )
-            print(json.dumps(logs, indent=4))
+            # print(json.dumps(logs, indent=4))
             
             
             data = dict(

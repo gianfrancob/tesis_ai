@@ -62,72 +62,101 @@ const apiCaller = () => {
     const responseJson = JSON.parse(response);
     console.log(responseJson);
 
-    idx = idx + 1;
-
     // TODO: Trye to make  status code work. Add style to detected img. Show logs info
     // if (status == 200) {
 
     // TODO: agregar logica para descomprimir el attachment recibido con las deteccion y armar carrusel
-    $("#image-from-server").attr(
-      "src",
-      "data:image/png;base64," + responseJson.inference
-    );
+    // $("#image-from-server").attr(
+    //   "src",
+    //   "data:image/png;base64," + responseJson.inference
+    // );
 
-    const pivots = responseJson.logs.detections.pivots
-      ? responseJson.logs.detections.pivots
-      : 0;
-    const silobolsas = responseJson.logs.detections.silobolsas
-      ? responseJson.logs.detections.silobolsas
-      : 0;
-    const img_size = responseJson.logs.img_size;
-    const inference_time = responseJson.logs.inference_time;
-    const total_time = responseJson.logs.total_time;
+    // saveAs(responseJson.inference, "inference.zip");
+
+    // var zip = new JSZip();
+    // zip.loadAsync(responseJson.inference, { base64: true });
+    // zip.generateAsync({ type: "base64" }).then(function (content) {
+    //   location.href = "data:application/zip;base64," + content;
+    // });
+    // location.href = responseJson.inference;
+    // var zip = new JSZip();
+    // zip.loadAsync(responseJson.inference, { base64: true })
+    // zip.generateAsync({ type: "base64" }).then(function (content) {
+    //     saveAs(content, "inference.zip");
+    //   });
+
+    // saveAs(responseJson.inference, "inference.zip");
+    // JSZipUtils.getBinaryContent(responseJson.inference, function (err, data) {
+    //   if (err) {
+    //     throw err; // or handle err
+    //   }
+
+    //   JSZip.loadAsync(data).then(function () {
+    //     saveAs(data, "inference.zip");
+    //     console.log("TERMINE");
+    //   });
+    // });
+
     const input_img_size = responseJson.logs.input_img_size;
     const conf_thres = responseJson.logs.conf_thres;
     const iou_thres = responseJson.logs.iou_thres;
-    const image_name = responseJson.logs.image_name;
+    const total_time = responseJson.logs.total_time;
     const raw_logs = responseJson.logs.raw_logs;
 
-    // const results_table = document.getElementById("results_table");
-    // results_table.deleteRow(1);
+    // TODO: agregar una row por cada elemento
+    for (inference of responseJson.logs.inference_logs) {
+      idx = idx + 1;
+      const pivots = inference.detections.pivots
+        ? inference.detections.pivots
+        : 0;
+      const silobolsas = inference.detections.silobolsas
+        ? inference.detections.silobolsas
+        : 0;
+      const img_size = inference.img_size;
+      const inference_time = inference.inference_time;
+      const image_name = inference.image_name;
 
-    const model_table = document.getElementById("model_table");
-    model_table.deleteRow(1);
+      // const results_table = document.getElementById("results_table");
+      // results_table.deleteRow(1);
 
-    $("#results_table").append(`<tr id="results_table_tr_${idx}"></tr>`);
+      const model_table = document.getElementById("model_table");
+      model_table.deleteRow(1);
 
-    $(`#results_table_tr_${idx}`).append(
-      `<td style="text-align:center">${image_name}</td>`
-    );
-    $(`#results_table_tr_${idx}`).append(
-      `<td style="text-align:center">${total_time}</td>`
-    );
-    $(`#results_table_tr_${idx}`).append(
-      `<td style="text-align:center">${inference_time}</td>`
-    );
-    $(`#results_table_tr_${idx}`).append(
-      `<td style="text-align:center">${img_size}</td>`
-    );
-    $(`#results_table_tr_${idx}`).append(
-      `<td style="text-align:center">${pivots}</td>`
-    );
-    $(`#results_table_tr_${idx}`).append(
-      `<td style="text-align:center">${silobolsas}</td>`
-    );
+      $("#results_table").append(`<tr id="results_table_tr_${idx}"></tr>`);
 
-    $("#model_table").append(`<tr id="model_table_tr"></tr>`);
-    $("#model_table_tr").append(
-      `<td style="text-align:center">YOLOv5 Small</td>`
-    );
-    $("#model_table_tr").append(
-      `<td style="text-align:center">${input_img_size}</td>`
-    );
-    $("#model_table_tr").append(
-      `<td style="text-align:center">${conf_thres}</td>`
-    );
-    $("#model_table_tr").append(
-      `<td style="text-align:center">${iou_thres}</td>`
-    );
+      $(`#results_table_tr_${idx}`).append(
+        `<td style="text-align:center">${image_name}</td>`
+      );
+      $(`#results_table_tr_${idx}`).append(
+        `<td style="text-align:center">${total_time}</td>`
+      );
+      $(`#results_table_tr_${idx}`).append(
+        `<td style="text-align:center">${inference_time}</td>`
+      );
+      $(`#results_table_tr_${idx}`).append(
+        `<td style="text-align:center">${img_size}</td>`
+      );
+      $(`#results_table_tr_${idx}`).append(
+        `<td style="text-align:center">${pivots}</td>`
+      );
+      $(`#results_table_tr_${idx}`).append(
+        `<td style="text-align:center">${silobolsas}</td>`
+      );
+
+      $("#model_table").append(`<tr id="model_table_tr"></tr>`);
+      $("#model_table_tr").append(
+        `<td style="text-align:center">YOLOv5 Small</td>`
+      );
+      $("#model_table_tr").append(
+        `<td style="text-align:center">${input_img_size}</td>`
+      );
+      $("#model_table_tr").append(
+        `<td style="text-align:center">${conf_thres}</td>`
+      );
+      $("#model_table_tr").append(
+        `<td style="text-align:center">${iou_thres}</td>`
+      );
+    }
 
     // }
   });
