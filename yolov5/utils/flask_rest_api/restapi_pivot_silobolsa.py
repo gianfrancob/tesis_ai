@@ -90,40 +90,50 @@ def predict():
 
                 with open(output_compressed_file, 'rb') as file_data:
                     output = file_data.read()
-                    inference_binary = output # TODO: chequear en FE si sirve lo que le llega
+                    inference_binary = output 
 
             
             #subprocess.run(["rm", save_path]) TODO:: no colgar con esto, para no llenar la matrix de basoooooooura
-            
-            # TODO: Rearmar logs cuadno extension != image
-            inference_logs = detect_logs.split(': ')[1].split(', Done')[0] # 416x640 5 pivots
-            detections = {}
-            pivots = re.findall("[0-9]+ pivot", inference_logs)
-            if len(pivots) > 0:
-                detections['pivots'] = pivots[0].split(' ')[0]
-            silobolsas = re.findall("[0-9]+ silobolsa", inference_logs)
-            if len(silobolsas) > 0:
-                detections['silobolsas'] = silobolsas[0].split(' ')[0]
 
             input_img_size = detect_logs.split('imgsz=')[1].split(',')[0]
             input_img_size += "x" + input_img_size + " px"
 
+            parsed_inference_logs = []
+            inference_logs = ''.join(detect_logs.split(")")[1:]).split("image ")[1:]
+            for inference in inference_logs:
+                name = inference.split(': ')[0].split('/')[-1]
+                inference_row = inference.split(': ')[1].split(', Done')[0] # 416x640 5 pivots
+                detections = {}
+                pivots = re.findall("[0-9]+ pivot", inference_row)
+                if len(pivots) > 0:
+                    detections['pivots'] = pivots[0].split(' ')[0]
+                silobolsas = re.findall("[0-9]+ silobolsa", inference_row)
+                if len(silobolsas) > 0:
+                    detections['silobolsas'] = silobolsas[0].split(' ')[0]
+                
+                img_size = inference_row.split(' ')[0] + " px"
+
+                parsed_inference_logs += [dict(
+                    image_name=name,
+                    img_size = img_size,
+                    detections = detections
+                )]
+
             logs = dict(
-                image_name=attachment_name,
+                filename = attachment_name,
+                inference_logs = parsed_inference_logs,
                 input_img_size=input_img_size,
-                img_size = inference_logs.split(' ')[0] + " px",
                 conf_thres = detect_logs.split('conf_thres=')[1].split(',')[0],
                 iou_thres = detect_logs.split('iou_thres=')[1].split(',')[0],
                 inference_time = detect_logs.split('Done. (')[1].split(')')[0],
                 total_time = detect_logs.split('Done. (')[2].split(')')[0],
-                detections = detections,
                 raw_logs=detect_logs
             )
             print(json.dumps(logs, indent=4))
             
             
             data = dict(
-                inference=base64.encodebytes(inference_binary).decode('ascii'),
+                inference="data:application/zip;base64," + base64.encodebytes(inference_binary).decode('ascii'),
                 logs=logs
             )
             
