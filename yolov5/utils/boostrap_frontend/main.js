@@ -58,7 +58,6 @@ const apiCaller = () => {
     $("#submit_btn").wrapInner("Submit");
 
     console.log(response);
-    // console.log(status);
     const responseJson = JSON.parse(response);
     console.log(responseJson);
 
@@ -77,43 +76,11 @@ const apiCaller = () => {
     }
 
     if (responseJson.logs.inference_logs.length > 1) {
-      download_btn.setAttribute("download", "inference.zip");
+      download_btn.setAttribute(
+        "download",
+        responseJson.logs.filename.split(".")[0] + ".zip"
+      );
     }
-
-    // TODO: Trye to make  status code work. Add style to detected img. Show logs info
-    // if (status == 200) {
-
-    // TODO: agregar logica para descomprimir el attachment recibido con las deteccion y armar carrusel
-    // $("#image-from-server").attr(
-    //   "src",
-    //   "data:image/png;base64," + responseJson.inference
-    // );
-
-    // saveAs(responseJson.inference, "inference.zip");
-
-    // var zip = new JSZip();
-    // zip.loadAsync(responseJson.inference, { base64: true });
-    // zip.generateAsync({ type: "base64" }).then(function (content) {
-    //   location.href = "data:application/zip;base64," + content;
-    // });
-    // location.href = responseJson.inference;
-    // var zip = new JSZip();
-    // zip.loadAsync(responseJson.inference, { base64: true })
-    // zip.generateAsync({ type: "base64" }).then(function (content) {
-    //     saveAs(content, "inference.zip");
-    //   });
-
-    // saveAs(responseJson.inference, "inference.zip");
-    // JSZipUtils.getBinaryContent(responseJson.inference, function (err, data) {
-    //   if (err) {
-    //     throw err; // or handle err
-    //   }
-
-    //   JSZip.loadAsync(data).then(function () {
-    //     saveAs(data, "inference.zip");
-    //     console.log("TERMINE");
-    //   });
-    // });
 
     const input_img_size = responseJson.logs.input_img_size;
     const conf_thres = responseJson.logs.conf_thres;
@@ -132,9 +99,6 @@ const apiCaller = () => {
       const img_size = inference.img_size;
       const inference_time = inference.inference_time;
       const image_name = inference.image_name;
-
-      // const results_table = document.getElementById("results_table");
-      // results_table.deleteRow(1);
 
       const model_table = document.getElementById("model_table");
       model_table.deleteRow(1);
@@ -174,7 +138,5 @@ const apiCaller = () => {
         `<td style="text-align:center">${iou_thres}</td>`
       );
     }
-
-    // }
   });
 };
