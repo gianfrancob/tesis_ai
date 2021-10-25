@@ -62,6 +62,24 @@ const apiCaller = () => {
     const responseJson = JSON.parse(response);
     console.log(responseJson);
 
+    const download_btn = document.getElementById("zip-from-server-href");
+    if (responseJson.logs.inference_logs.length) {
+      download_btn.href = responseJson.inference;
+      download_btn.hidden = false;
+    }
+
+    if (responseJson.logs.inference_logs.length == 1) {
+      $("#image-from-server").attr("src", responseJson.inference);
+      download_btn.setAttribute(
+        "download",
+        responseJson.logs.inference_logs[0].image_name
+      );
+    }
+
+    if (responseJson.logs.inference_logs.length > 1) {
+      download_btn.setAttribute("download", "inference.zip");
+    }
+
     // TODO: Trye to make  status code work. Add style to detected img. Show logs info
     // if (status == 200) {
 
@@ -103,7 +121,6 @@ const apiCaller = () => {
     const total_time = responseJson.logs.total_time;
     const raw_logs = responseJson.logs.raw_logs;
 
-    // TODO: agregar una row por cada elemento
     for (inference of responseJson.logs.inference_logs) {
       idx = idx + 1;
       const pivots = inference.detections.pivots

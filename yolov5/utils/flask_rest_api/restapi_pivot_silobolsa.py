@@ -92,7 +92,7 @@ def predict():
                     inference_binary = output 
 
             
-            #subprocess.run(["rm", save_path]) TODO:: no colgar con esto, para no llenar la matrix de basoooooooura
+            os.system(f"rm {save_path}")
             '''
             Namespace(weights=['yolov5s-best.pt'], source='./utils/flask_rest_api/postedImages/bulkImages', imgsz=640, conf_thres=0.65, iou_thres=0.45, max_det=1000, device='', view_img=False, save_txt=False, save_conf=False, save_crop=False, nosave=False, classes=None, agnostic_nms=False, augment=True, update=False, project='runs/RESTapi', name='results/bulkImages.zip', exist_ok=False, line_thickness=3, hide_labels=False, hide_conf=False, half=False)
             image 1/6 /workspace/shared_volume/yolov5/utils/flask_rest_api/postedImages/bulkImages/bolsa1.png: 320x640 1 silobolsa, Done. (0.050s)
