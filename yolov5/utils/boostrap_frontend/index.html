@@ -17,14 +17,14 @@
                         <!-- ENCABEZADO -->
   <!--========================================================== -->
     <header class="container-fluid bg-primary d-flex justify-content-center">
-        <p class="text-light mb-0 p-2 fs-6">Proyecto Integrador UNC - Ing. Comp.
+        <p class="text-light mb-0 p-2 fs-6">Proyecto Integrador Ingenieria en Computacion - UNC 
           </p>
     </header>
 
     <nav  class="navbar navbar-expand-lg navbar-light p-3"  id="menu">
         <div class="container">
           <a class="navbar-brand" href="#">
-              <span class="fs-5 text-primary fw-bold">PivotSilobolsa</span>
+              <span class="fs-5 text-primary fw-bold">IA Imagenes Satelitales</span>
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -111,7 +111,9 @@
 
             <div>
                 <h3 class="fs-5 mt-4 px-4 pb-1 icono-wrap">El Problema</h3>
-                <p class="px-4">Se intenta detectar el abuso de los recursos hídricos, evasión impositivas en el rubro agropecuario, deforestaciones ilegales, ssentamientos ilegales y expropiaciones.</p>
+                <li class="px-4">Se intenta detectar el abuso de los recursos hídricos.</li>
+                <li class="px-4">Evasión impositivas en el rubro agropecuario</li>
+                <li class="px-4">Deforestaciones asentamientos y expropiaciones ilegales.</li>
             </div>
         </div>
 
@@ -120,9 +122,8 @@
 
           <div>
               <h3 class="fs-5 mt-4 px-4 pb-1">Motivación e importancia del proyecto</h3>
-              <p class="px-4">Incorporar tecnologías novedosas y altamente populares en la industria al ámbito público.
-                Ayudar a combatir irregularidades detectándolas en tiempo real.
-              </p>
+              <li class="px-4">Incorporar tecnologías novedosas y altamente populares en la industria al ámbito público.</li>
+              <li class="px-4">Ayudar a combatir irregularidades detectándolas en tiempo real.</li>
           </div>
 
       </div>
@@ -134,8 +135,9 @@
 
             <div>
                 <h3 class="fs-5 mt-4 px-4 pb-1">Solución</h3>
-                <p class="px-4">Diseñar e Implementar una Inteligencia Artificial que detecte pivotes de riego y silobolsas a partir de imágenes satelitales.Realizar la clasificación e identificación de dichos objetos en tiempo real.Ofrecer una interfaz amigable al usuario para su uso.
-                  </p>
+                <li class="px-4">Diseñar e Implementar una Inteligencia Artificial que detecte pivotes de riego y silobolsas a partir de imágenes satelitales.</li>
+                <li class="px-4">Realizar la clasificación e identificación de dichos objetos en tiempo real.Ofrecer una interfaz amigable al usuario para su uso.</li>
+                <li class="px-4">Ofrecer una interfaz amigable al usuario para su uso.</li>
             </div>
         </div>
 
@@ -144,7 +146,7 @@
 
             <div>
                 <h3 class="fs-5 mt-4 px-4 pb-1">Machine Learning</h3>
-                <p class="px-4">Eleccion del algoritmo Yolo v5</p>
+                <p class="px-4">Modelo de ML seleccionado: <b>Yolo v5</b></p>
             </div>
         </div>
     </div>
@@ -156,12 +158,15 @@
 
 <section>
     <div class="container w-50 m-auto text-center" id="equipo">
-        <h1 class="mb-5 fs-2">Estudiantes de Ingeniería en Computacion <span class="text-primary">Gianfranco - Loreley</span></h1>
-        <p class="fs-4 ">Universidad Nacional de Cordoba</p>
+      <h1 class="text-primary">Gianfranco Barbiani - Loreley Bustamante</h2>
+        <h2 class="mb-5 fs-2">Estudiantes de Ingeniería en Computacion
+      </h1>
+      <br>
+      <h1 class="fs-1 ">Universidad Nacional de Cordoba</h1>
     </div>
 
     <div class="mt-5 text-center">
-        <img id="img-equipo" src="./img/unc2.jpg" alt="equipo">
+        <img id="img-equipo" src="./img/unc2.jpg" alt="equipo" style="max-width: 350px">
     </div>
 
     <div id="local" class="border-top border-2">
@@ -170,19 +175,23 @@
             <div class="wrapper-local">
                 <h2>Recursos</h2>
 
-                <p class="fs-5 text-body">Eligimos una supercomputadora llamada Matrix</p>
+                <p class="fs-5 text-body">El modelo corre en una supercomputadora llamada Nabucodonosor</p>
                 <section class="d-flex justify-content-start" id="numeros-local">
                     <div>
-                        <p class="text-primary fs-5">248</p>
-                        <p>Procesador</p>
+                        <p class="text-primary fs-5">Xeon E5-2680v2 (2x)</p>
+                        <p>CPUs</p>
                     </div>
                     <div>
-                        <p class="text-primary fs-5">100%</p>
-                        <p>Ram</p>
+                        <p class="text-primary fs-5">64 GiB</p>
+                        <p>RAM</p>
                     </div>
                     <div>
-                        <p class="text-primary fs-5">24</p>
-                        <p>GPU</p>
+                        <p class="text-primary fs-5">3 GPU NVIDIA GTX 1080Ti</p>
+                        <p>GPUs</p>
+                    </div>
+                    <div>
+                        <p class="text-primary fs-5">3 TiB + 240 GiB</p>
+                        <p>Almacenamiento SSD</p>
                     </div>
               </section>
             </div>
@@ -283,9 +292,10 @@
 <footer class="w-100  d-flex  align-items-center justify-content-center flex-wrap">
   <p class="fs-5 px-3  pt-3">PI &copy; Diciembre 2021</p>
   <div id="iconos" >
-      <a href="#"><i class="bi bi-facebook"></i></a>
-      <a href="#"><i class="bi bi-twitter"></i></a>
-      <a href="#"><i class="bi bi-instagram"></i></a>
+    <!-- TODO: agregar link a github -->
+      <!-- <a href="#"><i class="bi bi-facebook"></i></a> -->
+      <!-- <a href="#"><i class="bi bi-twitter"></i></a> -->
+      <!-- <a href="#"><i class="bi bi-instagram"></i></a> -->
   </div>
 </footer>
 
