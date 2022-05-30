@@ -1,0 +1,70 @@
+% Chapter Template
+
+\chapter{Introducción} % Main chapter title
+
+\label{Chapter1} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
+
+\lhead{Capítulo 1. \emph{Introducción}} % Change X to a consecutive number; this is for the header on each page - perhaps a shortened title
+
+\setstretch{1.1} % Line spacing of 1.1
+\section{Introducción}
+
+En la Universidad Nacional de Córdoba se generan las llamadas actas de exámenes para dejar constancia de los resultados de las evaluaciones en los turnos de examen. Un acta consta de un encabezado con información sobre la materia a la cual corresponde, la fecha y otros datos necesarios y luego renglones con información sobre los alumnos inscritos junto con la nota correspondiente de cada alumno.
+Luego de que se completó y controló el acta, es cerrado y archivado. Además de quedar asentados en papel, las notas también son ingresadas al sistema Guaraní, un sistema de gestión de alumnos utilizado por la UNC.
+
+Como el sistema Guaraní almacena la información ingresada en una base de datos, cualquier persona con los accesos y permisos suficientes puede ser, por ejemplo, un administrador de bases de datos, tiene la posibilidad de modificar la información almacenada. En la actualidad, la integridad de la información en el sistema Guaraní no puede ser garantizada, por lo cual certificados de historias académicas tienen que ser validadas contra las actas en papel. El proceso de validación suele llevar 10 días hábiles.
+
+Una posible forma de automatizar el proceso podría implementarse mediante archivos en formatos legibles para computadoras, como por ejemplo JSON, en conjunto con una firma digital, para garantizar la integridad. Dicha solución, sin embargo, presenta dos problemas: en un ataque contra la disponibilidad de los datos, un administrador podría eliminar una parte de la información sin que esto sea detectado. Eso es especialmente un problema en el caso de actas rectificadas ya que no es posible modificar un acta cerrada, así las actas rectificadas digitales mantienen una firma válida y pueden volver a ser consideradas válidas en el caso de desaparición de su acta rectificativa.
+
+Un Blockchain es una base de datos distribuida de solo escritura que hace uso de mecanismos criptográficos para que la información almacenada sea inmutable y segura. La distribución se logra a través de una red \textit{peer to peer}, a la cual se pueden unir tantos nodos como se desea. Los datos son ordenados de forma cronológica y la automatización se vuelve posible al usar \textit{smart contracts}, programas que son accionados por eventos y pueden provocar cambios en el estado de los datos. De este modo, los problemas de integridad y disponibilidad podrían resolverse.
+
+En respuesta a los problemas mencionados, la presente propuesta de proyecto integrador consiste en el desarrollo de un sistema de validación de información académica en Blockchain como prueba de concepto.
+
+\section{Motivación}
+
+Las motivaciones de llevar a cabo el trabajo integrador presente fueron las siguientes:
+\begin{itemize}
+    \item La posibilidad de estudiar a una tecnología nueva.
+    \item La oportunidad de participar en un proyecto de investigación y potencialmente realizar publicaciones científicas sobre lo estudiado.
+    \item  Si bien la tecnología Blockchain se conoce en el ambiente de las criptomonedas, su uso en otros ambientes no está establecido, por lo cual el desarrollo de un prototipo para un ambiente académico resulta de especial interés.
+    
+\end{itemize}
+
+\section{Marco institucional}
+
+El presente proyecto integrador forma parte del proyecto de investigación de “Tecnologías Blockchain” que cuenta con la participación de la Universidad Nacional de Córdoba y el Laboratorio de Redes y Computadoras. El equipo multidisciplinario de trabajo está compuesto por el Ing. José Daniel Britos, la Ing. Dra. Laura Cecilia Diaz Dávila y varios estudiantes de Ingeniería en Computación. 
+
+El objetivo general del proyecto de investigación es el de explorar la tecnología disruptiva “Blockchain” y sus posibles implementaciones más allá de su implementación original: “las criptomonedas” que dieron origen al concepto de cadena de bloques.
+
+El rol del presente proyecto integrador, dentro del proyecto de investigación, es el de analizar, estudiar y emplear la tecnología Blockchain en un sistema de validación de información académica. Actualmente existe un proyecto semejante de validación de certificados con Blockchain en la Prosecretaría Informática de la UNC.\cite{paper_montes}
+
+\section{Objetivos}
+
+El objetivo principal del presente trabajo es adquirir conocimientos sobre Blockchain y aplicar dichos conocimientos al desarrollar un prototipo para la validación de actas académicas y evaluar ventajas y desventajas de este caso.
+
+\subsection{Objetivos particulares}
+\begin{itemize}
+    \item Investigar la tecnología Blockchain, su funcionamiento y sus casos de uso a fondo.
+    \item Investigar y estudiar diferentes implementaciones y plataformas existentes.
+    \item Evaluar en base a los requerimientos, cuál es la implementación o plataforma más adecuada para realizar un prototipo.
+    \item Configurar un Blockchain localmente en un ambiente de desarrollo e implementar \textit{smart contracts} que permiten validar actas académicas.
+    \item Complementar al Blockchain con una API y una interfaz gráfica para mejorar su usabilidad.
+\end{itemize}
+
+\section{Estructura del texto}
+
+A continuación se describe el contenido de cada uno de los capítulos: 
+\begin{itemize}
+    \item \textbf{Capítulo 1 - Introducción: }El presente capítulo describe el trabajo en palabras generales, junto con motivaciones y objetivos del mismo.
+    \item \textbf{Capítulo 2 - Marco Teórico: }El capítulo consta de tres partes: En primer lugar, se explica el funcionamiento y las características únicas de la tecnología Blockchain tomando la criptomoneda Bitcoin como ejemplo, seguido por una primera discusión sobre posibles requerimientos del prototipo. En segundo lugar, se analizan implementaciones alternativas detallando diferencias y similitudes con Bitcoin. Por último, se llega a una conclusión sobre qué plataforma resulta ser la más adecuada para la implementación de un prototipo.
+    \item \textbf{Capítulo 3 - Hyperledger Fabric: }El capítulo describe con mayor detalle los componentes importantes y el funcionamiento de la plataforma que se eligió en el capítulo anterior.
+    \item \textbf{Capítulo 4 - Análisis y Diseño: }Luego del resumen de una entrevista con el director de Prosecretaría de Informática de la UNC sobre el presente proyecto, se procede a describir las herramientas más importantes a utilizar y a definir los requerimientos del trabajo con mayor detalle.
+    \item \textbf{Capítulo 5 - Implementación: }En primer lugar, se describen los pasos de configuración del Blockchain con Hyperledger Fabric junto con el desarrollo de los \textit{smart contracts}. Además, se describe la implementación de la API como también la implementación de la interfaz gráfica de usuario, junto con primeras pruebas del sistema en un ambiente local.
+    %Por último, se describen los pasos necesarios para que el desarrollo local puede ser desplegado en un cluster de Kubernetes.
+    \item \textbf{Capítulo 6 - Pruebas y Validación: }En este capítulo se plantean los casos de prueba que validan los requerimientos especificados junto con los procedimientos empleados y los resultados correspondientes.
+    \item \textbf{Capítulo 7 - Conclusiones: }En el capítulo final, se presentan limitaciones del prototipo desarrollado, posibles mejoras y conclusiones generales con respecto al trabajo. 
+    
+\end{itemize}
+
+
+\newpage

@@ -1,0 +1,159 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+volumes:
+  orderer.pi.elisabeth.com:
+  peer0.famaf.pi.elisabeth.com:
+  peer1.famaf.pi.elisabeth.com:
+  peer0.fcefyn.pi.elisabeth.com:
+  peer1.fcefyn.pi.elisabeth.com:
+  peer0.fcq.pi.elisabeth.com:
+  peer1.fcq.pi.elisabeth.com:
+
+networks:
+  pi:
+services:
+  ca0:
+    image: hyperledger/fabric-ca:1.4
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-famaf
+      - FABRIC_CA_SERVER_TLS_ENABLED=false
+    ports:
+      - "7054:7054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.pi.elisabeth.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/3259c59b2529796a4962e0b9f8b0f628810463d9f4789670c9f9df565eefc315_sk -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/famaf.pi.elisabeth.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_famaf
+    networks:
+      - pi
+
+  ca1:
+    image: hyperledger/fabric-ca:1.4
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-fcefyn
+      - FABRIC_CA_SERVER_TLS_ENABLED=false
+    ports:
+      - "8054:7054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.fcefyn.pi.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/c99e69b41d9de17130ae40e23684dbe13f5ead5e5cd90d31db5f9962286ca73a_sk -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/fcefyn.pi.elisabeth.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_fcefyn
+    networks:
+      - pi
+
+  ca2:
+    image: hyperledger/fabric-ca:1.4
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-fcq
+      - FABRIC_CA_SERVER_TLS_ENABLED=false
+    ports:
+      - "9054:7054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.fcq.pi.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/aa563548bb4522e057442b0e83154100ab8d9f55764dab8397e3fb467e980593_sk -b admin:adminpw -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/fcq.pi.elisabeth.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_fcq
+    networks:
+      - pi
+
+  orderer.pi.elisabeth.com:
+    extends:
+      file:   base/docker-compose-base.yaml
+      service: orderer.pi.elisabeth.com
+    container_name: orderer.pi.elisabeth.com
+    depends_on:
+      - ca0
+      - ca1
+      - ca2
+    networks:
+      - pi
+
+  peer0.famaf.pi.elisabeth.com:
+    container_name: peer0.famaf.pi.elisabeth.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.famaf.pi.elisabeth.com
+    networks:
+      - pi
+
+  peer1.famaf.pi.elisabeth.com:
+    container_name: peer1.famaf.pi.elisabeth.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.famaf.pi.elisabeth.com
+    networks:
+      - pi
+
+  peer0.fcefyn.pi.elisabeth.com:
+    container_name: peer0.fcefyn.pi.elisabeth.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.fcefyn.pi.elisabeth.com
+    networks:
+      - pi
+
+  peer1.fcefyn.pi.elisabeth.com:
+    container_name: peer1.fcefyn.pi.elisabeth.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.fcefyn.pi.elisabeth.com
+    networks:
+      - pi
+
+  peer0.fcq.pi.elisabeth.com:
+    container_name: peer0.fcq.pi.elisabeth.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.fcq.pi.elisabeth.com
+    networks:
+      - pi
+
+  peer1.fcq.pi.elisabeth.com:
+    container_name: peer1.fcq.pi.elisabeth.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.fcq.pi.elisabeth.com
+    networks:
+      - pi
+
+  cli:
+    container_name: cli
+    image: hyperledger/fabric-tools:1.4
+    tty: true
+    stdin_open: true
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - FABRIC_LOGGING_SPEC=INFO
+      - CORE_PEER_ID=cli
+      - CORE_PEER_ADDRESS=peer0.famaf.pi.elisabeth.com:7051
+      - CORE_PEER_LOCALMSPID=famafMSP
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/famaf.pi.elisabeth.com/users/Admin@famaf.pi.elisabeth.com/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./chaincode/:/opt/gopath/src/github.com/chaincode
+        - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+        - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+    depends_on:
+      - ca0
+      - ca1
+      - ca2
+      - orderer.pi.elisabeth.com
+      - peer0.famaf.pi.elisabeth.com
+      - peer1.famaf.pi.elisabeth.com
+      - peer0.fcefyn.pi.elisabeth.com
+      - peer1.fcefyn.pi.elisabeth.com
+      - peer0.fcq.pi.elisabeth.com
+      - peer1.fcq.pi.elisabeth.com
+    networks:
+      - pi

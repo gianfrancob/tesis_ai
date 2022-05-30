@@ -1,0 +1,32 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{err}{		}\PYG{l+lScalar+lScalarPlain}{OrdererOrgs}\PYG{p+pIndicator}{:}
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{Name}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{Orderer}
+            \PYG{l+lScalar+lScalarPlain}{Domain}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{pi.elisabeth.com}
+            \PYG{l+lScalar+lScalarPlain}{Specs}\PYG{p+pIndicator}{:}
+            \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{Hostname}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{orderer}
+
+        \PYG{l+lScalar+lScalarPlain}{PeerOrgs}\PYG{p+pIndicator}{:}
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{Name}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{fcefyn}
+            \PYG{l+lScalar+lScalarPlain}{Domain}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{fcefyn.pi.elisabeth.com}
+            \PYG{l+lScalar+lScalarPlain}{EnableNodeOUs}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{true}
+            \PYG{l+lScalar+lScalarPlain}{Template}\PYG{p+pIndicator}{:}
+            \PYG{l+lScalar+lScalarPlain}{Count}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{2}
+            \PYG{l+lScalar+lScalarPlain}{Users}\PYG{p+pIndicator}{:}
+            \PYG{l+lScalar+lScalarPlain}{Count}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{0}
+
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{Name}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{famaf}
+            \PYG{l+lScalar+lScalarPlain}{Domain}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{famaf.pi.elisabeth.com}
+            \PYG{l+lScalar+lScalarPlain}{EnableNodeOUs}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{true}
+            \PYG{l+lScalar+lScalarPlain}{Template}\PYG{p+pIndicator}{:}
+            \PYG{l+lScalar+lScalarPlain}{Count}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{2}
+            \PYG{l+lScalar+lScalarPlain}{Users}\PYG{p+pIndicator}{:}
+            \PYG{l+lScalar+lScalarPlain}{Count}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{0}
+
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{Name}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{fcq}
+            \PYG{l+lScalar+lScalarPlain}{Domain}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{fcq.pi.elisabeth.com}
+            \PYG{l+lScalar+lScalarPlain}{EnableNodeOUs}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{true}
+            \PYG{l+lScalar+lScalarPlain}{Template}\PYG{p+pIndicator}{:}
+            \PYG{l+lScalar+lScalarPlain}{Count}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{2}
+            \PYG{l+lScalar+lScalarPlain}{Users}\PYG{p+pIndicator}{:}
+            \PYG{l+lScalar+lScalarPlain}{Count}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{0}
+\end{Verbatim}

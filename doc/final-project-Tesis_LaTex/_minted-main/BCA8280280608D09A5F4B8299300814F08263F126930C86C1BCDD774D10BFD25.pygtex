@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+        \PYG{n+nt}{OrdererOrgs}\PYG{p}{:}
+        \PYG{p+pIndicator}{\PYGZhy{}} \PYG{n+nt}{Name}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{Orderer}
+            \PYG{l+lScalar+lScalarPlain}{Domain}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{pi.elisabeth.com}
+            \PYG{l+lScalar+lScalarPlain}{Specs}\PYG{p+pIndicator}{:}
+            \PYG{p+pIndicator}{\PYGZhy{}} \PYG{n+nt}{Hostname}\PYG{p}{:} \PYG{l+lScalar+lScalarPlain}{orderer}
+\end{Verbatim}

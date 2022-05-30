@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{} curl \PYGZhy{}sL https://deb.nodesource.com/setup\PYGZus{}8.x \PYG{p}{|} sudo \PYGZhy{}E bash \PYGZhy{}
+\PYGZdl{} sudo apt\PYGZhy{}get install \PYGZhy{}y nodejs
+\end{Verbatim}

@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{} \PYG{n+nb}{export} \PYG{n+nv}{GOROOT}\PYG{o}{=}/usr/local/go
+\PYGZdl{} \PYG{n+nb}{export} \PYG{n+nv}{GOPATH}\PYG{o}{=}/home/eli/.go
+\PYGZdl{} \PYG{n+nb}{export} \PYG{n+nv}{PATH}\PYG{o}{=}\PYG{n+nv}{\PYGZdl{}PATH}:\PYG{n+nv}{\PYGZdl{}GOROOT}/bin:\PYG{n+nv}{\PYGZdl{}GOPATH}/bin
+\end{Verbatim}

@@ -63,13 +63,13 @@ def predict():
                     mkdir_logs = subprocess.run(["mkdir", save_dir], stdout=subprocess.PIPE, text=True).stdout        
                     pyunpack.Archive(save_path).extractall(save_dir)
                     save_path = save_dir
-                    sub_results_folder = "/" + attachment_name
+                    sub_results_folder = "/"# + attachment_name
                     detected_img_path = f"./runs/RESTapi/results{sub_results_folder}"
                     print("detected_img_path: ", detected_img_path)
             
             print("save_path ", save_path)
             detect_logs = subprocess.run(["python3", "detect.py", "--weights", "yolov5s-best.pt", "--source", save_path, "--conf-thres", "0.65", "--augment", "--project", "runs/RESTapi", "--name", f"results{sub_results_folder}"], stdout=subprocess.PIPE, text=True).stdout
-            print(detect_logs)
+            print("detect_logs\n", detect_logs)
 
             output = io.BytesIO()
             inference_binary = None
@@ -91,7 +91,6 @@ def predict():
                     output = file_data.read()
                     inference_binary = output 
 
-            
             os.system(f"rm -r ./runs/RESTapi/results/*")
             os.system(f"rm -r ./utils/flask_rest_api/postedImages/*")
             '''
@@ -104,12 +103,15 @@ def predict():
             image 6/6 /workspace/shared_volume/yolov5/utils/flask_rest_api/postedImages/bulkImages/riego2.png: 512x640 24 pivots, Done. (0.053s)
 
             '''
-            input_img_size = detect_logs.split('imgsz=')[1].split(',')[0]
+            input_img_size = detect_logs.split('imgsz=')[1].split(')')[0]
             input_img_size += "x" + input_img_size + " px"
+
 
             parsed_inference_logs = []
             inference_logs = ''.join(detect_logs.split(")")[1:]).split("image ")[1:]
-            for inference in inference_logs:
+            # for inference in inference_logs:
+            for inference in detect_logs.split("image")[1:-1]:
+                print("inference ", inference)
                 name = inference.split(': ')[0].split('/')[-1]
                 inference_row = inference.split(': ')[1]#.split(', Done')[0] # 416x640 5 pivots
                 inference_time = inference_row.split('Done. (')[1].split('s')[0] + 's'
@@ -136,7 +138,7 @@ def predict():
                 input_img_size=input_img_size,
                 conf_thres = detect_logs.split('conf_thres=')[1].split(',')[0],
                 iou_thres = detect_logs.split('iou_thres=')[1].split(',')[0],
-                total_time = detect_logs.split('Done. (')[-1].split(')')[0],
+                total_time = detect_logs.split('Speed:')[1].split(', ')[1].split("inference")[0].replace("inference", ""),
                 raw_logs=detect_logs
             )
             # print(json.dumps(logs, indent=4))

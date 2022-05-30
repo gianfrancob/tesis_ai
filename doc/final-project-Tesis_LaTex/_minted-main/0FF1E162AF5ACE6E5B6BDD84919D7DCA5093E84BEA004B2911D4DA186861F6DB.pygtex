@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo groupadd docker
+\PYGZdl{} sudo usermod \PYGZhy{}aG docker eli
+\end{Verbatim}
