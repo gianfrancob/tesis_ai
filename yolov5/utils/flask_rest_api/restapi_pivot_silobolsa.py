@@ -157,10 +157,13 @@ def predict():
             return response
     except Exception as e:
         print(f"Error! {e}")
+        error_msg = str(e)
+        if 'patool' in error_msg:
+            error_msg = "Cannot unpack unknown archive format."
         return  app.response_class(
             status=400, 
             mimetype='application/json',
-            response=f"Detection failed. Error: {e}"
+            response=f"Something went wrong! Error: {error_msg}"
         )
 
 
